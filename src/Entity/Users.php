@@ -28,9 +28,27 @@ class Users
      */
     private $userSpecialties;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserLanguage", mappedBy="userId")
+     */
+    private $userLanguages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserVisit", mappedBy="clientId", orphanRemoval=true)
+     */
+    private $userVisits;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId", orphanRemoval=true)
+     */
+    private $sendingToDoctors;
+
     public function __construct()
     {
         $this->userSpecialties = new ArrayCollection();
+        $this->userLanguages = new ArrayCollection();
+        $this->userVisits = new ArrayCollection();
+        $this->sendingToDoctors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +93,99 @@ class Users
             // set the owning side to null (unless already changed)
             if ($userSpecialty->getUserId() === $this) {
                 $userSpecialty->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserLanguage[]
+     */
+    public function getUserLanguages(): Collection
+    {
+        return $this->userLanguages;
+    }
+
+    public function addUserLanguage(UserLanguage $userLanguage): self
+    {
+        if (!$this->userLanguages->contains($userLanguage)) {
+            $this->userLanguages[] = $userLanguage;
+            $userLanguage->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserLanguage(UserLanguage $userLanguage): self
+    {
+        if ($this->userLanguages->contains($userLanguage)) {
+            $this->userLanguages->removeElement($userLanguage);
+            // set the owning side to null (unless already changed)
+            if ($userLanguage->getUserId() === $this) {
+                $userLanguage->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserVisit[]
+     */
+    public function getUserVisits(): Collection
+    {
+        return $this->userVisits;
+    }
+
+    public function addUserVisit(UserVisit $userVisit): self
+    {
+        if (!$this->userVisits->contains($userVisit)) {
+            $this->userVisits[] = $userVisit;
+            $userVisit->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserVisit(UserVisit $userVisit): self
+    {
+        if ($this->userVisits->contains($userVisit)) {
+            $this->userVisits->removeElement($userVisit);
+            // set the owning side to null (unless already changed)
+            if ($userVisit->getClientId() === $this) {
+                $userVisit->setClientId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SendingToDoctor[]
+     */
+    public function getSendingToDoctors(): Collection
+    {
+        return $this->sendingToDoctors;
+    }
+
+    public function addSendingToDoctor(SendingToDoctor $sendingToDoctor): self
+    {
+        if (!$this->sendingToDoctors->contains($sendingToDoctor)) {
+            $this->sendingToDoctors[] = $sendingToDoctor;
+            $sendingToDoctor->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSendingToDoctor(SendingToDoctor $sendingToDoctor): self
+    {
+        if ($this->sendingToDoctors->contains($sendingToDoctor)) {
+            $this->sendingToDoctors->removeElement($sendingToDoctor);
+            // set the owning side to null (unless already changed)
+            if ($sendingToDoctor->getClientId() === $this) {
+                $sendingToDoctor->setClientId(null);
             }
         }
 
