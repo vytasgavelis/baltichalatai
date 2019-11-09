@@ -1,0 +1,15 @@
+{% block navbar %}
+<nav>
+  <img class = "bc-logo" src="build/BClogo.png"></img>
+{% if is_logged_in %}
+  <ul>
+    <li><button class="nav-link" onclick="location.href='/logout'">Atsijungti</button></li>
+  </ul>
+{% else %}
+  <ul class="nav-item">
+    <li><button class="nav-link nav-spec" onclick="location.href='/login'">Prisijungti</button></li>
+    <li><button class="nav-link" onclick="location.href='/register'">Registruotis</button></li>
+  </ul>
+{% endif %}
+</nav>
+{% endblock %}
