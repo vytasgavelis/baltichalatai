@@ -17,10 +17,10 @@ class UserInfo
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $userId;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -35,17 +35,17 @@ class UserInfo
     /**
      * @ORM\Column(type="string", length=32)
      */
-    private $phone_number;
+    private $phoneNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $personal_email;
+    private $personalEmail;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $date_of_birth;
+    private $dateOfBirth;
 
     /**
      * @ORM\Column(type="text")
@@ -55,7 +55,7 @@ class UserInfo
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $person_code;
+    private $personCode;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -67,14 +67,14 @@ class UserInfo
         return $this->id;
     }
 
-    public function getUserId(): ?Users
+    public function getUserId(): ?User
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?Users $user_id): self
+    public function setUserId(?User $userId): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -105,36 +105,36 @@ class UserInfo
 
     public function getPhoneNumber(): ?string
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(string $phone_number): self
+    public function setPhoneNumber(string $phoneNumber): self
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
 
     public function getPersonalEmail(): ?string
     {
-        return $this->personal_email;
+        return $this->personalEmail;
     }
 
-    public function setPersonalEmail(string $personal_email): self
+    public function setPersonalEmail(string $personalEmail): self
     {
-        $this->personal_email = $personal_email;
+        $this->personalEmail = $personalEmail;
 
         return $this;
     }
 
     public function getDateOfBirth(): ?\DateTimeInterface
     {
-        return $this->date_of_birth;
+        return $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(\DateTimeInterface $date_of_birth): self
+    public function setDateOfBirth(\DateTimeInterface $dateOfBirth): self
     {
-        $this->date_of_birth = $date_of_birth;
+        $this->dateOfBirth = $dateOfBirth;
 
         return $this;
     }
@@ -153,12 +153,12 @@ class UserInfo
 
     public function getPersonCode(): ?string
     {
-        return $this->person_code;
+        return $this->personCode;
     }
 
-    public function setPersonCode(string $person_code): self
+    public function setPersonCode(string $personCode): self
     {
-        $this->person_code = $person_code;
+        $this->personCode = $personCode;
 
         return $this;
     }

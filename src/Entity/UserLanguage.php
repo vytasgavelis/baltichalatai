@@ -17,7 +17,7 @@ class UserLanguage
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users", inversedBy="userLanguages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userLanguages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userId;
@@ -33,12 +33,12 @@ class UserLanguage
         return $this->id;
     }
 
-    public function getUserId(): ?Users
+    public function getUserId(): ?User
     {
         return $this->userId;
     }
 
-    public function setUserId(?Users $userId): self
+    public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
 

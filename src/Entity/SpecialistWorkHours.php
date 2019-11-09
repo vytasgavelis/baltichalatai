@@ -17,16 +17,16 @@ class SpecialistWorkHours
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $specialist_id;
+    private $specialistId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $clinic_id;
+    private $clinicId;
 
     /**
      * @ORM\Column(type="integer")
@@ -36,38 +36,38 @@ class SpecialistWorkHours
     /**
      * @ORM\Column(type="time")
      */
-    private $start_time;
+    private $startTime;
 
     /**
      * @ORM\Column(type="time")
      */
-    private $end_time;
+    private $endTime;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSpecialistId(): ?Users
+    public function getSpecialistId(): ?User
     {
-        return $this->specialist_id;
+        return $this->specialistId;
     }
 
-    public function setSpecialistId(?Users $specialist_id): self
+    public function setSpecialistId(?User $specialistId): self
     {
-        $this->specialist_id = $specialist_id;
+        $this->specialistId = $specialistId;
 
         return $this;
     }
 
-    public function getClinicId(): ?Users
+    public function getClinicId(): ?User
     {
-        return $this->clinic_id;
+        return $this->clinicId;
     }
 
-    public function setClinicId(?Users $clinic_id): self
+    public function setClinicId(?User $clinicId): self
     {
-        $this->clinic_id = $clinic_id;
+        $this->clinicId = $clinicId;
 
         return $this;
     }
@@ -86,24 +86,24 @@ class SpecialistWorkHours
 
     public function getStartTime(): ?\DateTimeInterface
     {
-        return $this->start_time;
+        return $this->startTime;
     }
 
-    public function setStartTime(\DateTimeInterface $start_time): self
+    public function setStartTime(\DateTimeInterface $startTime): self
     {
-        $this->start_time = $start_time;
+        $this->startTime = $startTime;
 
         return $this;
     }
 
     public function getEndTime(): ?\DateTimeInterface
     {
-        return $this->end_time;
+        return $this->endTime;
     }
 
-    public function setEndTime(\DateTimeInterface $end_time): self
+    public function setEndTime(\DateTimeInterface $endTime): self
     {
-        $this->end_time = $end_time;
+        $this->endTime = $endTime;
 
         return $this;
     }

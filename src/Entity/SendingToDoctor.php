@@ -17,7 +17,7 @@ class SendingToDoctor
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users", inversedBy="sendingToDoctors")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="sendingToDoctors")
      * @ORM\JoinColumn(nullable=false)
      */
     private $clientId;
