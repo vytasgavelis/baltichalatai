@@ -5,14 +5,8 @@
     <body class="bc-index">
         {% include 'components/navbar.html.twig' %}
         {% include 'components/search.html.twig' %}
-        <select>
-            <option value="-">-</option>
-            {% for specialty in specialties %}
-                <option value="{{ specialty.getId() }}">
-                    {{ specialty.getName() }}
-                </option>
-            {% endfor %}
-        </select>
+        {{ form(search_form) }}
     </body>
+
         
 {% endblock %}
