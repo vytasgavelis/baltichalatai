@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Specialty;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,8 +13,10 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+        $specialties = $this->getDoctrine()->getRepository(
+            Specialty::class)->findAll();
         return $this->render('home/index.html.twig', [
-            'someVariable' => 'NFQ Akademija',
+            'specialties' => $specialties,
             'is_logged_in' => false,
         ]);
     }
