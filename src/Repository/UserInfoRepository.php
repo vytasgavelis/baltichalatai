@@ -22,11 +22,11 @@ class UserInfoRepository extends ServiceEntityRepository
     // /**
     //  * @return UserInfo[] Returns an array of UserInfo objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByUserId($value)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.userId = :val')
             ->setParameter('val', $value)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
@@ -34,7 +34,7 @@ class UserInfoRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?UserInfo

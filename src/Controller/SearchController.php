@@ -3,6 +3,9 @@
 
 namespace App\Controller;
 use App\Entity\Specialty;
+use App\Entity\User;
+use App\Entity\UserSpecialty;
+use App\Entity\UserInfo;
 use App\Repository\UserSpecialtyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -10,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,9 +23,13 @@ class SearchController extends AbstractController
      */
     public function index(Request $request)
     {
+        // First select value
         $choices = Array();
+        $choices += array('-' => '');
+
         $specialties = $this->getDoctrine()->getRepository(
             Specialty::class)->findAll();
+
         foreach($specialties as $specialty) {
             $choices += array($specialty->getName() => $specialty->getId());
         }
@@ -32,7 +38,8 @@ class SearchController extends AbstractController
             ->add('name', TextType::class, ['required' => false])
             ->add('city', TextType::class, ['required' => false])
             ->add('specialties', ChoiceType::class, [
-                'choices' => $choices
+                'choices' => $choices,
+                'required' => false,
             ])
             ->add('search', SubmitType::class, ['label' => 'Search'])
             ->getForm();
@@ -43,7 +50,7 @@ class SearchController extends AbstractController
             $name = $this->validateInput($form->getData()['name']);
             $city = $this->validateInput($form->getData()['city']);
             $specialty = $this->validateInput($form->getData()['specialties']);
-            
+
             $url = '/search/' . $name . '/' . $city . '/' . $specialty;
             return new RedirectResponse($url);
         }
@@ -56,14 +63,26 @@ class SearchController extends AbstractController
      */
     public function results($name, $city, $specialty)
     {
+        $specialists = $this->getDoctrine()->getRepository(
+            UserSpecialty::class)->findBySpecialty($specialty);
+
+        foreach($specialists as $specialist){
+            $id =  $specialist->getUserId();
+
+            $userInfo =  $this->getDoctrine()->getRepository(
+                UserInfo::class)->findByUserId($id)[0];
+
+            echo $userInfo->getName() . ' ' . $userInfo->getSurname();
+        }
+
         return new Response(
-            '<html><body>' . $city . '</body></html>'
+            '<html><body></body></html>'
         );
     }
 
     public function validateInput($input)
     {
-        if ($input === '') {
+        if ($input == '') {
             return 0;
         } else {
             return $input;
