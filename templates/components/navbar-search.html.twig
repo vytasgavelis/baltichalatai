@@ -1,6 +1,14 @@
 {% block navbar %}
 <nav>
   <a href="/"><img class = "bc-logo" src="build/BClogo.png"></img></a>
+    <form action="/results" class="search-bar">
+        <div class="wrap">
+            <div class="navbar-search">
+                <input type="text" class="search-term" placeholder="Įveskite įstaigą, specialistą ar miestą...">
+                <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>
 {% if is_logged_in %}
   <ul>
     <li><button class="nav-link" onclick="location.href='/logout'">Atsijungti</button></li>

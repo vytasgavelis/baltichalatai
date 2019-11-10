@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}pagrindinis{% endblock %}
+{% block title %}resultatai{% endblock %}
 
 {% block body %}
     <body class="bc-index">
         {% include 'components/navbar.html.twig' %}
-    </body>     
+        {% include 'components/results-table.html.twig' %}
+    </body>
 {% endblock %}
