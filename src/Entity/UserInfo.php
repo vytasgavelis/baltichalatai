@@ -50,7 +50,7 @@ class UserInfo
     /**
      * @ORM\Column(type="text")
      */
-    private $address;
+    private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -139,14 +139,14 @@ class UserInfo
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getCity(): ?string
     {
-        return $this->address;
+        return $this->city;
     }
 
-    public function setAddress(string $address): self
+    public function setCity(string $city): self
     {
-        $this->address = $address;
+        $this->city = $city;
 
         return $this;
     }
