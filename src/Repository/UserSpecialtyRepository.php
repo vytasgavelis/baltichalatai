@@ -22,19 +22,26 @@ class UserSpecialtyRepository extends ServiceEntityRepository
     // /**
     //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findBySpecialty($value)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+        /*return $this->createQueryBuilder('u')
+            ->andWhere('u.specialty_id_id = :val')
             ->setParameter('val', $value)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
+        ;*/
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?UserSpecialty

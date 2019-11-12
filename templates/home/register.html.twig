@@ -1,12 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ someVariable }}{% endblock %}
 
 {% block body %}
-    <body class="bc-index">
+    <body>
         {% include 'components/navbar.html.twig' %}
-        {% include 'components/search.html.twig' %}
-        {{ form(search_form) }}
     </body>
-
-        
 {% endblock %}
