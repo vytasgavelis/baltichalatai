@@ -23,7 +23,7 @@ class UserInfoRepository extends ServiceEntityRepository
     //  * @return UserInfo[] Returns an array of UserInfo objects
     //  */
 
-    public function findByUserId($value)
+    public function findByUserId($value): ?UserInfo
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.userId = :val')
@@ -35,6 +35,29 @@ class UserInfoRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByUserName($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.name like :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByUserNameAndCity($name, $city) {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.name like :name and u.address like :city')
+            ->setParameter('name', '%' . $name . '%')
+            ->setParameter('city', '%' . $city . '%')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     /*
     public function findOneBySomeField($value): ?UserInfo

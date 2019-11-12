@@ -63,16 +63,30 @@ class SearchController extends AbstractController
      */
     public function results($name, $city, $specialty)
     {
-        $specialists = $this->getDoctrine()->getRepository(
-            UserSpecialty::class)->findBySpecialty($specialty);
+        $specialists = Array();
+        // Search by name
+        if ($name != '0' && $city == '0' && $specialty == '0') {
+            $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
+                ->findByUserName($name);
+        }
+        else if ($name != '0' && $city != '0' && $specialty == '0') {
+            $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
+                ->findByUserNameAndCity($name, $city);
+        }
+        else if ($name == '0' && $city == '0' && $specialty != '0'){
+            $specialists = $this->getDoctrine()->getRepository(
+                UserSpecialty::class)->findBySpecialty($specialty);
+        }
+
 
         foreach($specialists as $specialist){
-            $id =  $specialist->getUserId();
+            //$id =  $specialist->getUserId();
 
-            $userInfo =  $this->getDoctrine()->getRepository(
-                UserInfo::class)->findByUserId($id)[0];
+            //$userInfo =  $this->getDoctrine()->getRepository(
+              //  UserInfo::class)->findByUserId($id)[0];
 
-            echo $userInfo->getName() . ' ' . $userInfo->getSurname();
+            //echo $userInfo->getName() . ' ' . $userInfo->getSurname();
+            echo $specialist->getName();
         }
 
         return new Response(
@@ -88,4 +102,6 @@ class SearchController extends AbstractController
             return $input;
         }
     }
+
+
 }
