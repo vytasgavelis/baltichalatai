@@ -96,13 +96,15 @@ class SearchController extends AbstractController
         }
 
         //foreach($specialists as $specialist){
-            //echo $specialist->getUserId()->getUserInfo()->getName();
-            //echo $specialist->getUserId()->getUserInfo()->getCity();
+        //    echo $specialist->getUserId()->getUserInfo()->getName();
+        //    echo $specialist->getUserId()->getUserInfo()->getCity();
         //}
+
 
         return $this->render('rezultatai.html.twig',[
            'specialists' => $specialists
         ]);
+
     }
 
     public function validateInput($input)
