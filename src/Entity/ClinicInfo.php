@@ -57,7 +57,7 @@ class ClinicInfo
         return $this->id;
     }
 
-    public function getUserId(): ?Users
+    public function getUserId(): ?User
     {
         return $this->userId;
     }
