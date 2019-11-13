@@ -95,13 +95,14 @@ class SearchController extends AbstractController
                 UserSpecialty::class)->findBySpecialty($specialty);
         }
 
-        foreach($specialists as $specialist){
-            echo $specialist->getUserId()->getUserInfo()->getName();
-        }
+        //foreach($specialists as $specialist){
+            //echo $specialist->getUserId()->getUserInfo()->getName();
+            //echo $specialist->getUserId()->getUserInfo()->getCity();
+        //}
 
-        return new Response(
-            '<html><body></body></html>'
-        );
+        return $this->render('rezultatai.html.twig',[
+           'specialists' => $specialists
+        ]);
     }
 
     public function validateInput($input)
