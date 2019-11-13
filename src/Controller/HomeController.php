@@ -28,6 +28,16 @@ class HomeController extends AbstractController
         ]);
     }
     /**
+     * @Route("/login", name="login")
+     */
+    public function login()
+    {
+        return $this->render('home/login.html.twig', [
+            'someVariable' => 'NFQ Akademija',
+            'is_logged_in' => false,
+        ]);
+    }
+    /**
      * @Route("/results", name="results")
      */
     public function results()
