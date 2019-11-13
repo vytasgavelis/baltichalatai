@@ -44,6 +44,12 @@ class User
      */
     private $sendingToDoctors;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserInfo", mappedBy="userId")
+     */
+    private $userInfo;
+
+
     public function __construct()
     {
         $this->userSpecialties = new ArrayCollection();
@@ -102,7 +108,7 @@ class User
 
     public function getUserInfo(): ?UserInfo
     {
-        return $this->userInfoId;
+        return $this->userInfo;
     }
 
     /**

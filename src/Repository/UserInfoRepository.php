@@ -49,9 +49,21 @@ class UserInfoRepository extends ServiceEntityRepository
 
     public function findByUserNameAndCity($name, $city) {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.name like :name and u.address like :city')
+            ->andWhere('u.name like :name and u.city like :city')
             ->setParameter('name', '%' . $name . '%')
             ->setParameter('city', '%' . $city . '%')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByUserCity($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.city like :val')
+            ->setParameter('val', '%' . $value . '%')
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()

@@ -17,7 +17,7 @@ class UserInfo
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\OneToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userId;
@@ -50,7 +50,7 @@ class UserInfo
     /**
      * @ORM\Column(type="text")
      */
-    private $address;
+    private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -61,6 +61,24 @@ class UserInfo
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
 
     public function getId(): ?int
     {
@@ -135,18 +153,6 @@ class UserInfo
     public function setDateOfBirth(\DateTimeInterface $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
 
         return $this;
     }

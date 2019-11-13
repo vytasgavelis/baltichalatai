@@ -69,24 +69,34 @@ class SearchController extends AbstractController
             $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
                 ->findByUserName($name);
         }
+        // Search by city
+        else if ($name == '0' && $city != '0' && $specialty == '0') {
+            $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
+                ->findByCity($city);
+        }
+        // Search by name and city
         else if ($name != '0' && $city != '0' && $specialty == '0') {
             $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
                 ->findByUserNameAndCity($name, $city);
         }
+        // Search by city and specialty
+        else if ($name == '0' && $city != '0' && $specialty != '0') {
+            $specialists = $this->getDoctrine()->getRepository(
+                UserSpecialty::class)->findBySpecialtyAndCity($specialty, $city);
+        }
+        // Search by name and specialty
+        else if ($name != '0' && $city == '0' && $specialty != '0'){
+            $specialists = $this->getDoctrine()->getRepository(
+                UserSpecialty::class)->findBySpecialtyAndName($specialty, $name);
+        }
+        // Search by specialty
         else if ($name == '0' && $city == '0' && $specialty != '0'){
             $specialists = $this->getDoctrine()->getRepository(
                 UserSpecialty::class)->findBySpecialty($specialty);
         }
 
-
         foreach($specialists as $specialist){
-            //$id =  $specialist->getUserId();
-
-            //$userInfo =  $this->getDoctrine()->getRepository(
-              //  UserInfo::class)->findByUserId($id)[0];
-
-            //echo $userInfo->getName() . ' ' . $userInfo->getSurname();
-            echo $specialist->getName();
+            echo $specialist->getUserId()->getUserInfo()->getName();
         }
 
         return new Response(
