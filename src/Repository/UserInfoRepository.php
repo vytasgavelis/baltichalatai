@@ -61,7 +61,11 @@ class UserInfoRepository extends ServiceEntityRepository
 
     public function findByUserCity($value)
     {
+        echo 'search by cite';
         return $this->createQueryBuilder('u')
+            ->from('App\Entity\User', 'usr')
+//            ->leftJoin('usr.role', 'userId')
+//            ->andWhere('usr.role = 1')
             ->andWhere('u.city like :val')
             ->setParameter('val', '%' . $value . '%')
             ->orderBy('u.id', 'ASC')

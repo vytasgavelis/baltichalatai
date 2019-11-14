@@ -72,7 +72,7 @@ class SearchController extends AbstractController
         // Search by city
         else if ($name == '0' && $city != '0' && $specialty == '0') {
             $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
-                ->findByCity($city);
+                ->findByUserCity($city);
         }
         // Search by name and city
         else if ($name != '0' && $city != '0' && $specialty == '0') {
@@ -95,15 +95,18 @@ class SearchController extends AbstractController
                 UserSpecialty::class)->findBySpecialty($specialty);
         }
 
-        //foreach($specialists as $specialist){
-        //    echo $specialist->getUserId()->getUserInfo()->getName();
-        //    echo $specialist->getUserId()->getUserInfo()->getCity();
-        //}
+        foreach($specialists as $specialist){
+            echo $specialist->getUserId()->getUserInfo()->getName();
+        }
 
 
-        return $this->render('rezultatai.html.twig',[
-           'specialists' => $specialists
-        ]);
+//        return $this->render('rezultatai.html.twig',[
+//           'specialists' => $specialists
+//        ]);
+
+        return new Response(
+            '<html><body></body></html>'
+        );
 
     }
 
