@@ -49,6 +49,26 @@ class User
      */
     private $userInfo;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ClinicInfo", mappedBy="userId")
+     */
+    private $clinicInfo;
+
+    /**
+     * @return mixed
+     */
+    public function getClinicInfo()
+    {
+        return $this->clinicInfo;
+    }
+
+    /**
+     * @param mixed $clinicInfo
+     */
+    public function setClinicInfo($clinicInfo): void
+    {
+        $this->clinicInfo = $clinicInfo;
+    }
 
     public function __construct()
     {

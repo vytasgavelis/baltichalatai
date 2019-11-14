@@ -25,7 +25,7 @@ class SpecialistController extends AbstractController
     public function show($id)
     {
         $specialist = $this->getDoctrine()->getRepository(User::class)
-            ->findById($id);
+            ->findByIdAndRole($id, 1);
         if(sizeof($specialist) == 0){
             $specialist = null;
         }
