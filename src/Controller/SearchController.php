@@ -2,6 +2,7 @@
 
 
 namespace App\Controller;
+
 use App\Entity\Specialty;
 use App\Entity\User;
 use App\Entity\UserSpecialty;
@@ -24,13 +25,11 @@ class SearchController extends AbstractController
     public function index(Request $request)
     {
         // First select value
-        $choices = Array();
-        $choices += array('-' => '');
+        $choices = array();
 
-        $specialties = $this->getDoctrine()->getRepository(
-            Specialty::class)->findAll();
+        $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
 
-        foreach($specialties as $specialty) {
+        foreach ($specialties as $specialty) {
             $choices += array($specialty->getName() => $specialty->getId());
         }
 
@@ -45,69 +44,41 @@ class SearchController extends AbstractController
             ->getForm();
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $name = $this->validateInput($form->getData()['name']);
-            $city = $this->validateInput($form->getData()['city']);
-            $specialty = $this->validateInput($form->getData()['specialties']);
-
-            $url = '/search/' . $name . '/' . $city . '/' . $specialty;
-            return new RedirectResponse($url);
+            return $this->redirectToRoute('search', $form->getData());
         }
 
-        return $this->render('home/index.html.twig',['search_form' => $form->createView()]);
+        return $this->render('home/index.html.twig', ['search_form' => $form->createView()]);
     }
 
     /**
-     * @Route("/search/{name}/{city}/{specialty}", name="search")
+     * @Route("/search", name="search")
+     * @param Request $request
+     * @return Response
      */
-    public function results($name, $city, $specialty)
+    public function results(Request $request)
     {
-        $specialists = Array();
-        // Search by name
-        if ($name != '0' && $city == '0' && $specialty == '0') {
-            $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
-                ->findByUserName($name);
-        }
-        // Search by city
-        else if ($name == '0' && $city != '0' && $specialty == '0') {
-            $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
-                ->findByUserCity($city);
-        }
-        // Search by name and city
-        else if ($name != '0' && $city != '0' && $specialty == '0') {
-            $specialists = $this->getDoctrine()->getRepository(UserInfo::class)
-                ->findByUserNameAndCity($name, $city);
-        }
-        // Search by city and specialty
-        else if ($name == '0' && $city != '0' && $specialty != '0') {
-            $specialists = $this->getDoctrine()->getRepository(
-                UserSpecialty::class)->findBySpecialtyAndCity($specialty, $city);
-        }
-        // Search by name and specialty
-        else if ($name != '0' && $city == '0' && $specialty != '0'){
-            $specialists = $this->getDoctrine()->getRepository(
-                UserSpecialty::class)->findBySpecialtyAndName($specialty, $name);
-        }
-        // Search by specialty
-        else if ($name == '0' && $city == '0' && $specialty != '0'){
-            $specialists = $this->getDoctrine()->getRepository(
-                UserSpecialty::class)->findBySpecialty($specialty);
+        $specialists = $this->getDoctrine()->getRepository(User::class)->search(
+            $request->get('name'),
+            $request->get('city'),
+            $request->get('specialties')
+        );
+        $data = [];
+        foreach ($specialists as $specialist) {
+            $arr['name'] = $specialist->getUserInfo()->first()->getName();
+            $arr['city'] = $specialist->getUserInfo()->first()->getCity();
+            $arr['specialtyId'] = $specialist->getUserSpecialties()->first()->getId();
+            $data[] = $arr;
         }
 
-        foreach($specialists as $specialist){
-            echo $specialist->getUserId()->getUserInfo()->getName();
-        }
-
-
-//        return $this->render('rezultatai.html.twig',[
-//           'specialists' => $specialists
-//        ]);
+        echo json_encode($data);
+        /*return $this->render('rezultatai.html.twig',[
+           'specialists' => $specialists
+        ]);*/
 
         return new Response(
             '<html><body></body></html>'
         );
-
     }
 
     public function validateInput($input)
