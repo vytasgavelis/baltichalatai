@@ -1,0 +1,46 @@
+{% block doctor_profile %}
+	<div class="container-fluid bc-doctor-container">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="panel text-center">
+					<div class="user-heading">
+						<a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
+						<h1>Vardas Pavardė</h1>
+						<p>XXX Specialistas</p>
+						<p>XXX Poliklinika</p>
+						<p>1997-05-01</p>
+						<p>+370XXXXXXXX</p>
+					</div>
+					<button class="btn btn-margin" onclick="location.href='/doctor/edit'">Redaguoti profilį</button>
+				</div>
+			</div>
+			<div class="col-sm-8 bc-patient-column-8">
+				<div class="card mt-3 tab-card">
+					<div class="card-header tab-card-header bc-doctor-tab-header">
+						<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+							<li class="nav-item patient-tab">
+								<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" selected="true">Šiandien</a>
+							</li>
+							<li class="nav-item patient-tab">
+								<a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">Kalendorius</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+							<h5 class="card-title">Tab Card One</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						</div>
+						<div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+							<h5 class="card-title">Tab Card Two</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

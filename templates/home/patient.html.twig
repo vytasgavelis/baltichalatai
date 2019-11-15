@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}pacientas{% endblock %}
+
+{% block body %}
+    <body class="bc-index">
+        {% include 'components/navbar.html.twig' %}
+        {% if edit == true %}
+        {% include 'components/edit_patient_profile.html.twig' %}
+        {% else %}
+        {% include 'components/patient_profile.html.twig' %}
+        {% endif %}
+    </body>
+{% endblock %}

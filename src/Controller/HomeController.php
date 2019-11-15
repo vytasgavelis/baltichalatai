@@ -38,6 +38,61 @@ class HomeController extends AbstractController
         ]);
     }
     /**
+     * @Route("/doctor", name="doctor")
+     */
+    public function doctor()
+    {
+        return $this->render('home/doctor.html.twig', [
+            'someVariable' => 'NFQ Akademija',
+            'is_logged_in' => false,
+            'edit' => false,
+        ]);
+    }
+    /**
+     * @Route("/doctor/edit", name="doctor_edit")
+     */
+    public function doctor_edit()
+    {
+        return $this->render('home/doctor.html.twig', [
+            'someVariable' => 'NFQ Akademija',
+            'is_logged_in' => false,
+            'edit' => true,
+        ]);
+    }
+    /**
+     * @Route("/patient", name="patient")
+     */
+    public function patient()
+    {
+        return $this->render('home/patient.html.twig', [
+            'someVariable' => 'NFQ Akademija',
+            'is_logged_in' => false,
+            'edit' => false,
+        ]);
+    }
+    /**
+     * @Route("/patient/edit", name="patient_edit")
+     */
+    public function patient_edit()
+    {
+        return $this->render('home/patient.html.twig', [
+            'someVariable' => 'NFQ Akademija',
+            'is_logged_in' => false,
+            'edit' => true,
+        ]);
+    }
+    /**
+     * @Route("/clinic", name="clinic")
+     */
+    public function clinic()
+    {
+        return $this->render('home/clinic.html.twig', [
+            'someVariable' => 'NFQ Akademija',
+            'is_logged_in' => false,
+        ]);
+    }
+    
+    /**
      * @Route("/results", name="results")
      */
     public function results()
