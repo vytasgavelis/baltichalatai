@@ -20,12 +20,14 @@ class ClinicController extends AbstractController
 
     /**
      * @Route("/clinic/{id}", name="clinic_show")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show($id)
     {
         $clinic = $this->getDoctrine()->getRepository(User::class)
             ->findByIdAndRole($id, 2);
-        if(sizeof($clinic) == 0){
+        if (sizeof($clinic) == 0) {
             $clinic = null;
         }
         return $this->render('clinic/index.html.twig', [

@@ -16,13 +16,13 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $specialties = $this->getDoctrine()->getRepository(
-            Specialty::class)->findAll();
+        $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
         return $this->render('home/index.html.twig', [
             'specialties' => $specialties,
             'is_logged_in' => false,
         ]);
     }
+
     /**
      * @Route("/register", name="register")
      */

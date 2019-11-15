@@ -57,6 +57,4 @@ class UserSpecialty
 
         return $this;
     }
-
-
 }

@@ -57,7 +57,6 @@ class UserSpecialtyRepository extends ServiceEntityRepository
             ->setParameter('specialty', $specialty)
             ->getQuery()
             ->getResult();
-
     }
 
     // /**
@@ -74,7 +73,6 @@ class UserSpecialtyRepository extends ServiceEntityRepository
             ->setParameter('specialty', $specialty)
             ->getQuery()
             ->getResult();
-
     }
 
     /*

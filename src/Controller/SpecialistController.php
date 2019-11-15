@@ -21,12 +21,14 @@ class SpecialistController extends AbstractController
 
     /**
      * @Route("/specialist/{id}", name="specialist_show")
+     * @param $id
+     * @return Response
      */
     public function show($id)
     {
         $specialist = $this->getDoctrine()->getRepository(User::class)
             ->findByIdAndRole($id, 1);
-        if(sizeof($specialist) == 0){
+        if (sizeof($specialist) == 0) {
             $specialist = null;
         }
         return $this->render('specialist/index.html.twig', [

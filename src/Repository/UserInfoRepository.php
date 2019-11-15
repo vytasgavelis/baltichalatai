@@ -47,7 +47,8 @@ class UserInfoRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findByUserNameAndCity($name, $city) {
+    public function findByUserNameAndCity($name, $city)
+    {
         return $this->createQueryBuilder('u')
             ->andWhere('u.name like :name and u.city like :city')
             ->setParameter('name', '%' . $name . '%')

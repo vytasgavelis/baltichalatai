@@ -89,6 +89,4 @@ class SearchController extends AbstractController
             return $input;
         }
     }
-
-
 }

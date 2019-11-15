@@ -20,12 +20,14 @@ class PatientController extends AbstractController
 
     /**
      * @Route("/patient/{id}", name="patient_show")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show($id)
     {
         $patient = $this->getDoctrine()->getRepository(User::class)
             ->findByIdAndRole($id, 3);
-        if(sizeof($patient) == 0){
+        if (sizeof($patient) == 0) {
             $patient = null;
         }
         return $this->render('patient/index.html.twig', [
