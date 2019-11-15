@@ -40,12 +40,12 @@ class User
     private $userVisits;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId", orphanRemoval=true)
      */
     private $sendingToDoctors;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\UserInfo", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInfo", mappedBy="userId")
      */
     private $userInfo;
 
@@ -126,7 +126,7 @@ class User
         return $this;
     }
 
-    public function getUserInfo(): ?UserInfo
+    public function getUserInfo(): Collection
     {
         return $this->userInfo;
     }

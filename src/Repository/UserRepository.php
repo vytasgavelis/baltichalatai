@@ -35,6 +35,19 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
 
+    public function search(string $name = null, string $city = null, int $specialty = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u, us, spec')
+            ->join('u.userInfo', 'us')
+            ->join('u.userSpecialties', 'spec')
+            ->where('us.name like :name')
+            ->andWhere('us.city like :city')
+            ->andWhere('spec.id like :specId')
+            ->setParameters(['name' => '%'.$name.'%', 'city' => '%'.$city.'%', 'specId' => '%'.$specialty.'%'])
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?User

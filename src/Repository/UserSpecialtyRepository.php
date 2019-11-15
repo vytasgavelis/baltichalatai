@@ -23,6 +23,8 @@ class UserSpecialtyRepository extends ServiceEntityRepository
     //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
     //  */
 
+
+
     public function findBySpecialty($value)
     {
         return $this->createQueryBuilder('u')
