@@ -25,7 +25,7 @@ class User
     private $role;
     
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserSpecialty", mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserSpecialty", mappedBy="userId")
      */
     private $userSpecialties;
 
@@ -43,6 +43,32 @@ class User
      * @ORM\OneToMany(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId", orphanRemoval=true)
      */
     private $sendingToDoctors;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserInfo", mappedBy="userId")
+     */
+    private $userInfo;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ClinicInfo", mappedBy="userId")
+     */
+    private $clinicInfo;
+
+    /**
+     * @return mixed
+     */
+    public function getClinicInfo()
+    {
+        return $this->clinicInfo;
+    }
+
+    /**
+     * @param mixed $clinicInfo
+     */
+    public function setClinicInfo($clinicInfo): void
+    {
+        $this->clinicInfo = $clinicInfo;
+    }
 
     public function __construct()
     {
@@ -102,7 +128,7 @@ class User
 
     public function getUserInfo(): ?UserInfo
     {
-        return $this->userInfoId;
+        return $this->userInfo;
     }
 
     /**

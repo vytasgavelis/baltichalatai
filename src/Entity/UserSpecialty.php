@@ -38,6 +38,7 @@ class UserSpecialty
         return $this->userId;
     }
 
+
     public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
@@ -56,4 +57,6 @@ class UserSpecialty
 
         return $this;
     }
+
+
 }
