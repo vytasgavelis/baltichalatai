@@ -4,11 +4,11 @@
 
 {% block body %}
     <body class="bc-index">
-        {% include 'components/navbar.html.twig' %}
+        {% include 'components/layout/navbar.html.twig' %}
         {% if edit == true %}
-            {% include 'components/edit_doctor_profile.html.twig' %}
+            {% include 'components/page/doctor/edit.html.twig' %}
         {% else %}
-            {% include 'components/doctor_profile.html.twig' %}
+            {% include 'components/page/doctor/entry.html.twig' %}
         {% endif %}
     </body>
 {% endblock %}

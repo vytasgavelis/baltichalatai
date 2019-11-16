@@ -89,6 +89,18 @@ class HomeController extends AbstractController
         return $this->render('home/clinic.html.twig', [
             'someVariable' => 'NFQ Akademija',
             'is_logged_in' => false,
+            'edit' => false,
+        ]);
+    }
+    /**
+     * @Route("/clinic/edit", name="clinic_edit")
+     */
+    public function clinic_edit()
+    {
+        return $this->render('home/clinic.html.twig', [
+            'someVariable' => 'NFQ Akademija',
+            'is_logged_in' => false,
+            'edit' => true,
         ]);
     }
     
