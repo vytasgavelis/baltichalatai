@@ -1,14 +1,12 @@
-// customize some Bootstrap variables
-$primary: darken(#428bca, 20%);
-
-// the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
+// CSS for Background
 .bc-index {
   background: url("/build/BCbackground.jpg") no-repeat center center fixed ;
   background-size: cover; 
 }
 
+// Navigation bar
 .bc-logo {
   width: 150px;
   height: 150px;
@@ -16,7 +14,7 @@ $primary: darken(#428bca, 20%);
   margin-top: 30px;
 }
 
-.nav-item {
+.bc-item {
   list-style: none;
   position:absolute;
   top:0;
@@ -25,7 +23,7 @@ $primary: darken(#428bca, 20%);
   margin-right: 30px;
 }
 
-.nav-link {
+.bc-link {
   background: none;
   border: 0;
   box-sizing: border-box;
@@ -39,11 +37,11 @@ $primary: darken(#428bca, 20%);
   float: right;
 }
 
-.nav-spec {
+.bc-spec {
   padding: 16px 40px;
 }
 
-.nav-link::before, .nav-link::after {
+.bc-link::before, .bc-link::after {
   box-sizing: inherit;
   content: '';
   position: absolute;
@@ -51,54 +49,53 @@ $primary: darken(#428bca, 20%);
   height: 100%;
 }
 
-.nav-link {
+.bc-link {
   transition: color 0.25s;
 }
 
-.nav-link::before, .nav-link::after {
+.bc-link::before, .bc-link::after {
   border: 3px solid transparent;
   width: 0;
   height: 0;
 }
 
-.nav-link::before {
+.bc-link::before {
   top: 0;
   left: 0;
 }
 
-.nav-link::after {
+.bc-link::after {
   bottom: 0;
   right: 0;
 }
 
-.nav-link:hover {
+.bc-link:hover {
   color: #5185fa;
 }
 
-.nav-link:hover::before, .nav-link:hover::after {
+.bc-link:hover::before, .bc-link:hover::after {
   width: 100%;
   height: 100%;
 }
 
-.nav-link:hover::before {
+.bc-link:hover::before {
   border-top-color: #5185fa;
   border-right-color: #5185fa;
   transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
 }
 
-.nav-link:hover::after {
+.bc-link:hover::after {
   border-bottom-color: #5185fa;
   border-left-color: #5185fa;
   transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
 }
 
 
+// Search-bar (for index page)
 .search {
   width: 600px;
   display: flex;
-  position:fixed;
   top: 50%;
-  left: -20%;
 }
 
 .search-term {
@@ -133,8 +130,228 @@ $primary: darken(#428bca, 20%);
   transform: translate(-50%, -50%);
 }
 
+
+// Results table display
+.grid {
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  align-items: stretch;
+}
+
+.limiter {
+  grid-column: 70%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-table {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 33px 30px;
+}
+
+.wrap-table {
+  width: 960px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+.table {
+  width: 100%;
+  display: table;
+  margin: 0;
+}
+
+.results-row {
+  display: table-row;
+  background: #fff;
+}
+
+.results-row.header {
+  color: #ffffff;
+  background: #5185fa;
+}
+
+.cell {
+  display: table-cell;
+}
+
+.results-row .cell {
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.2;
+  font-weight: unset !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.results-row.header .cell {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset !important;
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
+.results-row .cell:nth-child(1) {
+  width: 360px;
+  padding-left: 40px;
+}
+
+.results-row .cell:nth-child(2) {
+  width: 160px;
+}
+
+.results-row .cell:nth-child(3) {
+  width: 250px;
+}
+
+.results-row .cell:nth-child(4) {
+  width: 190px;
+}
+
+.table, .results-row {
+  width: 100% !important;
+}
+
+.results-row:hover {
+  background-color: #e1eaff;
+  cursor: pointer;
+}
+
+
+// Pagination
+.page-forward {
+  grid-column: 15%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.page-back {
+  grid-column: 15%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+// Registration
+.registration-form {
+  background: white;
+  width: 400px;
+  position: absolute;
+  color: black;
+  padding: 30px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+  border: 3px solid #196cba;
+  border-radius: 5px;  
+}
+
+.btn {
+  margin-top: 10px;
+  background: white;
+  color: black;
+  border: 1px solid #196cba;
+  border-radius: 5px;  
+}
+.btn:hover {
+  background: #196cba;
+  border: 1px solid #196cba;
+  color: white;
+}
+
+
+// Profiles
+.profile-block {
+  width: 30%;
+  left: 20;
+  border: 3px solid #196cba;
+  margin-left: 30px;
+  margin-top: 60px;
+  background: white;
+}
+
+.user-heading > a:nth-child(1) > img:nth-child(1) {
+  width: 150px;
+  margin-top: 20px;
+ }
+
+.btn-margin {
+  margin-bottom: 20px;
+}
+
+// Patient Profile
+.bc-patient-container {
+  width: 80%;
+  border: 3px solid #5185fa;
+  background: rgba(255, 255, 255, 0.9);
+  margin-top: 50px;
+  max-width: 1200px;
+}
+
+.bc-patient-column-8 {
+  padding-top: 25px;
+  padding-right: 40px;
+  padding-bottom: 25px;
+}
+
+.bc-patient-tab-header {
+  background: #5185fa;
+}
+
+.bc-patient-container .nav-tabs > li.active > a {
+  color: white;
+  font-size: 16px;
+}
+.bc-patient-container .nav-tabs > li > a {
+  color: white;
+}
+
+.bc-patient-container .tab-content > .active {
+  min-height: 240px;
+}
+
+// Tables for doctor, clinic and patient
+.table > tbody > tr > td > button {
+  background: #74b3ee;
+  border: none;
+  padding: 5px 6px;
+ }
+
+ .table > tbody > tr > td > button:hover {
+  background: #74b3ee;
+  border: none;
+ }
+
+ .table > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(4) {
+  width: 180px;
+ }
+ 
+#one, #two, #three {
+  overflow: auto;
+ }
+
+// Edit profile
+.edit-profile {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.edit-profile > input {
+  margin-bottom: 10px;
+}
+
+
+// Media queries
 @media screen and (max-width: 850px) {
-  .nav-link {
+  .bc-link {
     background: white;
   }
   .search-term {
@@ -145,3 +362,79 @@ $primary: darken(#428bca, 20%);
     width: 100%;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .table {
+    display: block;
+  }
+
+  .results-row {
+    display: block;
+  }
+
+  .results-row.header {
+    padding: 0;
+    height: 0px;
+  }
+
+  .results-row.header .cell {
+    display: none;
+  }
+
+  .results-row .cell:before {
+    font-family: Poppins-Bold;
+    font-size: 12px;
+    color: #808080;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-weight: unset !important;
+    margin-bottom: 13px;
+    content: attr(data-title);
+    min-width: 98px;
+    display: block;
+  }
+  .cell {
+    display: block;
+  }
+  .page-back {
+    margin-top: 300px;
+  }
+  .page-forward {
+    margin-top: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .results-row {
+    border-bottom: 1px solid #f2f2f2;
+    padding-bottom: 18px;
+    padding-top: 30px;
+    padding-right: 15px;
+    margin: 0;
+  }
+
+  .results-row .cell {
+    border: none;
+    padding-left: 30px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .results-row .cell:nth-child(1) {
+    padding-left: 30px;
+  }
+
+  .results-row .cell {
+    font-family: Poppins-Regular;
+    font-size: 18px;
+    color: #555555;
+    line-height: 1.2;
+    font-weight: unset !important;
+  }
+
+  .table, .results-row, .cell {
+    width: 100% !important;
+  }
+}
+
+

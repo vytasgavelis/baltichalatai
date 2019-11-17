@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}daktaras{% endblock %}
+
+{% block body %}
+    <body class="bc-index">
+        {% include 'components/layout/navbar.html.twig' %}
+        {% if edit == true %}
+            {% include 'components/page/doctor/edit.html.twig' %}
+        {% else %}
+            {% include 'components/page/doctor/entry.html.twig' %}
+        {% endif %}
+    </body>
+{% endblock %}

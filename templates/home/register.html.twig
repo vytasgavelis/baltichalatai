@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ someVariable }}{% endblock %}
+{% block title %}registracija{% endblock %}
 
 {% block body %}
-    <body>
-        {% include 'components/navbar.html.twig' %}
-    </body>
+	<body class="bc-index">
+		{% include 'components/layout/navbar.html.twig' %}
+		{% include 'components/layout/registration.html.twig' %}
+	</body>
 {% endblock %}

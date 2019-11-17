@@ -13,7 +13,14 @@ require('@fortawesome/fontawesome-free/js/all.js');
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 const $ = require('jquery');
 require('bootstrap');
-
+require('bootstrap-datepicker');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
+    $('.datepicker').datepicker();
+    document.getElementById("defaultOpen").click();
 });
+
+
+$('.datepicker').datepicker({
+    format: 'yyyy/mm/dd',
+  })
