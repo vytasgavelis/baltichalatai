@@ -1,24 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SpecialistController!{% endblock %}
+{% block title %}daktaras{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    {% if specialist.getUserInfo().getName() is not defined or specialist.getUserInfo().getName() is null %}
-        no specialist found
-    {% else %}
-        Specialist {{ specialist.getUserInfo().getName() }}
-        Description {{ specialist.getUserInfo().getDescription() }}
-        City {{ specialist.getUserInfo().getCity() }}
-        Specialties
-        {%  for specialty in specialist.getUserSpecialties() %}
-            <li>{{ specialty.getSpecialtyId().getName() }}</li>
-        {% endfor %}
-    {% endif %}
-</div>
+        <body class="bc-index">
+        {% include 'components/layout/navbar.html.twig' %}
+{#        {% if edit == true %}#}
+{#                {% include 'components/page/doctor/edit.html.twig' %}#}
+{#        {% else %}#}
+                {% include 'specialist/information.html.twig' %}
+{#        {% endif %}#}
+        </body>
 {% endblock %}

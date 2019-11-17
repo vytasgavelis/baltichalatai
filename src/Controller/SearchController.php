@@ -65,6 +65,7 @@ class SearchController extends AbstractController
         );
         $data = [];
         foreach ($specialists as $specialist) {
+            $arr['id'] = $specialist->getId();
             $arr['name'] = $specialist->getUserInfo()->first()->getName();
             $arr['surname'] = $specialist->getUserInfo()->first()->getSurname();
             $arr['city'] = $specialist->getUserInfo()->first()->getCity();

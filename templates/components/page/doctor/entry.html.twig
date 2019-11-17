@@ -5,8 +5,10 @@
 				<div class="panel text-center">
 					<div class="user-heading">
 						<a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
-						<h2>Vardas Pavardė</h2>
-						<p>XXX Specialistas</p>
+						<h2>{{specialist.getUserInfo().first().getName()}} {{specialist.getUserInfo().first().getSurname()}}</h2>
+						{%  for specialty in specialist.getUserSpecialties() %}
+							<li>{{ specialty.getSpecialtyId().getName() }}</li>
+						{% endfor %}
 						<p>XXX Poliklinika</p>
 					</div>
 					<button class="btn btn-margin" onclick="location.href='/doctor/edit'">Redaguoti profilį</button>
