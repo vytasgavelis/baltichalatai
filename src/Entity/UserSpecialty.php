@@ -17,42 +17,43 @@ class UserSpecialty
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $userId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Specialties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Specialty")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $specialty_id;
+    private $specialtyId;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?Users
+    public function getUserId(): ?User
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?Users $user_id): self
+
+    public function setUserId(?User $userId): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
 
-    public function getSpecialtyId(): ?Specialties
+    public function getSpecialtyId(): ?Specialty
     {
-        return $this->specialty_id;
+        return $this->specialtyId;
     }
 
-    public function setSpecialtyId(?Specialties $specialty_id): self
+    public function setSpecialtyId(?Specialty $specialtyId): self
     {
-        $this->specialty_id = $specialty_id;
+        $this->specialtyId = $specialtyId;
 
         return $this;
     }

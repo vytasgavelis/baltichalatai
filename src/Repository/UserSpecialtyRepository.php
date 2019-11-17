@@ -22,19 +22,58 @@ class UserSpecialtyRepository extends ServiceEntityRepository
     // /**
     //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+
+
+    public function findBySpecialty($value)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+        /*return $this->createQueryBuilder('u')
+            ->andWhere('u.specialty_id_id = :val')
             ->setParameter('val', $value)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
-        ;
+        ;*/
     }
-    */
+    // /**
+    //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
+    //  */
+    public function findBySpecialtyAndCity($specialty, $city)
+    {
+        return $this->createQueryBuilder('u')
+            ->from('App\Entity\UserInfo', 'info')
+            ->leftJoin('info.userId', 'userId')
+            ->andWhere('u.specialtyId = :specialty')
+            ->andWhere('info.city = :city')
+            ->setParameter('city', $city)
+            ->setParameter('specialty', $specialty)
+            ->getQuery()
+            ->getResult();
+    }
+
+    // /**
+    //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
+    //  */
+    public function findBySpecialtyAndName($specialty, $name)
+    {
+        return $this->createQueryBuilder('u')
+            ->from('App\Entity\UserInfo', 'info')
+            ->leftJoin('info.userId', 'userId')
+            ->andWhere('u.specialtyId = :specialty')
+            ->andWhere('info.name like :name')
+            ->setParameter('name', $name)
+            ->setParameter('specialty', $specialty)
+            ->getQuery()
+            ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?UserSpecialty

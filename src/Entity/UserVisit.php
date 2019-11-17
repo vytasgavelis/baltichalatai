@@ -17,19 +17,19 @@ class UserVisit
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users", inversedBy="userVisits")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userVisits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $clientId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users", inversedBy="userVisits")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userVisits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $specialistId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users", inversedBy="userVisits")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userVisits")
      * @ORM\JoinColumn(nullable=false)
      */
     private $clinicId;
@@ -93,36 +93,36 @@ class UserVisit
         return $this->id;
     }
 
-    public function getClientId(): ?Users
+    public function getClientId(): ?User
     {
         return $this->clientId;
     }
 
-    public function setClientId(?Users $clientId): self
+    public function setClientId(?User $clientId): self
     {
         $this->clientId = $clientId;
 
         return $this;
     }
 
-    public function getSpecialistId(): ?Users
+    public function getSpecialistId(): ?User
     {
         return $this->specialistId;
     }
 
-    public function setSpecialistId(?Users $specialistId): self
+    public function setSpecialistId(?User $specialistId): self
     {
         $this->specialistId = $specialistId;
 
         return $this;
     }
 
-    public function getClinicId(): ?Users
+    public function getClinicId(): ?User
     {
         return $this->clinicId;
     }
 
-    public function setClinicId(?Users $clinicId): self
+    public function setClinicId(?User $clinicId): self
     {
         $this->clinicId = $clinicId;
 

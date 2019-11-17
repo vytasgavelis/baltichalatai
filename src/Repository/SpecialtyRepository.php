@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Specialties;
+use App\Entity\Specialty;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Specialties|null find($id, $lockMode = null, $lockVersion = null)
- * @method Specialties|null findOneBy(array $criteria, array $orderBy = null)
- * @method Specialties[]    findAll()
- * @method Specialties[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Specialty|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Specialty|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Specialty[]    findAll()
+ * @method Specialty[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SpecialtiesRepository extends ServiceEntityRepository
+class SpecialtyRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Specialties::class);
+        parent::__construct($registry, Specialty::class);
     }
 
     // /**
-    //  * @return Specialties[] Returns an array of Specialties objects
+    //  * @return Specialty[] Returns an array of Specialty objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class SpecialtiesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Specialties
+    public function findOneBySomeField($value): ?Specialty
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

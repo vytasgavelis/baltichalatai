@@ -22,11 +22,11 @@ class UserInfoRepository extends ServiceEntityRepository
     // /**
     //  * @return UserInfo[] Returns an array of UserInfo objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByUserId($value): ?UserInfo
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.userId = :val')
             ->setParameter('val', $value)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
@@ -34,7 +34,47 @@ class UserInfoRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+
+    public function findByUserName($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.name like :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByUserNameAndCity($name, $city)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.name like :name and u.city like :city')
+            ->setParameter('name', '%' . $name . '%')
+            ->setParameter('city', '%' . $city . '%')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByUserCity($value)
+    {
+        echo 'search by cite';
+        return $this->createQueryBuilder('u')
+            ->from('App\Entity\User', 'usr')
+//            ->leftJoin('usr.role', 'userId')
+//            ->andWhere('usr.role = 1')
+            ->andWhere('u.city like :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     /*
     public function findOneBySomeField($value): ?UserInfo

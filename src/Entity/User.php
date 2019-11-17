@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\UserInfo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class Users
+class User
 {
     /**
      * @ORM\Id()
@@ -22,9 +23,9 @@ class Users
      * @ORM\Column(type="integer")
      */
     private $role;
-
+    
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserSpecialty", mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserSpecialty", mappedBy="userId")
      */
     private $userSpecialties;
 
@@ -39,9 +40,35 @@ class Users
     private $userVisits;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId", orphanRemoval=true)
      */
     private $sendingToDoctors;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInfo", mappedBy="userId")
+     */
+    private $userInfo;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ClinicInfo", mappedBy="userId")
+     */
+    private $clinicInfo;
+
+    /**
+     * @return mixed
+     */
+    public function getClinicInfo()
+    {
+        return $this->clinicInfo;
+    }
+
+    /**
+     * @param mixed $clinicInfo
+     */
+    public function setClinicInfo($clinicInfo): void
+    {
+        $this->clinicInfo = $clinicInfo;
+    }
 
     public function __construct()
     {
@@ -97,6 +124,11 @@ class Users
         }
 
         return $this;
+    }
+
+    public function getUserInfo(): Collection
+    {
+        return $this->userInfo;
     }
 
     /**
