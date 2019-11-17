@@ -55,9 +55,9 @@ class HomeController extends AbstractController
         ]);
     }
     /**
-     * @Route("/doctor/edit", name="doctor_edit")
+     * @Route("/doctor/edit", name="doctorEdit")
      */
-    public function doctor_edit()
+    public function doctorEdit()
     {
         return $this->render('home/doctor.html.twig', [
             'someVariable' => 'NFQ Akademija',
@@ -77,9 +77,9 @@ class HomeController extends AbstractController
         ]);
     }
     /**
-     * @Route("/patient/edit", name="patient_edit")
+     * @Route("/patient/edit", name="patientEdit")
      */
-    public function patient_edit()
+    public function patientEdit()
     {
         return $this->render('home/patient.html.twig', [
             'someVariable' => 'NFQ Akademija',
@@ -99,9 +99,9 @@ class HomeController extends AbstractController
         ]);
     }
     /**
-     * @Route("/clinic/edit", name="clinic_edit")
+     * @Route("/clinic/edit", name="clinicEdit")
      */
-    public function clinic_edit()
+    public function clinicEdit()
     {
         return $this->render('home/clinic.html.twig', [
             'someVariable' => 'NFQ Akademija',
@@ -116,9 +116,9 @@ class HomeController extends AbstractController
     public function results()
     {
         return $this->render('home/results.html.twig', [
-            'search_results' => [ 
+            'search_results' => [
                 'specialist' => [
-                    'Šeimos gydytojas', 
+                    'Šeimos gydytojas',
                     'Akių lygių spec',
                     'Traumatologas',
                     'Odontologas'
@@ -130,7 +130,7 @@ class HomeController extends AbstractController
                 ],
                 'city' => ['Kaunas', 'Vilnius', 'Klaipėda'],
                 'doctor' => ['Daktaras', 'Daktarė', 'Seselė']
-        ],
+            ],
             'is_logged_in' => false,
         ]);
     }

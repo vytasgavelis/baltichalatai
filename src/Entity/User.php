@@ -55,6 +55,11 @@ class User
     private $clinicInfo;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClinicSpecialists", mappedBy="clinicId")
+     */
+    private $clinicSpecialists;
+
+    /**
      * @return mixed
      */
     public function getClinicInfo()
@@ -76,6 +81,7 @@ class User
         $this->userLanguages = new ArrayCollection();
         $this->userVisits = new ArrayCollection();
         $this->sendingToDoctors = new ArrayCollection();
+        $this->clinicSpecialists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +224,37 @@ class User
             // set the owning side to null (unless already changed)
             if ($sendingToDoctor->getClientId() === $this) {
                 $sendingToDoctor->setClientId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClinicSpecialists[]
+     */
+    public function getClinicSpecialists(): Collection
+    {
+        return $this->clinicSpecialists;
+    }
+
+    public function addClinicSpecialist(ClinicSpecialists $clinicSpecialist): self
+    {
+        if (!$this->clinicSpecialists->contains($clinicSpecialist)) {
+            $this->clinicSpecialists[] = $clinicSpecialist;
+            $clinicSpecialist->setClinicId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClinicSpecialist(ClinicSpecialists $clinicSpecialist): self
+    {
+        if ($this->clinicSpecialists->contains($clinicSpecialist)) {
+            $this->clinicSpecialists->removeElement($clinicSpecialist);
+            // set the owning side to null (unless already changed)
+            if ($clinicSpecialist->getClinicId() === $this) {
+                $clinicSpecialist->setClinicId(null);
             }
         }
 

@@ -88,6 +88,11 @@ class UserVisit
      */
     private $recipeId;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isCompleted;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +154,18 @@ class UserVisit
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getIsCompleted(): ?bool
+    {
+        return $this->isCompleted;
+    }
+
+    public function setIsCompleted(?bool $isCompleted): self
+    {
+        $this->isCompleted = $isCompleted;
 
         return $this;
     }
