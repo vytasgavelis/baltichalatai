@@ -1,0 +1,40 @@
+{% block clinic_profile %}
+    <div class="container-fluid bc-patient-container">
+        {% if clinic.getClinicInfo() is not defined or clinic.getClinicInfo() is  null %}
+            <h1>Nepavyko rasti įstaigos</h1>
+        {% else %}
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel text-center">
+                        <div class="user-heading">
+                            <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
+                            <h2>{{ clinic.getClinicInfo().getName() }}</h2>
+                            <p>{{ clinic.getClinicInfo().getPhoneNumber() }}</p>
+                            <p>{{ clinic.getClinicInfo().getAddress() }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 bc-patient-column-8">
+                    <div class="card mt-3 tab-card">
+                        <div class="card-header tab-card-header bc-patient-tab-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                <li class="nav-item patient-tab">
+                                    <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" selected="true">Gydytojų sąrašas</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+{#                                Create a dataTable with vardas, specialybė, darbo laikas I-V: 8:00-15:00  +++ add specialist button AND delete#}
+                                {%  for specialist in clinic.getClinicSpecialists() %}
+                                    <p><a href="/specialist/{{ specialist.getSpecialistId().getId() }}">{{ specialist.getSpecialistId().getUserInfo().first.getName() }} {{ specialist.getSpecialistId().getUserInfo().first.getSurname() }}</a></p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
