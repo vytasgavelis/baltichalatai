@@ -66,17 +66,18 @@ class SearchController extends AbstractController
         $data = [];
         foreach ($specialists as $specialist) {
             $arr['name'] = $specialist->getUserInfo()->first()->getName();
+            $arr['surname'] = $specialist->getUserInfo()->first()->getSurname();
             $arr['city'] = $specialist->getUserInfo()->first()->getCity();
-            $arr['specialtyId'] = $specialist->getUserSpecialties()->first()->getId();
+            $arr['specialty'] = $specialist->getUserSpecialties()->first()->getSpecialtyId()->getName();
             $data[] = $arr;
         }
 
-        echo json_encode($data);
+        //echo json_encode($data);
         /*return $this->render('rezultatai.html.twig',[
            'specialists' => $specialists
         ]);*/
 
-        return $this->render('home/results.html.twig');
+        return $this->render('home/results.html.twig', ['specialists' => $data]);
     }
 
     public function validateInput($input)
