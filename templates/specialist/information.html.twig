@@ -12,7 +12,11 @@
                         {%  for specialty in specialist.getUserSpecialties() %}
                             <li>{{ specialty.getSpecialtyId().getName() }}</li>
                         {% endfor %}
-                        <p>XXX Poliklinika</p>
+                        {% if specialist.getSpecialistClinics().first().getClinicId() is not defined or specialist.getSpecialistClinics().first().getClinicId() is null%}
+                            Specialistas įstaigai nepriklauso
+                        {% else %}
+                            <p>{{ specialist.getSpecialistClinics().first().getClinicId().getClinicInfo().getName() }}</p>
+                        {% endif %}
                         <p>{{ specialist.getUserInfo().first().getCity() }}</p>
                     </div>
                 </div>
