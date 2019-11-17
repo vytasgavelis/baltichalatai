@@ -31,8 +31,7 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->setParameter('role', $role)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function search(string $name = null, string $city = null, int $specialty = null)
@@ -49,15 +48,18 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?User
+    public function getUsers()
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->getEntityManager()->getRepository(User::class)->findBy(['role' => 1]);
     }
-    */
+
+    public function getSpecialists()
+    {
+        return $this->getEntityManager()->getRepository(User::class)->findBy(['role' => 2]);
+    }
+
+    public function getClinics()
+    {
+        return $this->getEntityManager()->getRepository(User::class)->findBy(['role' => 3]);
+    }
 }

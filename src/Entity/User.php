@@ -35,14 +35,14 @@ class User
     private $userLanguages;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserVisit", mappedBy="clientId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\UserVisit", mappedBy="clientId")
      */
     private $userVisits;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId", orphanRemoval=true)
-     */
-    private $sendingToDoctors;
+   /* /**
+     * @ORM\OneToOne(targetEntity="App\Entity\SendingToDoctor", mappedBy="clientId")
+
+    private $sendingToDoctors;*/
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserInfo", mappedBy="userId")
@@ -60,9 +60,9 @@ class User
     private $clinicSpecialists;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ClinicSpecialists", mappedBy="specialistId")
+     * @ORM\OneToMany(targetEntity="App\Entity\ClinicWorkHours", mappedBy="clinicId")
      */
-    private $specialistClinics;
+    private $clinicWorkHours;
 
     /**
      * @return mixed
@@ -87,6 +87,7 @@ class User
         $this->userVisits = new ArrayCollection();
         $this->sendingToDoctors = new ArrayCollection();
         $this->clinicSpecialists = new ArrayCollection();
+        $this->clinicWorkHours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,10 +205,10 @@ class User
         return $this;
     }
 
-    /**
-     * @return Collection|SendingToDoctor[]
-     */
-    public function getSendingToDoctors(): Collection
+    /*/**
+     * @return SendingToDoctor
+
+    public function getSendingToDoctors(): SendingToDoctor
     {
         return $this->sendingToDoctors;
     }
@@ -233,7 +234,7 @@ class User
         }
 
         return $this;
-    }
+    }*/
 
     /**
      * @return Collection|ClinicSpecialists[]
@@ -241,14 +242,6 @@ class User
     public function getClinicSpecialists(): Collection
     {
         return $this->clinicSpecialists;
-    }
-
-    /**
-     * @return Collection|ClinicSpecialists[]
-     */
-    public function getSpecialistClinics(): Collection
-    {
-        return $this->specialistClinics;
     }
 
     public function addClinicSpecialist(ClinicSpecialists $clinicSpecialist): self
@@ -273,4 +266,37 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return Collection|ClinicWorkHours[]
+     */
+    public function getClinicWorkHours(): Collection
+    {
+        return $this->clinicWorkHours;
+    }
+
+    public function addClinicWorkHour(ClinicWorkHours $clinicWorkHour): self
+    {
+        if (!$this->clinicWorkHours->contains($clinicWorkHour)) {
+            $this->clinicWorkHours[] = $clinicWorkHour;
+            $clinicWorkHour->setClinicId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClinicWorkHour(ClinicWorkHours $clinicWorkHour): self
+    {
+        if ($this->clinicWorkHours->contains($clinicWorkHour)) {
+            $this->clinicWorkHours->removeElement($clinicWorkHour);
+            // set the owning side to null (unless already changed)
+            if ($clinicWorkHour->getClinicId() === $this) {
+                $clinicWorkHour->setClinicId(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

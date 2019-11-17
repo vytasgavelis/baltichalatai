@@ -46,7 +46,7 @@ class UserVisit
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SendingToDoctor", inversedBy="userVisits")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $sendingToDoctorId;
 
@@ -84,7 +84,7 @@ class UserVisit
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="userVisits")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $recipeId;
 

@@ -27,7 +27,7 @@ class Recipe
     private $validFrom;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=255)
      */
     private $validDuration;
 
@@ -60,12 +60,12 @@ class Recipe
         return $this;
     }
 
-    public function getValidDuration(): ?\DateTimeInterface
+    public function getValidDuration(): string
     {
         return $this->validDuration;
     }
 
-    public function setValidDuration(\DateTimeInterface $validDuration): self
+    public function setValidDuration(string $validDuration): self
     {
         $this->validDuration = $validDuration;
 
