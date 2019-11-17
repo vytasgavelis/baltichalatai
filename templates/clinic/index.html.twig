@@ -1,18 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Klinika{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    {% if clinic.getClinicInfo().getName() is not defined or clinic.getClinicInfo().getName() is null %}
-        no clinic found
-    {% else %}
-        {{ clinic.getClinicInfo().getName() }}
-        {{ clinic.getClinicInfo().getAddress() }}
-    {% endif %}
-</div>
+        <body class="bc-index">
+        {% include 'components/layout/navbar.html.twig' %}
+        {#        {% if edit == true %}#}
+        {#                {% include 'components/page/doctor/edit.html.twig' %}#}
+        {#        {% else %}#}
+        {% include 'clinic/information.html.twig' %}
+        {#        {% endif %}#}
+        </body>
 {% endblock %}

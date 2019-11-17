@@ -60,6 +60,11 @@ class User
     private $clinicSpecialists;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClinicSpecialists", mappedBy="specialistId")
+     */
+    private $specialistClinics;
+
+    /**
      * @return mixed
      */
     public function getClinicInfo()
@@ -236,6 +241,14 @@ class User
     public function getClinicSpecialists(): Collection
     {
         return $this->clinicSpecialists;
+    }
+
+    /**
+     * @return Collection|ClinicSpecialists[]
+     */
+    public function getSpecialistClinics(): Collection
+    {
+        return $this->specialistClinics;
     }
 
     public function addClinicSpecialist(ClinicSpecialists $clinicSpecialist): self

@@ -1,5 +1,8 @@
 {% block doctor_profile %}
     <div class="container-fluid bc-patient-container">
+        {% if specialist.getUserInfo() is not defined or specialist.getUserInfo() is  null %}
+            <h1>Nepavyko rasti specialisto</h1>
+        {% else %}
         <div class="row">
             <div class="col-sm-4">
                 <div class="panel text-center">
@@ -9,7 +12,11 @@
                         {%  for specialty in specialist.getUserSpecialties() %}
                             <li>{{ specialty.getSpecialtyId().getName() }}</li>
                         {% endfor %}
-                        <p>XXX Poliklinika</p>
+                        {% if specialist.getSpecialistClinics().first().getClinicId() is not defined or specialist.getSpecialistClinics().first().getClinicId() is null%}
+                            Specialistas įstaigai nepriklauso
+                        {% else %}
+                            <p>{{ specialist.getSpecialistClinics().first().getClinicId().getClinicInfo().getName() }}</p>
+                        {% endif %}
                         <p>{{ specialist.getUserInfo().first().getCity() }}</p>
                     </div>
                 </div>
@@ -47,5 +54,6 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
