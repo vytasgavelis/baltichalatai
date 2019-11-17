@@ -40,7 +40,7 @@ class SearchController extends AbstractController
                 'choices' => $choices,
                 'required' => false,
             ])
-            ->add('search', SubmitType::class, ['label' => 'Search'])
+            ->add('search', SubmitType::class, ['label' => 'Ieskoti'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -76,9 +76,7 @@ class SearchController extends AbstractController
            'specialists' => $specialists
         ]);*/
 
-        return new Response(
-            '<html><body></body></html>'
-        );
+        return $this->render('home/results.html.twig');
     }
 
     public function validateInput($input)

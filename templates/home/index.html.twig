@@ -4,9 +4,25 @@
 
 {% block body %}
     <body class="bc-index">
-        {% include 'components/navbar.html.twig' %}
-        {% include 'components/search.html.twig' %}
-        {{ form(search_form) }}
+        {% include 'components/layout/navbar.html.twig' %}
+            <div class="wrap">
+                <div>
+                    {{ form_start(search_form) }}
+                    {{ form_widget(search_form.name, {'attr':
+                        {'class': 'search-term', 'placeholder': 'Specialisto vardas'}}
+                    ) }}
+                    {{ form_widget(search_form.city, {'attr':
+                        {'class': 'search-term', 'placeholder': 'Miestas'}}
+                    ) }}
+                    {{ form_widget(search_form.specialties, {'attr':
+                        {'class': 'form-control form-control-lg', 'placeholder': 'Specialistas'}}
+                    ) }}
+                    {{ form_widget(search_form.search, {'attr':
+                        {'class': 'search-button', 'label': 'Ieškoti'}}
+                    ) }}
+                    {{ form_end(search_form) }}
+                </div>
+            </div>
     </body>
 
 {% endblock %}
