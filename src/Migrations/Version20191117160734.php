@@ -37,5 +37,6 @@ final class Version20191117160734 extends AbstractMigration
         $this->addSql('ALTER TABLE sending_to_doctor CHANGE description description VARCHAR(2000) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE user_info CHANGE user_id_id user_id_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE user_visit CHANGE specialist_id_id specialist_id_id INT DEFAULT NULL, CHANGE clinic_id_id clinic_id_id INT DEFAULT NULL, CHANGE sending_to_doctor_id_id sending_to_doctor_id_id INT NOT NULL, CHANGE recipe_id_id recipe_id_id INT NOT NULL, CHANGE is_completed is_completed TINYINT(1) DEFAULT \'NULL\'');
+
     }
 }
