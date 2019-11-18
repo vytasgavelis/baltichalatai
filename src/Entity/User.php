@@ -65,6 +65,11 @@ class User
     private $clinicWorkHours;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClinicSpecialists", mappedBy="specialistId")
+     */
+    private $specialistClinics;
+
+    /**
      * @return mixed
      */
     public function getClinicInfo()
@@ -137,6 +142,16 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return Collection|ClinicSpecialists[]
+     */
+    public function getSpecialistClinics(): Collection
+    {
+        return $this->specialistClinics;
+    }
+
+
 
     public function getUserInfo(): Collection
     {
