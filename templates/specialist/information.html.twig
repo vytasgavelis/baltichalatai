@@ -46,9 +46,17 @@
                         </div>
                         <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                             {# Change to calendar view for future appointments #}
-                            <h5 class="card-title">Tab Card Two</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <h5 class="card-title">Grafikai</h5>
+                            <div class="row">
+                                {% for day in workHours%}
+                                    <div class="col-md-2">
+                                        day: {{ day.day }}
+                                        {% for hour in day.hours %}
+                                            <p> {{ hour }} </p>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>

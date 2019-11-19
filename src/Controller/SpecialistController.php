@@ -2,13 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\SpecialistWorkHours;
 use App\Entity\User;
+use App\Services\SpecialistService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SpecialistController extends AbstractController
 {
+    private $specialistService;
+
+    public function __construct(SpecialistService $specialistService)
+    {
+        $this->specialistService = $specialistService;
+    }
+
     /**
      * @Route("/specialist", name="specialist")
      */
@@ -27,12 +36,15 @@ class SpecialistController extends AbstractController
     public function show($id)
     {
         $specialist = $this->getDoctrine()->getRepository(User::class)
-            ->findByIdAndRole($id, 1);
+            ->findByIdAndRole($id, 2);
         if (sizeof($specialist) == 0) {
             $specialist = null;
         }
+        $workHours = $this->getDoctrine()->getRepository(SpecialistWorkHours::class)->getWorkHours($specialist[0]);
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
+            'workHours' => $this->specialistService->getSpecialistHoursFormatted($workHours)
         ]);
     }
+
 }
