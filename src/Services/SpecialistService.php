@@ -12,8 +12,11 @@ class SpecialistService
     {
         $dateArr = [];
         foreach ($workHours as $workHour) {
-            $period = new DatePeriod($workHour->getStartTime(), CarbonInterval::minutes(30),
-                $workHour->getEndTime()->modify('+1 second'));
+            $period = new DatePeriod(
+                $workHour->getStartTime(),
+                CarbonInterval::minutes(30),
+                $workHour->getEndTime()->modify('+1 second')
+            );
             $arr = [];
             foreach ($period as $d) {
                 $arr[] = $d->format('H:i:s');
@@ -23,5 +26,4 @@ class SpecialistService
 
         return $dateArr;
     }
-
 }
