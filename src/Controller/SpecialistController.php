@@ -41,10 +41,10 @@ class SpecialistController extends AbstractController
             $specialist = null;
         }
         $workHours = $this->getDoctrine()->getRepository(SpecialistWorkHours::class)->getWorkHours($specialist[0]);
+
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
-            'workHours' => $this->specialistService->getSpecialistHoursFormatted($workHours)
+            'workHours' => $this->specialistService->getSpecialistHoursFormatted($workHours),
         ]);
     }
-
 }

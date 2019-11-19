@@ -20,6 +20,7 @@ class SpecialistService
             }
             $dateArr[] = array('day' => $workHour->getDay(), 'hours' => $arr);
         }
+
         return $dateArr;
     }
 
