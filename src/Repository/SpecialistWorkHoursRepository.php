@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SpecialistWorkHours;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,32 +20,9 @@ class SpecialistWorkHoursRepository extends ServiceEntityRepository
         parent::__construct($registry, SpecialistWorkHours::class);
     }
 
-    // /**
-    //  * @return SpecialistWorkHours[] Returns an array of SpecialistWorkHours objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getWorkHours(User $user)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->getEntityManager()->getRepository(SpecialistWorkHours::class)
+            ->findBy(['specialistId' => $user->getId()]);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?SpecialistWorkHours
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
