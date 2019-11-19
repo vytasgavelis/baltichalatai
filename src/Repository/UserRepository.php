@@ -43,7 +43,7 @@ class UserRepository extends ServiceEntityRepository
             ->where('us.name like :name')
             ->andWhere('us.city like :city')
             ->andWhere('spec.id like :specId')
-            ->andWhere('u.role like %1%')
+            ->andWhere('u.role = 2')
             ->setParameters(['name' => '%'.$name.'%', 'city' => '%'.$city.'%', 'specId' => '%'.$specialty.'%'])
             ->getQuery()
             ->getResult();
