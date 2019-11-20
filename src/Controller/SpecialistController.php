@@ -38,9 +38,11 @@ class SpecialistController extends AbstractController
         $specialist = $this->getDoctrine()->getRepository(User::class)
             ->findByIdAndRole($id, 2);
         if (sizeof($specialist) == 0) {
-            $specialist = null;
+            throw $this->createNotFoundException();
+        } else {
+            $workHours = $this->getDoctrine()->getRepository(SpecialistWorkHours::class)
+                ->getWorkHours($specialist[0]);
         }
-        $workHours = $this->getDoctrine()->getRepository(SpecialistWorkHours::class)->getWorkHours($specialist[0]);
 
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
