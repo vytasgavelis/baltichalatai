@@ -20,9 +20,18 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Exception;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
+
     public function load(ObjectManager $manager)
     {
         $count = 100;
@@ -72,6 +81,9 @@ class AppFixtures extends Fixture
             } else {
                 $user->setRole(3);
             }
+            $user->setPassword($this->encoder->encodePassword($user, 'testas'));
+            $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+            $user->setEmail("user$i@test.com");
             $manager->persist($user);
         }
         $manager->flush();
@@ -81,7 +93,6 @@ class AppFixtures extends Fixture
     {
         $user = $manager->getRepository(User::class)->findAll();
         foreach ($user as $usr) {
-            //var_dump($usr->getRole());
             if ($usr->getRole() == 1 || $usr->getRole() == 2) {
                 $userInfo = new UserInfo();
                 $name = $this->getNames();
@@ -90,6 +101,7 @@ class AppFixtures extends Fixture
                 $userInfo->setSurname($surname);
                 $userInfo->setPhoneNumber($this->getPhoneNumber());
                 $userInfo->setPersonalEmail($this->getEmail($name, $surname));
+
                 $date = '19' . mt_rand(30, 90) . '-' . mt_rand(1, 12) . '-' . mt_rand(1, 28);
                 try {
                     $userInfo->setDateOfBirth(new DateTime($date));
