@@ -24,26 +24,6 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/register", name="register")
-     */
-    public function register()
-    {
-        return $this->render('home/register.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-        ]);
-    }
-    /**
-     * @Route("/login", name="login")
-     */
-    public function login()
-    {
-        return $this->render('home/login.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-        ]);
-    }
-    /**
      * @Route("/doctor", name="doctor")
      */
     public function doctor()
