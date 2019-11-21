@@ -36,15 +36,21 @@ class UserRepository extends ServiceEntityRepository
 
     public function search(string $name = null, string $city = null, int $specialty = null)
     {
-        return $this->createQueryBuilder('u')
+        $query = $this->createQueryBuilder('u')
             ->select('u, us, spec')
             ->join('u.userInfo', 'us')
             ->join('u.userSpecialties', 'spec')
             ->where('us.name like :name')
-            ->andWhere('us.city like :city')
-            ->andWhere('spec.specialtyId = :specId')
-            ->andWhere('u.role = 2')
-            ->setParameters(['name' => '%'.$name.'%', 'city' => '%'.$city.'%', 'specId' => $specialty])
+            ->andWhere('us.city like :city');
+
+        if (!is_null($specialty)) {
+            $query->andWhere('spec.specialtyId = :specId');
+            $query->setParameters(['name' => '%'.$name.'%', 'city' => '%'.$city.'%', 'specId' => $specialty]);
+        } else {
+            $query->setParameters(['name' => '%'.$name.'%', 'city' => '%'.$city.'%']);
+        }
+
+        return $query->andWhere('u.role = 2')
             ->getQuery()
             ->getResult();
     }
