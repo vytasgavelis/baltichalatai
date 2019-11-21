@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserInfo;
 use App\Form\UserInfoType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,9 @@ class UserInfoController extends AbstractController
     {
         if ($user instanceof User && ($user->getRole() == 2 || $user->getRole() == 1)) {
             $userInfo = $user->getUserInfo()->first();
+            if ($userInfo == false) {
+                $userInfo = new UserInfo();
+            }
             $form = $this->createForm(UserInfoType::class, $userInfo, [
                 'action' => $this->generateUrl('userinfo_edit')
             ]);
@@ -31,6 +35,7 @@ class UserInfoController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $userInfo->setUserId($user);
                 $em = $this->getDoctrine()->getManager();
 
                 $em->persist($userInfo);

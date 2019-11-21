@@ -7,10 +7,17 @@
 {#    <li><button class="bc-link bc-spec" onclick="location.href='/patient'">Mano Paskyra</button></li>#}
 {#  </ul>#}
 {#{% else %}#}
+  {% if app.user %}
   <ul class="bc-item">
-    <li><button class="bc-link bc-spec" onclick="location.href='/login'">Prisijungti</button></li>
-    <li><button class="bc-link" onclick="location.href='/register'">Registruotis</button></li>
+    <li><button class="bc-link bc-spec" onclick="location.href='/logout'">Atsijungti</button></li>
+    <li><button class="bc-link bc-spec" onclick="location.href='/userinfo/edit'">Mano Paskyra</button></li>
   </ul>
+  {% else %}
+    <ul class="bc-item">
+      <li><button class="bc-link bc-spec" onclick="location.href='/login'">Prisijungti</button></li>
+      <li><button class="bc-link" onclick="location.href='/register'">Registruotis</button></li>
+    </ul>
+  {% endif %}
 {#{% endif %}#}
 </nav>
 {% endblock %}
