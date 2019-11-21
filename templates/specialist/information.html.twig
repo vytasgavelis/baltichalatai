@@ -8,8 +8,7 @@
                 <div class="panel text-center">
                     <div class="user-heading">
                         <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
-{#                        <h2>{{ specialist.getUserInfo().first().getName() }} {{specialist.getUserInfo().first().getSurname()}}</h2>#}
-                        {{ dump('test') }}
+                        <h2>{{ specialist.getUserInfo().first().getName() }} {{specialist.getUserInfo().first().getSurname()}}</h2>
                         {%  for specialty in specialist.getUserSpecialties() %}
                             <li>{{ specialty.getSpecialtyId().getName() }}</li>
                         {% endfor %}
