@@ -40,6 +40,10 @@ class UserInfoController extends AbstractController
 
                 $em->persist($userInfo);
                 $em->flush();
+            } else {
+                return $this->render('user_info/edit.html.twig', [
+                    'user_info_form' => $form->createView(),
+                ]);
             }
 
             return $this->render('user_info/edit.html.twig', [
@@ -50,5 +54,15 @@ class UserInfoController extends AbstractController
 
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
+
+//    private function validateForm($data) : string {
+//        $error = "";
+//        if (!ctype_alpha($data['name'])) {
+//            $error .= 'Vardas gali susidaryti tik is raidziu';
+//        }
+//
+//        dump($error);
+//        return $error;
+//    }
 
 }

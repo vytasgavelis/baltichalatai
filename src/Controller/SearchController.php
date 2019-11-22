@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class SearchController extends AbstractController
 {
     /**
@@ -67,7 +68,12 @@ class SearchController extends AbstractController
         $data = [];
 
         foreach ($specialists as $specialist) {
-            $arr['clinic'] = $specialist->getSpecialistClinics()->first()->getClinicId()->getClinicInfo()->getName();
+            if($specialist->getSpecialistClinics()->first()){
+                $arr['clinic'] = $specialist->getSpecialistClinics()->first()->getClinicId()->getClinicInfo()->getName();
+            } else {
+                $arr['clinic'] = 'Specialistas klinikai nepriklauso';
+            }
+
             $arr['id'] = $specialist->getId();
             $arr['name'] = $specialist->getUserInfo()->first()->getName();
             $arr['surname'] = $specialist->getUserInfo()->first()->getSurname();

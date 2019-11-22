@@ -30,22 +30,25 @@
                                     Miestas
                                 </div>
                             </div>
-
                             {% for specialist in specialists %}
-                            <div class="results-row">
-                            	<div class="cell" data-title="Full Name">
-                                    <a href="/specialist/{{ specialist.id }}">{{ specialist.name }} {{ specialist.surname }}</a>
-                            	</div>
-                            <div class="cell" data-title="Age">
-                            	{{ specialist.specialty }}
-                            </div>
-                            <div class="cell" data-title="Job Title">
-                            	{{ specialist.clinic }}
-                            </div>
-                            <div class="cell" data-title="Location">
-                            	{{ specialist.city }}
-                            </div>
-                            </div>
+                                <div class="results-row">
+                                    <div class="cell" data-title="Full Name">
+                                        <a href="/specialist/{{ specialist.id }}">{{ specialist.name }} {{ specialist.surname }}</a>
+                                    </div>
+                                <div class="cell" data-title="Age">
+                                    {{ specialist.specialty }}
+                                </div>
+                                <div class="cell" data-title="Job Title">
+                                    {% if specialist.clinic is not defined %}
+                                        Specialistas istaigai nepriklauso
+                                    {% else %}
+                                        {{ specialist.clinic }}
+                                    {% endif %}
+                                </div>
+                                <div class="cell" data-title="Location">
+                                    {{ specialist.city }}
+                                </div>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
