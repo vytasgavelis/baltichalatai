@@ -69,10 +69,14 @@ class SpecialistController extends AbstractController
             $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
 
             foreach ($specialties as $specialty) {
-                if(!in_array($specialty, $user->getUserSpecialties()->toArray())) {
+                if (!in_array($specialty, $user->getUserSpecialties()->toArray())) {
                     $choices += array($specialty->getName() => $specialty->getId());
                 }
             }
+
+//            foreach($user->getUserSpecialties()->toArray() as $specialty){
+//                echo $specialty->getName();
+//            }
 
             $specialtiesForm = $this->createFormBuilder([])
                 ->add('specialties', ChoiceType::class, [
@@ -89,37 +93,48 @@ class SpecialistController extends AbstractController
 
             if ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
                 if($request->request->get('form')['specialties'] != "") {
-                    $userSpecialty = new UserSpecialty();
-                    $userSpecialty->setUserId($user);
-                    $specialty = $this->getDoctrine()->getRepository(Specialty::class)
-                        ->findOneById($request->request->get('form')['specialties']);
+                    //Check if user does not have that specialty
+                    if (sizeof($this->getDoctrine()->getRepository(UserSpecialty::class)
+                        ->findByUserIdAndSpecialtyId(
+                            $user->getId(), $request->request->get('form')['specialties']))
+                        == 0)
+                    {
+                        $userSpecialty = new UserSpecialty();
+                        $userSpecialty->setUserId($user);
+                        $specialty = $this->getDoctrine()->getRepository(Specialty::class)
+                            ->findOneById($request->request->get('form')['specialties']);
+                        $userSpecialty->setSpecialtyId($specialty);
 
-                    $userSpecialty->setSpecialtyId($specialty);
+                        $em = $this->getDoctrine()->getManager();
 
-                    $em = $this->getDoctrine()->getManager();
-
-                    $em->persist($userSpecialty);
-                    $em->flush();
+                        $em->persist($userSpecialty);
+                        $em->flush();
+                    } else {
+                        // Flash message that you already have that specialty added.
+                        echo 'jus jau pasirinkes tokia specialybe';
+                    }
                 } else if($request->request->get('form')['custom_specialty'] != ""){
-                    $userSpecialty = new UserSpecialty();
-                    $specialty = new Specialty();
-                    $specialty->setName($request->request->get('form')['custom_specialty']);
 
-//                    $userSpecialty->setUserId($user);
-//                    $specialty = $this->getDoctrine()->getRepository(Specialty::class)
-//                        ->findOneById($request->request->get('form')['specialties']);
-//
-//                    $userSpecialty->setSpecialtyId($specialty);
+                    $specialty = $this->getDoctrine()->getRepository(Specialty::class)
+                        ->findBySpecialtyName($request->request->get('form')['custom_specialty']);
 
-                    $em = $this->getDoctrine()->getManager();
+                    if (sizeof($specialty) == 0) {
+                        $userSpecialty = new UserSpecialty();
+                        $specialty = new Specialty();
+                        $specialty->setName($request->request->get('form')['custom_specialty']);
+                        $em = $this->getDoctrine()->getManager();
 
-                    $em->persist($specialty);
-                    $em->flush();
+                        $em->persist($specialty);
+                        $em->flush();
 
-                    $userSpecialty->setUserId($user);
-                    $userSpecialty->setSpecialtyId($specialty);
-                    $em->persist($userSpecialty);
-                    $em->flush();
+                        $userSpecialty->setUserId($user);
+                        $userSpecialty->setSpecialtyId($specialty);
+                        $em->persist($userSpecialty);
+                        $em->flush();
+                    } else {
+                        // Flash message that specialty already exists
+                        echo 'specialty already exists';
+                    }
                 }
             }
 

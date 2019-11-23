@@ -36,6 +36,18 @@ class SpecialtyRepository extends ServiceEntityRepository
     }
     */
 
+    // /**
+    //  * @return Specialty[] Returns an array of Specialty objects
+    //  */
+    public function findBySpecialtyName($name) {
+        $name = strtolower($name);
+        return $this->createQueryBuilder('s')
+            ->andWhere('LOWER(s.name) = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     public function findOneById($id): ?Specialty
     {
