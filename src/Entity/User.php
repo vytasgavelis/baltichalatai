@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\UserInfo;
+use App\Entity\ClinicInfo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -69,7 +70,7 @@ class User implements UserInterface
     private $userInfo;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ClinicInfo", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="App\Entity\ClinicInfo", mappedBy="userId")
      */
     private $clinicInfo;
 
@@ -88,9 +89,6 @@ class User implements UserInterface
      */
     private $specialistClinics;
 
-    /**
-     * @return mixed
-     */
     public function getClinicInfo()
     {
         return $this->clinicInfo;

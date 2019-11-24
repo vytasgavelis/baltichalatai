@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gydymo istaigos paskyra{% endblock %}
+
+{% block body %}
+    <body class="bc-index">
+    {% include 'components/layout/navbar.html.twig' %}
+    {{ form(clinic_info_form) }}
+    </body>
+{% endblock %}

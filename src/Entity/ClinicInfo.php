@@ -17,8 +17,8 @@ class ClinicInfo
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="clinicInfo")
+     * @ORM\JoinColumn(name="user_id_id", referencedColumnName="id")
      */
     private $userId;
 
