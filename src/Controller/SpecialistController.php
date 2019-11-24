@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+
 use App\Entity\SpecialistWorkHours;
 use App\Entity\Specialty;
 use App\Entity\User;
@@ -58,47 +59,26 @@ class SpecialistController extends AbstractController
 
     /**
      * @Route("/specialist/edit", name="specialist_edit")
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
      * @return Response
      */
     public function edit(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
-
         if ($user instanceof User && $user->getRole() == 2) {
-            $choices = array();
+            $specialtiesForm = $this->createSpecialistForm();
 
-            $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
-
-            foreach ($specialties as $specialty) {
-                if (!in_array($specialty, $user->getUserSpecialties()->toArray())) {
-                    $choices += array($specialty->getName() => $specialty->getId());
-                }
-            }
-
-//            foreach($user->getUserSpecialties()->toArray() as $specialty){
-//                echo $specialty->getName();
-//            }
-
-            $specialtiesForm = $this->createFormBuilder([])
-                ->add('specialties', ChoiceType::class, [
-                    'choices' => $choices,
-                    'required' => false,
-                ])
-                ->add('custom_specialty', TextType::class, ['required' => false])
-                ->add('submit', SubmitType::class, ['label' => 'Prideti'])
-                ->getForm()
-            ;
-
-            // Handle the request
             $specialtiesForm->handleRequest($request);
 
             if ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
-                if($request->request->get('form')['specialties'] != "") {
+                // Add specialty from dropdown
+                if ($request->request->get('form')['specialties'] != "") {
                     //Check if user does not have that specialty
-                    if (sizeof($this->getDoctrine()->getRepository(UserSpecialty::class)
-                        ->findByUserIdAndSpecialtyId(
-                            $user->getId(), $request->request->get('form')['specialties']))
-                        == 0)
-                    {
+                    $specialty = $this->getDoctrine()->getRepository(UserSpecialty::class)
+                        ->findByUserIdAndSpecialtyId($user->getId(), $request->request->get('form')['specialties']);
+
+                    if (sizeof($specialty)== 0) {
                         $userSpecialty = new UserSpecialty();
                         $userSpecialty->setUserId($user);
                         $specialty = $this->getDoctrine()->getRepository(Specialty::class)
@@ -113,8 +93,10 @@ class SpecialistController extends AbstractController
                         // Flash message that you already have that specialty added.
                         echo 'jus jau pasirinkes tokia specialybe';
                     }
-                } else if($request->request->get('form')['custom_specialty'] != ""){
-
+                }
+                // Add specialty from text box.
+                elseif ($request->request->get('form')['custom_specialty'] != "") {
+                    // Check if specialty already exists.
                     $specialty = $this->getDoctrine()->getRepository(Specialty::class)
                         ->findBySpecialtyName($request->request->get('form')['custom_specialty']);
 
@@ -146,4 +128,24 @@ class SpecialistController extends AbstractController
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 
+    private function createSpecialistForm(UserInterface $user = null)
+    {
+        $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
+        $choices = array();
+        foreach ($specialties as $specialty) {
+            $choices += array($specialty->getName() => $specialty->getId());
+        }
+
+        $specialtiesForm = $this->createFormBuilder([])
+            ->add('specialties', ChoiceType::class, [
+                'choices' => $choices,
+                'required' => false,
+            ])
+            ->add('custom_specialty', TextType::class, ['required' => false])
+            ->add('submit', SubmitType::class, ['label' => 'Prideti'])
+            ->getForm()
+        ;
+
+        return $specialtiesForm;
+    }
 }

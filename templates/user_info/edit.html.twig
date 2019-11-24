@@ -1,1 +1,10 @@
-{{ form(user_info_form) }}
+{% extends 'base.html.twig' %}
+
+{% block title %}Asmenine paskyra{% endblock %}
+
+{% block body %}
+    <body class="bc-index">
+    {% include 'components/layout/navbar.html.twig' %}
+    {{ form(user_info_form) }}
+    </body>
+{% endblock %}

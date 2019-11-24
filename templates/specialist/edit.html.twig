@@ -1,1 +1,10 @@
-{{ form(specialtiesForm) }}
+{% extends 'base.html.twig' %}
+
+{% block title %}Specialisto paskyra{% endblock %}
+
+{% block body %}
+    <body class="bc-index">
+    {% include 'components/layout/navbar.html.twig' %}
+    {{ form(specialtiesForm) }}
+    </body>
+{% endblock %}

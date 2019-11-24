@@ -11,6 +11,9 @@
   <ul class="bc-item">
     <li><button class="bc-link bc-spec" onclick="location.href='/logout'">Atsijungti</button></li>
     <li><button class="bc-link bc-spec" onclick="location.href='/userinfo/edit'">Mano Paskyra</button></li>
+    {% if app.user.getRole() == 2 %}
+      <li><button class="bc-link bc-spec" onclick="location.href='/specialist/edit'">Specialisto Paskyra</button></li>
+    {% endif %}
   </ul>
   {% else %}
     <ul class="bc-item">
