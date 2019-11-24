@@ -12,9 +12,7 @@ use App\Entity\UserInfo;
 use App\Entity\UserSpecialty;
 use App\Form\UserInfoType;
 use App\Form\UserSpecialtyType;
-use App\Services\SpecialistService;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -62,7 +60,6 @@ class SpecialistController extends AbstractController
     }
 
     /**
-
      * @Route("/specialist/{id}/hours_edit", name="specialist_hours_edit")
      * @param $id
      * @param Request $request
@@ -111,7 +108,9 @@ class SpecialistController extends AbstractController
             'specClinics' => $specClinics,
             'workHours' => $workHours,
         ]);
-   /**
+    }
+
+    /**
      * @Route("/specialist/edit", name="specialist_edit")
      * @param Request $request
      * @param UrlGeneratorInterface $urlGenerator
@@ -132,7 +131,7 @@ class SpecialistController extends AbstractController
                     $specialty = $this->getDoctrine()->getRepository(UserSpecialty::class)
                         ->findByUserIdAndSpecialtyId($user->getId(), $request->request->get('form')['specialties']);
 
-                    if (sizeof($specialty)== 0) {
+                    if (sizeof($specialty) == 0) {
                         $userSpecialty = new UserSpecialty();
                         $userSpecialty->setUserId($user);
                         $specialty = $this->getDoctrine()->getRepository(Specialty::class)
@@ -147,9 +146,7 @@ class SpecialistController extends AbstractController
                         // Flash message that you already have that specialty added.
                         echo 'jus jau pasirinkes tokia specialybe';
                     }
-                }
-                // Add specialty from text box.
-                elseif ($request->request->get('form')['custom_specialty'] != "") {
+                } elseif ($request->request->get('form')['custom_specialty'] != "") {// Add specialty from text box.
                     // Check if specialty already exists.
                     $specialty = $this->getDoctrine()->getRepository(Specialty::class)
                         ->findBySpecialtyName($request->request->get('form')['custom_specialty']);
@@ -175,7 +172,7 @@ class SpecialistController extends AbstractController
             }
 
             return $this->render('specialist/edit.html.twig', [
-                'specialtiesForm' => $specialtiesForm->createView() ,
+                'specialtiesForm' => $specialtiesForm->createView(),
             ]);
         }
 
@@ -197,8 +194,7 @@ class SpecialistController extends AbstractController
             ])
             ->add('custom_specialty', TextType::class, ['required' => false])
             ->add('submit', SubmitType::class, ['label' => 'Prideti'])
-            ->getForm()
-        ;
+            ->getForm();
 
         return $specialtiesForm;
     }
