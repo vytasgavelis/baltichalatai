@@ -40,7 +40,7 @@ class UserRepository extends ServiceEntityRepository
             ->select('u, us, spec')
             ->join('u.userInfo', 'us')
             ->join('u.userSpecialties', 'spec')
-            ->where('us.name like :name')
+            ->where('concat(us.name, us.surname) like :name')
             ->andWhere('us.city like :city');
 
         if (!is_null($specialty)) {

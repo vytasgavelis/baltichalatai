@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% for clinic in specClinics %}
+            <h3>{{ clinic.getClinicId().getClinicInfo().getName() }}</h3>
+            <form action="{{ path('specialist_hours_edit', {'id': clinic.specialistId.id}) }}" method="POST">
+                <input type="text" name="clinicId" value="{{ clinic.getClinicId.getId }}" hidden>
+                <div class="row">
+                    {% for day in workDayList %}
+                        <div class="col-md-2">
+                            <label> {{ day }} </label>
+                            <div class="row">
+                                <label class="ml-3"> Pradžios laikas </label>
+                                <input type="text" class="form-control ml-3" name="day[{{ loop.index }}][startTime]"
+                                       value="{{ specialist_service.getWorkHoursTime(
+                                           clinic.specialistId.id, clinic.getClinicId.getId, loop.index, 'start'
+                                       ) }}">
+                            </div>
+                            <div class="row">
+                                <label class="ml-3"> Pabaigos laikas </label>
+                                <input type="text" class="form-control ml-3" name="day[{{ loop.index }}][endTime]"
+                                       value="{{ specialist_service.getWorkHoursTime(
+                                           clinic.specialistId.id, clinic.getClinicId.getId, loop.index, 'end'
+                                       ) }}">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class=" row">
+                    <button type="submit" class="btn btn-success ml-3"> Išsaugoti</button>
+                </div>
+            </form>
+        {% endfor %}
+    </div>
+{% endblock %}
