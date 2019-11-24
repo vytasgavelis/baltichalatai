@@ -1,23 +1,16 @@
 <?php
 
-/*test */
-
 namespace App\Controller;
 
 use App\Entity\Specialty;
 use App\Entity\User;
-use App\Entity\UserSpecialty;
-use App\Entity\UserInfo;
-use App\Repository\UserSpecialtyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 
 class SearchController extends AbstractController
 {
