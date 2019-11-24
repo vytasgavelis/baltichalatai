@@ -26,9 +26,9 @@ class ClinicController extends AbstractController
     public function show($id)
     {
         $clinic = $this->getDoctrine()->getRepository(User::class)
-            ->findByIdAndRole($id, 2);
+            ->findByIdAndRole($id, 3);
         if (sizeof($clinic) == 0) {
-            $clinic = null;
+            throw $this->createNotFoundException();
         }
         return $this->render('clinic/index.html.twig', [
             'clinic' => $clinic[0],

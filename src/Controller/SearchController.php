@@ -68,8 +68,9 @@ class SearchController extends AbstractController
         $data = [];
 
         foreach ($specialists as $specialist) {
-            if($specialist->getSpecialistClinics()->first()){
-                $arr['clinic'] = $specialist->getSpecialistClinics()->first()->getClinicId()->getClinicInfo()->getName();
+            if ($specialist->getSpecialistClinics()->first()) {
+                $arr['clinic'] = $specialist->getSpecialistClinics()
+                    ->first()->getClinicId()->getClinicInfo()->getName();
             } else {
                 $arr['clinic'] = 'Specialistas klinikai nepriklauso';
             }
@@ -81,11 +82,6 @@ class SearchController extends AbstractController
             $arr['specialty'] = $specialist->getUserSpecialties()->first()->getSpecialtyId()->getName();
             $data[] = $arr;
         }
-
-        //echo json_encode($data);
-        /*return $this->render('rezultatai.html.twig',[
-           'specialists' => $specialists
-        ]);*/
 
         return $this->render('home/results.html.twig', ['specialists' => $data]);
     }
