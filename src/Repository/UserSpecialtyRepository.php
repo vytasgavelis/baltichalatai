@@ -22,9 +22,20 @@ class UserSpecialtyRepository extends ServiceEntityRepository
     // /**
     //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
     //  */
+    public function findByUserIdAndSpecialtyId($userId, $specialtyId)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.userId = :userId')
+            ->andWhere('u.specialtyId = :specialtyId')
+            ->setParameter('specialtyId', $specialtyId)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
 
-
-
+    // /**
+    //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
+    //  */
     public function findBySpecialty($value)
     {
         return $this->createQueryBuilder('u')
@@ -74,6 +85,7 @@ class UserSpecialtyRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
     /*
     public function findOneBySomeField($value): ?UserSpecialty
