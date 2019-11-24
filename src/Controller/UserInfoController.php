@@ -52,7 +52,6 @@ class UserInfoController extends AbstractController
             return $this->render('user_info/edit.html.twig', [
                 'user_info_form' => $form->createView(),
             ]);
-
         }
 
         return new RedirectResponse($urlGenerator->generate('app_login'));

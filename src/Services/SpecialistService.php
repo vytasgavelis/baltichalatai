@@ -45,10 +45,11 @@ class SpecialistService
                 'clinicId' => $workHour->getClinicId(),
                 array(
                     'day' => $workHour->getDay(),
-                    'hours' => $arr
-                )
+                    'hours' => $arr,
+                ),
             );
         }
+
         return $dateArr;
     }
 
@@ -115,7 +116,7 @@ class SpecialistService
         return $this->manager->getRepository(SpecialistWorkHours::class)->findBy([
             'specialistId' => $specId,
             'clinicId' => $clinicId,
-            'day' => $day
+            'day' => $day,
         ]);
     }
 
@@ -132,7 +133,6 @@ class SpecialistService
             } else {
                 return $spec[0]->getEndTime()->format('H:i');
             }
-
         } catch (\Exception $e) {
         }
     }

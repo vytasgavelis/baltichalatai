@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Form;
-
 
 use App\Entity\Specialty;
 use App\Entity\UserInfo;
@@ -15,25 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserSpecialtyType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-
-//        $choices = array();
-//
-//        $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
-//
-//        foreach ($specialties as $specialty) {
-//            $choices += array($specialty->getName() => $specialty->getId());
-//        }
-//
-//        $builder
-//            ->add('specialties', ChoiceType::class, [
-//                'choices' => $choices,
-//                'required' => false,
-//            ])
-//        ;
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
