@@ -59,54 +59,51 @@ class SpecialistController extends AbstractController
     }
 
     /**
-     * @Route("/specialist/{id}/hours_edit", name="specialist_hours_edit")
+     * @Route("/specialist/hours_edit", name="specialist_hours_edit")
      * @param $id
      * @param Request $request
      * @return Response
      * @throws \Exception
      */
-    public function editHours($id, Request $request)
+    public function editHours(UserInterface $user = null, Request $request,  UrlGeneratorInterface $urlGenerator)
     {
-        if (!is_null($request->get('day'))) {
-            $manager = $this->getDoctrine()->getManager();
+        if ($user instanceof User && $user->getRole() == 2) {
+            if (!is_null($request->get('day'))) {
+                $manager = $this->getDoctrine()->getManager();
 
-            $specialist = $this->specialistService->getSpecialist($id);
-            $clinic = $this->specialistService->getClinic($request->get('clinicId'));
+                $clinic = $this->specialistService->getClinic($request->get('clinicId'));
 
-            $workHours = $this->specialistService->getWorkHours($id, $clinic[0]->getId());
-            foreach ($workHours as $workHour) { //ismetam visus laikus
-                $manager->remove($workHour);
-            }
-            foreach ($request->get('day') as $key => $day) {
-                //praskipinam jeigu nieko neideta, kad nesugeneruotu default laiku
-                if ($day['startTime'] == "" || $day['endTime'] == "") {
-                    continue;
+                $workHours = $this->specialistService->getWorkHours($user->getId(), $clinic[0]->getId());
+                foreach ($workHours as $workHour) { //ismetam visus laikus
+                    $manager->remove($workHour);
                 }
-                $workHours = new SpecialistWorkHours(); //sudedam naujus laikus
-                $workHours->setClinicId($clinic[0]);
-                $workHours->setSpecialistId($specialist[0]);
-                $workHours->setDay($key);
-                $workHours->setStartTime(new DateTime($day['startTime']));
-                $workHours->setEndTime(new DateTime($day['endTime']));
+                foreach ($request->get('day') as $key => $day) {
+                    //praskipinam jeigu nieko neideta, kad nesugeneruotu default laiku
+                    if ($day['startTime'] == "" || $day['endTime'] == "") {
+                        continue;
+                    }
+                    $workHours = new SpecialistWorkHours(); //sudedam naujus laikus
+                    $workHours->setClinicId($clinic[0]);
+                    $workHours->setSpecialistId($user);
+                    $workHours->setDay($key);
+                    $workHours->setStartTime(new DateTime($day['startTime']));
+                    $workHours->setEndTime(new DateTime($day['endTime']));
 
-                $manager->persist($workHours);
+                    $manager->persist($workHours);
+                }
+                $manager->flush();
             }
-            $manager->flush();
+
+            $workHours = $this->specialistService->getSpecialistWorkHours($user);
+
+            $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
+            return $this->render('specialist/hours_edit.html.twig', [
+                'workDayList' => $this->specialistService->getWorkdayList(),
+                'specClinics' => $specClinics,
+                'workHours' => $workHours,
+            ]);
         }
-
-        $specialist = $this->specialistService->getSpecialist($id);
-        if (sizeof($specialist) == 0) {
-            throw $this->createNotFoundException();
-        }
-
-        $workHours = $this->specialistService->getSpecialistWorkHours($specialist[0]);
-        $specClinics = $this->specialistService->getSpecialistClinics($id);
-
-        return $this->render('specialist/hours_edit.html.twig', [
-            'workDayList' => $this->specialistService->getWorkdayList(),
-            'specClinics' => $specClinics,
-            'workHours' => $workHours,
-        ]);
+        return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 
     /**
