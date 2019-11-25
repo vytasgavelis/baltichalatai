@@ -20,13 +20,12 @@ class UserInfoType extends AbstractType
             ->add('phoneNumber')
             ->add('personalEmail')
             ->add('dateOfBirth', DateType::class, array(
-                'years' => range(date('Y') - 100, date('Y'))
+                'years' => range(date('Y') - 100, date('Y')),
             ))
             ->add('city')
             ->add('personCode')
             ->add('description')
-            ->add('save',SubmitType::class)
-        ;
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -22,31 +22,15 @@ class SpecialtyRepository extends ServiceEntityRepository
     // /**
     //  * @return Specialty[] Returns an array of Specialty objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findBySpecialtyName($name)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    // /**
-    //  * @return Specialty[] Returns an array of Specialty objects
-    //  */
-    public function findBySpecialtyName($name) {
         $name = strtolower($name);
+
         return $this->createQueryBuilder('s')
             ->andWhere('LOWER(s.name) = :name')
             ->setParameter('name', $name)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     public function findOneById($id): ?Specialty
@@ -55,8 +39,6 @@ class SpecialtyRepository extends ServiceEntityRepository
             ->andWhere('s.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-
 }

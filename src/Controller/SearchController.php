@@ -1,23 +1,16 @@
 <?php
 
-/*test */
-
 namespace App\Controller;
 
 use App\Entity\Specialty;
 use App\Entity\User;
-use App\Entity\UserSpecialty;
-use App\Entity\UserInfo;
-use App\Repository\UserSpecialtyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 
 class SearchController extends AbstractController
 {
@@ -68,8 +61,9 @@ class SearchController extends AbstractController
         $data = [];
 
         foreach ($specialists as $specialist) {
-            if($specialist->getSpecialistClinics()->first()){
-                $arr['clinic'] = $specialist->getSpecialistClinics()->first()->getClinicId()->getClinicInfo()->getName();
+            if ($specialist->getSpecialistClinics()->first()) {
+                $arr['clinic'] = $specialist->getSpecialistClinics()
+                    ->first()->getClinicId()->getClinicInfo()->getName();
             } else {
                 $arr['clinic'] = 'Specialistas klinikai nepriklauso';
             }
@@ -81,11 +75,6 @@ class SearchController extends AbstractController
             $arr['specialty'] = $specialist->getUserSpecialties()->first()->getSpecialtyId()->getName();
             $data[] = $arr;
         }
-
-        //echo json_encode($data);
-        /*return $this->render('rezultatai.html.twig',[
-           'specialists' => $specialists
-        ]);*/
 
         return $this->render('home/results.html.twig', ['specialists' => $data]);
     }

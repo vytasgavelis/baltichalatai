@@ -163,8 +163,6 @@ class User implements UserInterface
         return $this->specialistClinics;
     }
 
-
-
     public function getUserInfo(): Collection
     {
         return $this->userInfo;
@@ -231,37 +229,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-    /*/**
-     * @return SendingToDoctor
-
-    public function getSendingToDoctors(): SendingToDoctor
-    {
-        return $this->sendingToDoctors;
-    }
-
-    public function addSendingToDoctor(SendingToDoctor $sendingToDoctor): self
-    {
-        if (!$this->sendingToDoctors->contains($sendingToDoctor)) {
-            $this->sendingToDoctors[] = $sendingToDoctor;
-            $sendingToDoctor->setClientId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSendingToDoctor(SendingToDoctor $sendingToDoctor): self
-    {
-        if ($this->sendingToDoctors->contains($sendingToDoctor)) {
-            $this->sendingToDoctors->removeElement($sendingToDoctor);
-            // set the owning side to null (unless already changed)
-            if ($sendingToDoctor->getClientId() === $this) {
-                $sendingToDoctor->setClientId(null);
-            }
-        }
-
-        return $this;
-    }*/
 
     /**
      * @return Collection|ClinicSpecialists[]
@@ -349,7 +316,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -376,7 +343,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self

@@ -18,6 +18,9 @@ class UserInfoController extends AbstractController
 
     /**
      * @Route("/userinfo/edit", name="userinfo_edit")
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
      * @return Response
      */
     public function edit(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
@@ -28,7 +31,7 @@ class UserInfoController extends AbstractController
                 $userInfo = new UserInfo();
             }
             $form = $this->createForm(UserInfoType::class, $userInfo, [
-                'action' => $this->generateUrl('userinfo_edit')
+                'action' => $this->generateUrl('userinfo_edit'),
             ]);
 
             //Handle the request
@@ -47,22 +50,10 @@ class UserInfoController extends AbstractController
             }
 
             return $this->render('user_info/edit.html.twig', [
-                'user_info_form' => $form->createView()
+                'user_info_form' => $form->createView(),
             ]);
-
         }
 
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
-
-//    private function validateForm($data) : string {
-//        $error = "";
-//        if (!ctype_alpha($data['name'])) {
-//            $error .= 'Vardas gali susidaryti tik is raidziu';
-//        }
-//
-//        dump($error);
-//        return $error;
-//    }
-
 }
