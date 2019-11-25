@@ -50,16 +50,21 @@
                                 {# Change to calendar view for future appointments #}
                                 <h5 class="card-title">Grafikai</h5>
                                 <span> <a href="{{ path('specialist_hours_edit', {'id': specialist.getId}) }}"> Redaguoti </a></span>
-                                <div class="row">
-                                    {% for clinic in workHours %}
-                                        <div class="col-md-2">
-                                            day: {{ clinic.0.day }}
-                                            {% for key, hour in clinic.0.hours %}
-                                                <p> {{ hour }} </p>
-                                            {% endfor %}
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                <form>
+                                    <input type="hidden" name="specialist_id" value="{{ specialist.getUserInfo().first().getId() }}">
+                                    <div class="row">
+                                        {% for clinic in workHours %}
+                                            <div class="col-md-2">
+                                                day: {{ clinic.0.day }}
+                                                {% for key, hour in clinic.0.hours %}
+                                                    <input type="radio" name="reg_time" value="{{ clinic.0.day }}-{{ hour }}"> {{ hour }} </input>
+                                                {% endfor %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <br><br>
+                                    <input type="submit" value="Pasirinkti">
+                                </form>
                             </div>
                         </div>
                     </div>
