@@ -36,7 +36,7 @@
                             </div>
                             <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                                 {%  for specialist in clinic.getClinicSpecialists() %}
-                                    <p><a href="/specialist/{{ specialist.getSpecialistId().getId() }}">{{ specialist.getSpecialistId().getUserInfo().first.getName() }} {{ specialist.getSpecialistId().getUserInfo().first.getSurname() }}</a></p>
+                                    <p><a href="/specialist/show/{{ specialist.getSpecialistId().getId() }}">{{ specialist.getSpecialistId().getUserInfo().first.getName() }} {{ specialist.getSpecialistId().getUserInfo().first.getSurname() }}</a></p>
                                 {% endfor %}
                             </div>
                         </div>
