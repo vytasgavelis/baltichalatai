@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\SpecialistWorkHours;
 use App\Services\SpecialistService;
+use App\Services\UserSpecialtyService;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Specialty;
@@ -22,10 +23,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class SpecialistController extends AbstractController
 {
     private $specialistService;
+    /**
+     * @var UserSpecialtyService
+     */
+    private $userSpecialtyService;
 
-    public function __construct(SpecialistService $specialistService)
+    public function __construct(SpecialistService $specialistService, UserSpecialtyService $userSpecialtyService)
     {
         $this->specialistService = $specialistService;
+        $this->userSpecialtyService = $userSpecialtyService;
     }
 
     /**
@@ -60,12 +66,13 @@ class SpecialistController extends AbstractController
 
     /**
      * @Route("/specialist/hours_edit", name="specialist_hours_edit")
-     * @param $id
      * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
      * @return Response
      * @throws \Exception
      */
-    public function editHours(UserInterface $user = null, Request $request,  UrlGeneratorInterface $urlGenerator)
+    public function editHours(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
         if ($user instanceof User && $user->getRole() == 2) {
             if (!is_null($request->get('day'))) {
@@ -117,54 +124,15 @@ class SpecialistController extends AbstractController
     {
         if ($user instanceof User && $user->getRole() == 2) {
             $specialtiesForm = $this->createSpecialistForm();
-
             $specialtiesForm->handleRequest($request);
 
             if ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
-                // Add specialty from dropdown
-                if ($request->request->get('form')['specialties'] != "") {
-                    //Check if user does not have that specialty
-                    $specialty = $this->getDoctrine()->getRepository(UserSpecialty::class)
-                        ->findByUserIdAndSpecialtyId($user->getId(), $request->request->get('form')['specialties']);
-
-                    if (sizeof($specialty) == 0) {
-                        $userSpecialty = new UserSpecialty();
-                        $userSpecialty->setUserId($user);
-                        $specialty = $this->getDoctrine()->getRepository(Specialty::class)
-                            ->findOneById($request->request->get('form')['specialties']);
-                        $userSpecialty->setSpecialtyId($specialty);
-
-                        $em = $this->getDoctrine()->getManager();
-
-                        $em->persist($userSpecialty);
-                        $em->flush();
-                    } else {
-                        // Flash message that you already have that specialty added.
-                        echo 'jus jau pasirinkes tokia specialybe';
-                    }
-                } elseif ($request->request->get('form')['custom_specialty'] != "") {// Add specialty from text box.
-                    // Check if specialty already exists.
-                    $specialty = $this->getDoctrine()->getRepository(Specialty::class)
-                        ->findBySpecialtyName($request->request->get('form')['custom_specialty']);
-
-                    if (sizeof($specialty) == 0) {
-                        $userSpecialty = new UserSpecialty();
-                        $specialty = new Specialty();
-                        $specialty->setName($request->request->get('form')['custom_specialty']);
-                        $em = $this->getDoctrine()->getManager();
-
-                        $em->persist($specialty);
-                        $em->flush();
-
-                        $userSpecialty->setUserId($user);
-                        $userSpecialty->setSpecialtyId($specialty);
-                        $em->persist($userSpecialty);
-                        $em->flush();
-                    } else {
-                        // Flash message that specialty already exists
-                        echo 'specialty already exists';
-                    }
-                }
+                $responseData = $request->request->get('form');
+                $this->userSpecialtyService->addSpecialty(
+                    $responseData['specialties'],
+                    $responseData['custom_specialty'],
+                    $user
+                );
             }
 
             return $this->render('specialist/edit.html.twig', [
