@@ -39,10 +39,8 @@ class UserSpecialtyService
                     ->findOneById($specialtyData);
                 $userSpecialty->setSpecialtyId($specialty);
 
-                $em = $this->manager;
-
-                $em->persist($userSpecialty);
-                $em->flush();
+                $this->manager->persist($userSpecialty);
+                $this->manager->flush();
             } else {
                 // Flash message that you already have that specialty added.
                 echo 'jus jau pasirinkes tokia specialybe';
@@ -56,15 +54,14 @@ class UserSpecialtyService
                 $userSpecialty = new UserSpecialty();
                 $specialty = new Specialty();
                 $specialty->setName($customSpecialtyData);
-                $em = $this->manager;
 
-                $em->persist($specialty);
-                $em->flush();
+                $this->manager->persist($specialty);
+                $this->manager->flush();
 
                 $userSpecialty->setUserId($user);
                 $userSpecialty->setSpecialtyId($specialty);
-                $em->persist($userSpecialty);
-                $em->flush();
+                $this->manager->persist($userSpecialty);
+                $this->manager->flush();
             } else {
                 // Flash message that specialty already exists
                 echo 'specialty already exists';
