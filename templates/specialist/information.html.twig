@@ -15,7 +15,7 @@
                             {% if specialist.getSpecialistClinics().first().getClinicId() is not defined or specialist.getSpecialistClinics().first().getClinicId() is null %}
                                 Specialistas įstaigai nepriklauso
                             {% else %}
-                                <a href="/clinic/{{ specialist.getSpecialistClinics().first().getClinicId().getId() }}">
+                                <a href="/clinic/show/{{ specialist.getSpecialistClinics().first().getClinicId().getId() }}">
                                     <p>{{ specialist.getSpecialistClinics().first().getClinicId().getClinicInfo().getName() }}</p>
                                 </a>
                             {% endif %}
