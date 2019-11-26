@@ -107,6 +107,7 @@
   border: solid 3px #518ef8;
   padding: 30px 80px;
   background: rgba(112, 167, 238, 0.8);
+  margin-top: 20px;
 }
 
 #form_search {
@@ -114,7 +115,7 @@
   width: 20%;
   border: solid 2px #4268bc;
   border-radius: 4px;
-  height: 32px;
+  height: 35px;
   transition: .4s;
   color: rgb(66, 104, 188);
   background: white;
@@ -129,7 +130,7 @@
 #form_specialties {
   float: left;
   width: 25%;
-  height: 32px;
+  height: 35px;
   margin-right: 5px;
   color: rgb(66, 104, 188);
   font-size: 18px;
@@ -150,6 +151,10 @@
   margin-right: 5px;
   color: #4268bc;
   font-size: 18px;
+}
+.search-header {
+  margin-bottom: 20px;
+  color: rgb(34, 37, 117);
 }
 
 // Results table display
@@ -248,10 +253,11 @@
 
 // Pagination
 .page-forward {
-  grid-column: 15%;
   margin: auto;
   display: flex;
   align-items: center;
+  float: right;
+  transform: translate(-100%, -200%)
 }
 
 .page-back {
@@ -340,6 +346,24 @@
   min-height: 240px;
 }
 
+
+//Specialist
+
+.specialist-work-hours {
+  border-right: 2px solid rgba(66, 104, 188, 0.8);
+  margin-left: 20px;
+  overflow-y: auto;
+  max-height: 300px;
+  min-width: 120px;
+}
+.specialist-hours-row {
+  flex-wrap: nowrap;
+}
+
+.specialist-header {
+  margin-bottom: 20px;
+}
+
 // Tables for doctor, clinic and patient
 .table > tbody > tr > td > button {
   background: #74b3ee;
@@ -360,19 +384,9 @@
   overflow: auto;
  }
 
-// Edit profile
-//.edit-profile {
-//  margin-top: 15px;
-//  margin-bottom: 15px;
-//}
-//.edit-profile > input {
-//  margin-bottom: 10px;
-//}
 .edit-user-info {
   align-content: center;
 }
-
-
 
 // Media queries
 @media screen and (max-width: 850px) {
@@ -443,7 +457,8 @@
     margin-top: 300px;
   }
   .page-forward {
-    margin-top: 300px;
+    float: right;
+    transform: translate(-20%, -230%);
   }
 }
 
@@ -489,12 +504,14 @@
   }
   #form_specialties {
     margin-left: -20px;
-    //margin-top: 10px;
   }
   #form_search {
-    float: none;
+    margin-left: -20px;
   }
   .wrap {
     min-width: 359px;
+  }
+  .search-header {
+    margin-left: -20px;
   }
 }

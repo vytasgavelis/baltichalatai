@@ -51,24 +51,29 @@
                             </div>
                             <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                                 {# Change to calendar view for future appointments #}
-                                <h5 class="card-title">Grafikai</h5>
+                                <h5 class="card-title specialist-header">Pasirinkite vizitą pas specialistą:</h5>
                                 {% if app.user and app.user.getRole() == 2 and app.user.getId() == specialist.getId() %}
                                   <span> <a href="{{ path('specialist_hours_edit') }}"> Redaguoti </a></span>
                                 {% endif %}
                                 <form>
+                                    <div>
                                     <input type="hidden" name="specialist_id" value="{{ specialist.getUserInfo().first().getId() }}">
-                                    <div class="row">
+                                    <div class="row specialist-hours-row">
                                         {% for clinic in workHours %}
-                                            <div class="col-md-2">
+                                            <div class="col-xl-2 specialist-work-hours">
+                                            <div class="row">
                                                 day: {{ clinic.0.day }}
+                                                </div>
                                                 {% for key, hour in clinic.0.hours %}
-                                                    <input type="radio" name="reg_time" value="{{ clinic.0.day }}-{{ hour }}"> {{ hour }} </input>
+
+                                                    <div class="row"><input type="radio" name="reg_time" value="{{ clinic.0.day }}-{{ hour }}"> {{ hour }} </input></div>
                                                 {% endfor %}
                                             </div>
                                         {% endfor %}
                                     </div>
+                                    </div>
                                     <br><br>
-                                    <input type="submit" value="Pasirinkti">
+                                    <input type="submit" id="form_search" value="Pasirinkti">
                                 </form>
                             </div>
                         </div>
