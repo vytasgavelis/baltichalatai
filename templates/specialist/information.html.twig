@@ -52,7 +52,7 @@
                             <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                                 {# Change to calendar view for future appointments #}
                                 <h5 class="card-title">Grafikai</h5>
-                                {% if app.user.getRole() == 2 and app.user.getId() == specialist.getId() %}
+                                {% if app.user and app.user.getRole() == 2 and app.user.getId() == specialist.getId() %}
                                   <span> <a href="{{ path('specialist_hours_edit') }}"> Redaguoti </a></span>
                                 {% endif %}
                                 <form>
