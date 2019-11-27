@@ -24,7 +24,13 @@ class UserVisitController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->remove($userVisit);
             $em->flush();
-        }
             return new RedirectResponse($urlGenerator->generate('patient'));
+        } else if ($user->getId() == $userVisit->getSpecialistId()->getId()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($userVisit);
+            $em->flush();
+            return new RedirectResponse($urlGenerator->generate('specialist'));
+        }
+        return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 }

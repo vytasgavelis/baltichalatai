@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\SpecialistWorkHours;
 use App\Services\SpecialistService;
 use App\Services\UserSpecialtyService;
+use App\Entity\UserVisit;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Specialty;
@@ -41,6 +42,7 @@ class SpecialistController extends AbstractController
     {
         return $this->render('specialist/home.html.twig', [
             'userInfo' => $user->getUserInfo()->first(),
+            'visits' => $this->getDoctrine()->getRepository(UserVisit::class)->findBySpecialistId($user->getId()),
         ]);
     }
 
