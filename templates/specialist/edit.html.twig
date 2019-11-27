@@ -9,6 +9,9 @@
 
         <li>{{ specialty.getSpecialtyId().getName() }}</li>
     {% endfor %}
-    {{ form(specialtiesForm) }}
+    <div class="wrap edit-wrap">
+        <h3 class="search-header">Redaguoti Profilį:</h3>
+        {{ form(specialtiesForm) }}
+    </div>
     </body>
 {% endblock %}

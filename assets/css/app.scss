@@ -104,27 +104,27 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: solid 3px #518ef8;
   padding: 30px 80px;
-  background: rgba(112, 167, 238, 0.8);
+  background: rgba(176, 205, 242, 0.95);
   margin-top: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #form_search {
   float: left;
   width: 20%;
-  border: solid 2px #4268bc;
   border-radius: 4px;
+  border: none;
   height: 35px;
   transition: .4s;
-  color: rgb(66, 104, 188);
-  background: white;
+  color: white;
+  background: #5185fa;
 }
 
 #form_search:hover {
-  color: white;
+  color: rgb(66, 104, 188);
   border: none;
-  background: rgb(66, 104, 188);
+  background: white;
 }
 
 #form_specialties {
@@ -154,7 +154,7 @@
 }
 .search-header {
   margin-bottom: 20px;
-  color: rgb(34, 37, 117);
+  color: #2f5caf;
 }
 
 // Results table display
@@ -388,6 +388,223 @@
   align-content: center;
 }
 
+// Patient Profile Edit
+#user_info_name {
+  width: 50%;
+  color: #2f5caf;
+}
+
+#user_info > div:nth-child(1) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  color: #2f5caf;
+}
+
+#user_info_surname {
+  width: 50%;
+  color: #2f5caf;
+}
+
+#user_info > div:nth-child(2) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  color: #2f5caf;
+}
+
+#user_info_phoneNumber {
+  width: 50%;
+  color: #2f5caf;
+}
+
+#user_info > div:nth-child(3) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  color: #2f5caf;
+}
+
+#user_info_personalEmail {
+  width: 50%;
+  color: #2f5caf;
+}
+
+#user_info > div:nth-child(4) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  color: #2f5caf;
+}
+
+#user_info_dateOfBirth {
+  width: 50%;
+  transform: translate(58%, -110%);
+  color: #2f5caf;
+}
+
+#user_info > div:nth-child(5) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  transform: translate(0%,20%);
+  color: #2f5caf;
+}
+
+#user_info_city {
+  height: 32px;
+  width: 50%;
+  color: #2f5caf;
+  transform: translate(0%,-70%);
+}
+
+#user_info > div:nth-child(6) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  transform: translate(0%, -110%);
+  color: #2f5caf;
+}
+
+#user_info_personCode {
+  width: 50%;
+  color: #2f5caf;
+  transform: translate(0%,-90%);
+}
+
+#user_info > div:nth-child(7) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  transform: translate(0%, -110%);
+  color: #2f5caf;
+}
+
+#user_info_description {
+  height: 32px;
+  width: 50%;
+  color: #2f5caf;
+  transform: translate(0%,-90%);
+}
+
+#user_info > div:nth-child(8) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+  transform: translate(0%, -130%);
+  color: #2f5caf;
+}
+
+#user_info_save {
+  margin-top: 20px;
+  float: right;
+  width: 20%;
+  border-radius: 4px;
+  border: none;
+  height: 35px;
+  transition: .4s;
+  color: white;
+  background: #5185fa;
+  min-width: 100px;
+}
+
+#user_info_save:hover {
+    color: rgb(66, 104, 188);
+    border: none;
+    background: white;
+}
+
+.edit-wrap {
+  margin-top: 100px;
+}
+
+// Clinic Profile Edit
+#clinic_info > div:nth-child(1) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+}
+
+#clinic_info_name {
+  width: 50%;
+}
+
+#clinic_info > div:nth-child(2) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+}
+
+#clinic_info_address {
+  width: 50%;
+}
+
+#clinic_info > div:nth-child(3) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+}
+
+#clinic_info_webpage {
+  width: 50%;
+}
+
+#clinic_info > div:nth-child(4) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+}
+
+#clinic_info_email {
+  width: 50%;
+}
+
+#clinic_info_description {
+  height: 32px;
+  width: 50%;
+}
+
+#clinic_info > div:nth-child(5) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+}
+
+#clinic_info > div:nth-child(6) > label:nth-child(1) {
+  width: 25%;
+  margin-right: 20px;
+}
+
+#clinic_info_phoneNumber {
+  width: 50%;
+  transform: translate(0%,-20%);
+}
+
+#clinic_info_save {
+  margin-top: 20px;
+  float: right;
+  width: 20%;
+  border-radius: 4px;
+  border: none;
+  height: 35px;
+  transition: .4s;
+  color: white;
+  background: #5185fa;
+  min-width: 100px;
+}
+
+#clinic_info_save:hover {
+  color: rgb(66, 104, 188);
+  border: none;
+  background: white;
+}
+
+#form_submit {
+  margin-top: 20px;
+  float: right;
+  width: 20%;
+  border-radius: 4px;
+  border: none;
+  height: 35px;
+  transition: .4s;
+  color: white;
+  background: #5185fa;
+  min-width: 100px;
+}
+
+#form_submit:hover {
+  color: rgb(66, 104, 188);
+  border: none;
+  background: white;
+}
+
 // Media queries
 @media screen and (max-width: 850px) {
   .bc-link {
@@ -492,15 +709,20 @@
   .table, .results-row, .cell {
     width: 100% !important;
   }
-}
+  #user_info > div:nth-child(7) > label:nth-child(1) {
+    transform: translate(0%, -30%);
+  }
 
+  #user_info_dateOfBirth {
+    transform: translate(70%, -80%);
+  }
+}
 @media screen and (max-width: 550px) {
   #form_name {
     margin-left: -20px;
   }
   #form_city {
     margin-left: -20px;
-    //margin-top: 10px;
   }
   #form_specialties {
     margin-left: -20px;

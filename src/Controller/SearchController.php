@@ -35,7 +35,7 @@ class SearchController extends AbstractController
                 'choices' => $choices,
                 'required' => false,
             ])
-            ->add('search', SubmitType::class, ['label' => 'Ieskoti'])
+            ->add('search', SubmitType::class, ['label' => 'Ieškoti'])
             ->getForm();
 
         $form->handleRequest($request);
