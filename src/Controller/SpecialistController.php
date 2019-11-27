@@ -37,10 +37,10 @@ class SpecialistController extends AbstractController
     /**
      * @Route("/specialist", name="specialist")
      */
-    public function index()
+    public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
-        return $this->render('specialist/index.html.twig', [
-            'controller_name' => 'SpecialistController',
+        return $this->render('specialist/home.html.twig', [
+            'userInfo' => $user->getUserInfo()->first(),
         ]);
     }
 

@@ -45,28 +45,28 @@ class HomeController extends AbstractController
             'edit' => true,
         ]);
     }
-    /**
-     * @Route("/patient", name="patient")
-     */
-    public function patient()
-    {
-        return $this->render('home/patient.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-            'edit' => false,
-        ]);
-    }
-    /**
-     * @Route("/patient/edit", name="patientEdit")
-     */
-    public function patientEdit()
-    {
-        return $this->render('home/patient.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-            'edit' => true,
-        ]);
-    }
+//    /**
+//     * @Route("/patient", name="patient")
+//     */
+//    public function patient()
+//    {
+//        return $this->render('home/patient.html.twig', [
+//            'someVariable' => 'NFQ Akademija',
+//            'is_logged_in' => false,
+//            'edit' => false,
+//        ]);
+//    }
+//    /**
+//     * @Route("/patient/edit", name="patientEdit")
+//     */
+//    public function patientEdit()
+//    {
+//        return $this->render('home/patient.html.twig', [
+//            'someVariable' => 'NFQ Akademija',
+//            'is_logged_in' => false,
+//            'edit' => true,
+//        ]);
+//    }
     /**
      * @Route("/clinic", name="clinic")
      */

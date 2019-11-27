@@ -5,11 +5,13 @@
 				<div class="panel text-center">
 					<div class="user-heading">
 						<a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
-						<h2>{{specialist.getUserInfo().first().getName()}} {{specialist.getUserInfo().first().getSurname()}}</h2>
-						{%  for specialty in specialist.getUserSpecialties() %}
+						<h2>{{ userInfo.getName()}} {{ userInfo.getSurname()}}</h2>
+						{%  for specialty in app.user.getUserSpecialties() %}
 							<li>{{ specialty.getSpecialtyId().getName() }}</li>
 						{% endfor %}
-						<p>XXX Poliklinika</p>
+						{% for clinic in app.user.getSpecialistClinics() %}
+							<a><a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a></p>
+						{% endfor %}
 					</div>
 					<button class="btn btn-margin" onclick="location.href='/doctor/edit'">Redaguoti profilį</button>
 				</div>
