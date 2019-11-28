@@ -22,19 +22,19 @@ class UserVisitRepository extends ServiceEntityRepository
     // /**
     //  * @return UserVisit[] Returns an array of UserVisit objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findBySpecialistId($value)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.specialistId = :val')
             ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
+            ->orderBy('u.visitDate', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?UserVisit

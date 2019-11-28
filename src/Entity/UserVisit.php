@@ -51,6 +51,19 @@ class UserVisit
     private $sendingToDoctorId;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $cabinetNumber;
+
+    /**
+     * @return mixed
+     */
+    public function getCabinetNumber()
+    {
+        return $this->cabinetNumber;
+    }
+
+    /**
      * @return mixed
      */
     public function getSendingToDoctorId()

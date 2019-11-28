@@ -4,24 +4,19 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class PatientController extends AbstractController
 {
     /**
-     * @Route("/patient", name="patient")
-     */
-    public function index()
-    {
-        return $this->render('patient/index.html.twig', [
-            'controller_name' => 'PatientController',
-        ]);
-    }
-
-    /**
-     * @Route("/patient/{id}", name="patient_show")
+     * @Route("/patient/show/{id}", name="patient_show")
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -33,5 +28,26 @@ class PatientController extends AbstractController
         return $this->render('patient/index.html.twig', [
             'patient' => $patient[0],
         ]);
+    }
+
+    /**
+     * @Route("/patient", name="patient")
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
+     * @return Response
+     */
+    public function panel(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
+    {
+        if (is_bool($user->getUserInfo()->first())) {
+            return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
+        }
+        if ($user instanceof User && $user->getRole() == 1) {
+            return $this->render('patient/home.html.twig', [
+                'visits' => $user->getUserVisits(),
+                'userInfo' => $user->getUserInfo()->first(),
+            ]);
+        }
+
+        return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 }

@@ -28,6 +28,27 @@ class ClinicSpecialists
      */
     private $specialistId;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $cabinetNumber;
+
+    /**
+     * @return mixed
+     */
+    public function getCabinetNumber()
+    {
+        return $this->cabinetNumber;
+    }
+
+    /**
+     * @param mixed $cabinetNumber
+     */
+    public function setCabinetNumber($cabinetNumber): void
+    {
+        $this->cabinetNumber = $cabinetNumber;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

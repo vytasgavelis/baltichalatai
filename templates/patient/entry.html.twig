@@ -5,11 +5,11 @@
 				<div class="panel text-center">
 					<div class="user-heading">
 						<a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
-						<h2>Vardas Pavardė</h2>
-						<p>1997-05-01</p>
-						<p>+370XXXXXXXX</p>
+						<h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
+						<p>{{ userInfo.getDateOfBirth()|date('Y-m-d') }}</p>
+						<p>{{ userInfo.getPhoneNumber() }}</p>
 					</div>
-					<button class="btn btn-margin" onclick="location.href='/patient/edit'">Redaguoti profilį</button>
+					<button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
 				</div>
 			</div>
 			<div class="col-sm-8 bc-patient-column-8">
@@ -41,46 +41,18 @@
 								<th>Veiksmai</th>
 							</tr>
 							</thead>
-							<tr>
-								<td>2019/11/31</td>
-								<td>12:35</td>
-								<td>Odontologas</td>
-								<td>Diana Valaitytė</td>
-								<td>203</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
-							<tr>
-								<td>2019/12/20</td>
-								<td>12:35</td>
-								<td>Šeimos Gydytojas</td>
-								<td>Vytas Gavelis</td>
-								<td>331</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
-							<tr>
-								<td>2020/01/13</td>
-								<td>12:35</td>
-								<td>Kardiologas</td>
-								<td>Lukas Patackas</td>
-								<td>115</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
-							<tr>
-								<td>2020/01/24</td>
-								<td>12:35</td>
-								<td>Neurochirurgas</td>
-								<td>Petras Janulevičius</td>
-								<td>404</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
+								{% for visit in visits %}
+								<tr>
+									<td>{{ visit.getVisitDate()|date('Y-m-d') }}</td>
+									<td>{{ visit.getVisitDate()|date('H:i') }}</td>
+									<td>{{ visit.getSpecialistId().getUserSpecialties().first().getSpecialtyId().getName() }}</td>
+									<td><a href="{{ path('specialist_show', {'id': visit.getSpecialistId().getId()}) }}">{{ visit.getSpecialistId().getUserInfo().first().getName() }} {{ visit.getSpecialistId().getUserInfo().first().getSurname() }}</a></td>
+									<td>203</td>
+									<td>
+										<button class="btn btn-secondary" onclick="location.href='/uservisit/{{ visit.getId() }}/delete'" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
+									</td>
+								</tr>
+								{% endfor %}
 						</table>
 						</div>
 						<div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">

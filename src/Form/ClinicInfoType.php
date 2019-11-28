@@ -21,8 +21,7 @@ class ClinicInfoType extends AbstractType
             ->add('email')
             ->add('description')
             ->add('phoneNumber')
-            ->add('save',SubmitType::class)
-        ;
+            ->add('save', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
