@@ -4,26 +4,23 @@
 
 {% block body %}
     <body class="bc-index">
-        {% include 'components/layout/navbar.html.twig' %}
-            <div class="wrap">
-                <h3 class="search-header">Specialistų Paieška:</h3>
-                <div>
-                    {{ form_start(search_form) }}
-                    {{ form_widget(search_form.name, {'attr':
-                        {'class': 'search-term', 'placeholder': 'Vardas'}}
-                    ) }}
-                    {{ form_widget(search_form.city, {'attr':
-                        {'class': 'search-term', 'placeholder': 'Miestas'}}
-                    ) }}
-                    {{ form_widget(search_form.specialties, {'attr':
-                        {'class': 'form-control form-control-lg', 'placeholder': 'Specialistas'}}
-                    ) }}
-                    {{ form_widget(search_form.search, {'attr':
-                        {'class': 'search-button', 'label': 'Ieškoti'}}
-                    ) }}
-                    {{ form_end(search_form) }}
-                </div>
-            </div>
+    {% include 'components/layout/navbar.html.twig' %}
+    <div class="wrap">
+        <h3 class="search-header">Specialistų Paieška:</h3>
+        {{ form_start(search_form) }}
+        {{ form_widget(search_form.name, {'attr':
+            {'class': 'search-term', 'placeholder': 'Vardas'}}
+        ) }}
+        {{ form_widget(search_form.city, {'attr':
+            {'class': 'search-term', 'placeholder': 'Miestas'}}
+        ) }}
+        {{ form_widget(search_form.specialties, {'attr':
+            {'class': 'form-control form-control-lg', 'placeholder': 'Specialistas'}}
+        ) }}
+        {{ form_widget(search_form.search, {'attr':
+            {'class': 'search-button', 'label': 'Ieškoti'}}
+        ) }}
+        {{ form_end(search_form) }}
+    </div>
     </body>
-
 {% endblock %}

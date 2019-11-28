@@ -3,13 +3,17 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
+        <body class="bc-index">
+        {% include 'components/layout/navbar.html.twig' %}
+    <div class="wrap edit-wrap">
+    <h3 class="search-header">Registracija:</h3>
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.email, {'label': 'El. Paštas'}) }}
+        {{ form_row(registrationForm.plainPassword, {'label': 'Slaptažodis'}) }}
+        {{ form_row(registrationForm.agreeTerms, {'label': 'Sutinku su taisyklėmis'}) }}
 
-        <button class="btn">Register</button>
+        <button id="user_info_save">Registruotis</button>
     {{ form_end(registrationForm) }}
+    </div>
+        </body>
 {% endblock %}
