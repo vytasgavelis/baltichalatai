@@ -24,7 +24,7 @@ class UserInfoType extends AbstractType
             ->add('city', TextType::class, ['label'=> 'Miestas'])
             ->add('personCode', null, ['label'=> 'Asmens Kodas'])
             ->add('description', TextType::class, ['label'=> 'Aprašymas'])
-            ->add('save', SubmitType::class,['label'=> 'Išsaugoti']);
+            ->add('save', SubmitType::class, ['label'=> 'Išsaugoti']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

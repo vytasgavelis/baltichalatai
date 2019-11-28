@@ -70,7 +70,7 @@ class User implements UserInterface
     private $userInfo;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ClinicInfo", mappedBy="userId")
+     * @ORM\OneToOne(targetEntity="App\Entity\ClinicInfo", mappedBy="userId")
      */
     private $clinicInfo;
 
@@ -110,6 +110,7 @@ class User implements UserInterface
         $this->sendingToDoctors = new ArrayCollection();
         $this->clinicSpecialists = new ArrayCollection();
         $this->clinicWorkHours = new ArrayCollection();
+        $this->specialistClinics = new ArrayCollection();
     }
 
     public function getRole(): ?int
