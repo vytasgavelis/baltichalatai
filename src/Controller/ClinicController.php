@@ -77,5 +77,4 @@ class ClinicController extends AbstractController
 
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
-
 }

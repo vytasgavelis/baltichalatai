@@ -18,14 +18,17 @@ class UserVisitController extends AbstractController
      * @param UserInterface|null $user
      * @return RedirectResponse
      */
-    public function deleteUserVisit(UrlGeneratorInterface $urlGenerator, UserVisit $userVisit, UserInterface $user = null)
-    {
+    public function deleteUserVisit(
+        UrlGeneratorInterface $urlGenerator,
+        UserVisit $userVisit,
+        UserInterface $user = null
+    ) {
         if ($user->getId() == $userVisit->getClientId()->getId()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($userVisit);
             $em->flush();
             return new RedirectResponse($urlGenerator->generate('patient'));
-        } else if ($user->getId() == $userVisit->getSpecialistId()->getId()) {
+        } elseif ($user->getId() == $userVisit->getSpecialistId()->getId()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($userVisit);
             $em->flush();
