@@ -40,6 +40,10 @@ class SpecialistController extends AbstractController
      */
     public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
+        if (is_bool($user->getUserInfo()->first())) {
+            return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
+        }
+
         return $this->render('specialist/home.html.twig', [
             'userInfo' => $user->getUserInfo()->first(),
             'visits' => $this->getDoctrine()->getRepository(UserVisit::class)->findBySpecialistId($user->getId()),

@@ -13,7 +13,10 @@
 							<a><a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a></p>
 						{% endfor %}
 					</div>
-					<button class="btn btn-margin" onclick="location.href='/doctor/edit'">Redaguoti profilį</button>
+					<button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
+					<div>
+						<button class="btn btn-margin" onclick="location.href='/specialist/edit'">Redaguoti specialybes</button>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-8 bc-patient-column-8">
