@@ -19,22 +19,25 @@ class ClinicSpecialistsRepository extends ServiceEntityRepository
         parent::__construct($registry, ClinicSpecialists::class);
     }
 
-    // /**
-    //  * @return ClinicSpecialists[] Returns an array of ClinicSpecialists objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $value
+     * @param $clinicId
+     * @return ClinicSpecialists[] Returns an array of ClinicSpecialists objects
+     */
+
+    public function findBySpecialistIdAndClinicId($value, $clinicId)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+            ->andWhere('c.specialistId = :val')
+            ->andWhere('c.clinicId = :clinicId')
             ->setParameter('val', $value)
+            ->setParameter('clinicId', $clinicId)
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?ClinicSpecialists
