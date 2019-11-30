@@ -10,7 +10,7 @@
 							<li>{{ specialty.getSpecialtyId().getName() }}</li>
 						{% endfor %}
 						{% for clinic in app.user.getSpecialistClinics() %}
-							<a><a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a></p>
+							<p><a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a></p>
 						{% endfor %}
 					</div>
 					<button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
@@ -61,9 +61,11 @@
 						</div>
 						<div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
 						{# Change to calendar view for future appointments #}
-							<h5 class="card-title">Tab Card Two</h5>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							<a href="#" class="btn btn-primary">Go somewhere</a>
+{#							{{ app.user.getClinicWorkHours().first() }}#}
+{#							<h5 class="card-title">Tab Card Two</h5>#}
+{#							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#							<a href="#" class="btn btn-primary">Go somewhere</a>#}
+							{% include 'specialist/hours_edit.html.twig' %}
 						</div>
 					</div>
 				</div>

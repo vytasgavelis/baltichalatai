@@ -44,9 +44,15 @@ class SpecialistController extends AbstractController
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
 
+        $workHours = $this->specialistService->getSpecialistWorkHours($user);
+
+        $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
         return $this->render('specialist/home.html.twig', [
             'userInfo' => $user->getUserInfo()->first(),
             'visits' => $this->getDoctrine()->getRepository(UserVisit::class)->findBySpecialistId($user->getId()),
+            'workDayList' => $this->specialistService->getWorkdayList(),
+            'specClinics' => $specClinics,
+            'workHours' => $workHours,
         ]);
     }
 
@@ -116,7 +122,7 @@ class SpecialistController extends AbstractController
                 'workHours' => $workHours,
             ]);
         }
-        return new RedirectResponse($urlGenerator->generate('app_login'));
+        throw $this->createNotFoundException('Puslapis nerastas');
     }
 
     /**

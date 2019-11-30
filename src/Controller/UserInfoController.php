@@ -44,6 +44,11 @@ class UserInfoController extends AbstractController
 
                 $em->persist($userInfo);
                 $em->flush();
+                if($user->getRole() == 1) {
+                    return new RedirectResponse($urlGenerator->generate('patient'));
+                } else {
+                    return new RedirectResponse($urlGenerator->generate('specialist'));
+                }
             } else {
                 return $this->render('user_info/edit.html.twig', [
                     'message' => $message,
