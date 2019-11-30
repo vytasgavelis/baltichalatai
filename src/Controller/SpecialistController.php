@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -31,11 +32,19 @@ class SpecialistController extends AbstractController
      * @var UserSpecialtyService
      */
     private $userSpecialtyService;
+    /**
+     * @var FlashBagInterface
+     */
+    private $bag;
 
-    public function __construct(SpecialistService $specialistService, UserSpecialtyService $userSpecialtyService)
-    {
+    public function __construct(
+        SpecialistService $specialistService,
+        UserSpecialtyService $userSpecialtyService,
+        FlashBagInterface $bag
+    ) {
         $this->specialistService = $specialistService;
         $this->userSpecialtyService = $userSpecialtyService;
+        $this->bag = $bag;
     }
 
     /**
@@ -217,6 +226,7 @@ class SpecialistController extends AbstractController
             $manager->persist($visit);
             $manager->flush();
 
+            $this->bag->add('success', 'Užregistruota sėkmingai');
             return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist[0]->getId()]));
         } else {
             throw new NotFoundHttpException('Klinikos negali registruotis į vizitus');
