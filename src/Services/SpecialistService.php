@@ -8,6 +8,7 @@ use App\Entity\SpecialistWorkHours;
 use App\Entity\User;
 use Carbon\CarbonInterval;
 use DatePeriod;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SpecialistService
@@ -135,5 +136,11 @@ class SpecialistService
             }
         } catch (\Exception $e) {
         }
+    }
+
+    public function getDateFromDayNumber($dayCount)
+    {
+        $date = new DateTime();
+        return $date->modify('this week +'.($dayCount-1).' days')->format('Y-m-d');
     }
 }

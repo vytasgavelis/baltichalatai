@@ -7,6 +7,7 @@ use App\Services\SpecialistService;
 use App\Services\UserSpecialtyService;
 use App\Entity\UserVisit;
 use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Specialty;
 use App\Entity\User;
@@ -17,9 +18,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 class SpecialistController extends AbstractController
 {
@@ -37,6 +40,9 @@ class SpecialistController extends AbstractController
 
     /**
      * @Route("/specialist", name="specialist")
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
+     * @return Response
      */
     public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
@@ -72,7 +78,7 @@ class SpecialistController extends AbstractController
      * @param UrlGeneratorInterface $urlGenerator
      * @param UserInterface|null $user
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function editHours(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
@@ -106,12 +112,14 @@ class SpecialistController extends AbstractController
             $workHours = $this->specialistService->getSpecialistWorkHours($user);
 
             $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
+
             return $this->render('specialist/hours_edit.html.twig', [
                 'workDayList' => $this->specialistService->getWorkdayList(),
                 'specClinics' => $specClinics,
                 'workHours' => $workHours,
             ]);
         }
+
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 
@@ -163,5 +171,41 @@ class SpecialistController extends AbstractController
             ->getForm();
 
         return $specialtiesForm;
+    }
+
+    /**
+     * @Route ("specialist/register_visit/{specialistId}", name="specialist_register_visit")
+     * @param int $specialistId
+     * @param Request $request
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function registerVisit(
+        int $specialistId,
+        Request $request,
+        UrlGeneratorInterface $urlGenerator,
+        UserInterface $user = null
+    ) {
+        if ($user instanceof User and $user->getRole() != 3) {
+            $manager = $this->getDoctrine()->getManager();
+            $reqInfo = explode(';', $request->get('reg_time'));
+            $specialist = $this->specialistService->getSpecialist($specialistId);
+            $clinic = $this->specialistService->getClinic($reqInfo[0]);
+            $visit = new UserVisit();
+            $visit->setClientId($user);
+            $visit->setSpecialistId($specialist[0]);
+            $visit->setClinicId($clinic[0]);
+            $visit->setCabinetNumber(0); // TO DO change to specialists cabinet number
+            $visit->setVisitDate(new DateTime($reqInfo[1].$reqInfo[2]));
+
+            $manager->persist($visit);
+            $manager->flush();
+
+            return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist[0]->getId()]));
+        } else {
+            throw new NotFoundHttpException('Klinikos negali registruotis į vizitus');
+        }
     }
 }
