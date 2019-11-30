@@ -56,6 +56,7 @@ class SpecialistController extends AbstractController
      * @Route("/specialist/show/{id}", name="specialist_show")
      * @param $id
      * @return Response
+     * @throws Exception
      */
     public function show($id)
     {
@@ -193,12 +194,25 @@ class SpecialistController extends AbstractController
             $reqInfo = explode(';', $request->get('reg_time'));
             $specialist = $this->specialistService->getSpecialist($specialistId);
             $clinic = $this->specialistService->getClinic($reqInfo[0]);
+            $fullDate = new DateTime($reqInfo[1].$reqInfo[2]);
+            // pries idedant pachekinam ar netycia kazkas anksciau jau nebus ten pat uzsiregistraves
+            // kolkas redirectinam atgal, poto galbut kazkokia zinute prideti
+            if ($this->specialistService->checkIfDateIsOccupied(
+                $fullDate,
+                $specialist[0]->getId(),
+                $clinic[0]->getId()
+            )) {
+                return new RedirectResponse($urlGenerator->generate(
+                    'specialist_show',
+                    ['id' => $specialist[0]->getId()]
+                ));
+            }
             $visit = new UserVisit();
             $visit->setClientId($user);
             $visit->setSpecialistId($specialist[0]);
             $visit->setClinicId($clinic[0]);
             $visit->setCabinetNumber(0); // TO DO change to specialists cabinet number
-            $visit->setVisitDate(new DateTime($reqInfo[1].$reqInfo[2]));
+            $visit->setVisitDate($fullDate);
 
             $manager->persist($visit);
             $manager->flush();
