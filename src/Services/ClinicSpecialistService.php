@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use App\Entity\ClinicSpecialists;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
