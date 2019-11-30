@@ -112,7 +112,7 @@ class SpecialistController extends AbstractController
                 }
                 $manager->flush();
             }
-
+            return new RedirectResponse($urlGenerator->generate('specialist'));
             $workHours = $this->specialistService->getSpecialistWorkHours($user);
 
             $specClinics = $this->specialistService->getSpecialistClinics($user->getId());

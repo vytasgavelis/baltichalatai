@@ -44,7 +44,7 @@ class UserInfoController extends AbstractController
 
                 $em->persist($userInfo);
                 $em->flush();
-                if($user->getRole() == 1) {
+                if ($user->getRole() == 1) {
                     return new RedirectResponse($urlGenerator->generate('patient'));
                 } else {
                     return new RedirectResponse($urlGenerator->generate('specialist'));
