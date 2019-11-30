@@ -6,9 +6,12 @@ namespace App\Services;
 use App\Entity\ClinicSpecialists;
 use App\Entity\SpecialistWorkHours;
 use App\Entity\User;
+use App\Entity\UserVisit;
 use Carbon\CarbonInterval;
 use DatePeriod;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class SpecialistService
 {
@@ -27,6 +30,7 @@ class SpecialistService
     /**
      * @param $workHours
      * @return array
+     * @throws Exception
      */
     public function getSpecialistHoursFormatted($workHours): array
     {
@@ -39,7 +43,17 @@ class SpecialistService
             );
             $arr = [];
             foreach ($period as $d) {
-                $arr[] = $d->format('H:i:s');
+                $formattedDate = $this->getDateFromDayNumber($workHour->getDay());
+                $formattedTime = $d->format('H:i:s');
+                if ($this->checkIfDateIsOccupied(
+                    new DateTime($formattedDate.$formattedTime),
+                    $workHour->getSpecialistId(),
+                    $workHour->getClinicId()
+                )) {
+                    continue;
+                } else {
+                    $arr[] = $formattedTime;
+                }
             }
             $dateArr[] = array(
                 'clinicId' => $workHour->getClinicId(),
@@ -51,6 +65,18 @@ class SpecialistService
         }
 
         return $dateArr;
+    }
+
+    /**
+     * @param $date
+     * @param $specialistId
+     * @param $clinicId
+     * @return bool
+     */
+    public function checkIfDateIsOccupied($date, $specialistId, $clinicId)
+    {
+        return sizeof($this->manager->getRepository(UserVisit::class)
+                ->checkIfWorkHourExists($date, $specialistId, $clinicId)) > 0;
     }
 
     /**
@@ -111,6 +137,12 @@ class SpecialistService
         ]);
     }
 
+    /**
+     * @param int $specId
+     * @param int $clinicId
+     * @param int $day
+     * @return SpecialistWorkHours[]|object[]
+     */
     public function getWorkHoursByDay(int $specId, int $clinicId, int $day)
     {
         return $this->manager->getRepository(SpecialistWorkHours::class)->findBy([
@@ -120,6 +152,13 @@ class SpecialistService
         ]);
     }
 
+    /**
+     * @param int $specId
+     * @param int $clinicId
+     * @param int $day
+     * @param string|null $startOrEndOfDay
+     * @return string
+     */
     public function getWorkHoursTime(int $specId, int $clinicId, int $day, string $startOrEndOfDay = null)
     {
         $spec = $this->manager->getRepository(SpecialistWorkHours::class)->findBy([
@@ -127,13 +166,22 @@ class SpecialistService
             'clinicId' => $clinicId,
             'day' => $day,
         ]);
-        try {
-            if ($startOrEndOfDay == 'start') {
-                return $spec[0]->getStartTime()->format('H:i');
-            } else {
-                return $spec[0]->getEndTime()->format('H:i');
-            }
-        } catch (\Exception $e) {
+        if ($startOrEndOfDay == 'start') {
+            return $spec[0]->getStartTime()->format('H:i');
+        } else {
+            return $spec[0]->getEndTime()->format('H:i');
         }
+    }
+
+    /**
+     * @param $dayCount
+     * @return string
+     * @throws Exception
+     */
+    public function getDateFromDayNumber($dayCount)
+    {
+        $date = new DateTime();
+
+        return $date->modify('this week +'.($dayCount - 1).' days')->format('Y-m-d');
     }
 }
