@@ -55,12 +55,7 @@ class UserInfoController extends AbstractController
                     'user_info_form' => $form->createView(),
                 ]);
             }
-            return $this->render('user_info/edit.html.twig', [
-                'message' => $message,
-                'user_info_form' => $form->createView(),
-            ]);
         }
-
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 }

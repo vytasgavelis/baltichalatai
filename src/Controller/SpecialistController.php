@@ -40,20 +40,23 @@ class SpecialistController extends AbstractController
      */
     public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
-        if (is_bool($user->getUserInfo()->first())) {
-            return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
+        if ($user instanceof User && $user->getRole() == 2) {
+            if (is_bool($user->getUserInfo()->first())) {
+                return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
+            }
+
+            $workHours = $this->specialistService->getSpecialistWorkHours($user);
+
+            $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
+            return $this->render('specialist/home.html.twig', [
+                'userInfo' => $user->getUserInfo()->first(),
+                'visits' => $this->getDoctrine()->getRepository(UserVisit::class)->findBySpecialistId($user->getId()),
+                'workDayList' => $this->specialistService->getWorkdayList(),
+                'specClinics' => $specClinics,
+                'workHours' => $workHours,
+            ]);
         }
-
-        $workHours = $this->specialistService->getSpecialistWorkHours($user);
-
-        $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
-        return $this->render('specialist/home.html.twig', [
-            'userInfo' => $user->getUserInfo()->first(),
-            'visits' => $this->getDoctrine()->getRepository(UserVisit::class)->findBySpecialistId($user->getId()),
-            'workDayList' => $this->specialistService->getWorkdayList(),
-            'specClinics' => $specClinics,
-            'workHours' => $workHours,
-        ]);
+        throw $this->createNotFoundException();
     }
 
     /**
