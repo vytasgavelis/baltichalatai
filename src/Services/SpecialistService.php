@@ -45,7 +45,7 @@ class SpecialistService
             foreach ($period as $d) {
                 $formattedDate = $this->getDateFromDayNumber($workHour->getDay());
                 $formattedTime = $d->format('H:i:s');
-                if ($this->checkIfHourIsOccupied(
+                if ($this->checkIfDateIsOccupied(
                     new DateTime($formattedDate.$formattedTime),
                     $workHour->getSpecialistId(),
                     $workHour->getClinicId()
@@ -68,12 +68,12 @@ class SpecialistService
     }
 
     /**
-     * @param $time
+     * @param $date
      * @param $specialistId
      * @param $clinicId
      * @return bool
      */
-    public function checkIfHourIsOccupied($date, $specialistId, $clinicId)
+    public function checkIfDateIsOccupied($date, $specialistId, $clinicId)
     {
         return sizeof($this->manager->getRepository(UserVisit::class)
                 ->checkIfWorkHourExists($date, $specialistId, $clinicId)) > 0;
