@@ -1,6 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
+{% block hours_edit %}
     <div class="container">
         {% for clinic in specClinics %}
             <h3>{{ clinic.getClinicId().getClinicInfo().getName() }}</h3>

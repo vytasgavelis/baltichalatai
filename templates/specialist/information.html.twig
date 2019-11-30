@@ -8,6 +8,9 @@
                     <div class="panel text-center">
                         <div class="user-heading">
                             <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
+                                                        {% if app.user.getRole() == 3 %}
+                                                            <button onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/add'">Prideti specialista i istaiga</button>
+                                                        {% endif %}
                             <h2>{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</h2>
                             {% for specialty in specialist.getUserSpecialties() %}
                                 <li>{{ specialty.getSpecialtyId().getName() }}</li>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Specialty;
 //use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,17 +68,17 @@ class HomeController extends AbstractController
 //            'edit' => true,
 //        ]);
 //    }
-    /**
-     * @Route("/clinic", name="clinic")
-     */
-    public function clinic()
-    {
-        return $this->render('home/clinic.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-            'edit' => false,
-        ]);
-    }
+//    /**
+//     * @Route("/clinic", name="clinic")
+//     */
+//    public function clinic()
+//    {
+//        return $this->render('home/clinic.html.twig', [
+//            'someVariable' => 'NFQ Akademija',
+//            'is_logged_in' => false,
+//            'edit' => false,
+//        ]);
+//    }
     /**
      * @Route("/clinic/edit", name="clinicEdit")
      */

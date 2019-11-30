@@ -26,9 +26,11 @@ class UserInfoController extends AbstractController
     public function edit(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
         if ($user instanceof User && ($user->getRole() == 2 || $user->getRole() == 1)) {
+            $message = null;
             $userInfo = $user->getUserInfo()->first();
             if ($userInfo == false) {
                 $userInfo = new UserInfo();
+                $message = 'Prašome užpildyti asmeninę informaciją';
             }
             $form = $this->createForm(UserInfoType::class, $userInfo, [
                 'action' => $this->generateUrl('userinfo_edit'),
@@ -36,24 +38,24 @@ class UserInfoController extends AbstractController
 
             //Handle the request
             $form->handleRequest($request);
-
             if ($form->isSubmitted() && $form->isValid()) {
                 $userInfo->setUserId($user);
                 $em = $this->getDoctrine()->getManager();
 
                 $em->persist($userInfo);
                 $em->flush();
+                if ($user->getRole() == 1) {
+                    return new RedirectResponse($urlGenerator->generate('patient'));
+                } else {
+                    return new RedirectResponse($urlGenerator->generate('specialist'));
+                }
             } else {
                 return $this->render('user_info/edit.html.twig', [
+                    'message' => $message,
                     'user_info_form' => $form->createView(),
                 ]);
             }
-
-            return $this->render('user_info/edit.html.twig', [
-                'user_info_form' => $form->createView(),
-            ]);
         }
-
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 }

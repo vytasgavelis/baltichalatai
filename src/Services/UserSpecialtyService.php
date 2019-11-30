@@ -55,7 +55,6 @@ class UserSpecialtyService
                 $specialty->setName($customSpecialtyData);
 
                 $this->manager->persist($specialty);
-                $this->manager->flush();
 
                 $userSpecialty->setUserId($user);
                 $userSpecialty->setSpecialtyId($specialty);

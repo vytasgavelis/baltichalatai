@@ -5,13 +5,23 @@
 {% block body %}
     <body class="bc-index">
     {% include 'components/layout/navbar.html.twig' %}
-    {% for specialty in app.user.getUserSpecialties() %}
 
-        <li>{{ specialty.getSpecialtyId().getName() }}</li>
-    {% endfor %}
     <div class="wrap edit-wrap">
-        <h3 class="search-header">Redaguoti Profilį:</h3>
-        {{ form(specialtiesForm) }}
+        <h3 class="search-header">Redaguoti specialybes:</h3>
+        <div>
+            {% for specialty in app.user.getUserSpecialties() %}
+                <li>{{ specialty.getSpecialtyId().getName() }}</li>
+            {% endfor %}
+        </div>
+        {{ form_start(specialtiesForm) }}
+        {{ form_widget(specialtiesForm.specialties) }}
+        {{ form_widget(specialtiesForm.custom_specialty, {'attr':
+            {'class': 'search-term', 'placeholder': 'Įvesti specialybę'}}
+        ) }}
+        {{ form_widget(specialtiesForm.submit, {'attr':
+            {'class': 'search-button', 'label': 'Pridėti'}}
+        ) }}
+        {{ form_end(specialtiesForm) }}
     </div>
     </body>
 {% endblock %}

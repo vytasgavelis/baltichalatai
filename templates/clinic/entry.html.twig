@@ -1,0 +1,40 @@
+{% block clinic_profile %}
+	<div class="container-fluid bc-patient-container">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="panel text-center">
+					<div class="user-heading">
+						<a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
+						<h2>{{ clinicInfo.getName() }}</h2>
+						<p>{{ clinicInfo.getPhoneNumber() }}</p>
+						<p>{{ clinicInfo.getAddress() }}</p>
+					</div>
+					<button class="btn btn-margin" onclick="location.href='/clinic/edit'">Redaguoti profilį</button>
+				</div>
+			</div>
+			<div class="col-sm-8 bc-patient-column-8">
+				<div class="card mt-3 tab-card">
+					<div class="card-header tab-card-header bc-patient-tab-header">
+						<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+							<li class="nav-item patient-tab">
+								<a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" selected="true">Gydytojų sąrašas</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+						{# Create a dataTable with vardas, specialybė, darbo laikas I-V: 8:00-15:00  +++ add specialist button AND delete #}
+{#                            <h5 class="card-title">Tab Card One</h5>#}
+{#							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+{#							<a href="#" class="btn btn-primary">Go somewhere</a>#}
+							{%  for specialist in app.user.getClinicSpecialists() %}
+								<p><a href="/specialist/show/{{ specialist.getSpecialistId().getId() }}">{{ specialist.getSpecialistId().getUserInfo().first.getName() }} {{ specialist.getSpecialistId().getUserInfo().first.getSurname() }}</a></p>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

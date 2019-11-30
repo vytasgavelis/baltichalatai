@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ClinicInfo;
 use App\Entity\UserInfo;
+use App\Entity\UserVisit;
 use App\Form\ClinicInfoType;
 use App\Form\UserInfoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +20,21 @@ class ClinicController extends AbstractController
 {
     /**
      * @Route("/clinic", name="clinic")
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
+     * @return RedirectResponse|Response
      */
-    public function index()
+    public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
-        return $this->render('clinic/index.html.twig', [
-            'controller_name' => 'ClinicController',
-        ]);
+        if ($user instanceof User && $user->getRole() == 3) {
+            if ($user->getClinicInfo() == null) {
+                return new RedirectResponse($urlGenerator->generate('clinic_edit'));
+            }
+            return $this->render('clinic/home.html.twig', [
+                'clinicInfo' => $user->getClinicInfo(),
+            ]);
+        }
+        throw $this->createNotFoundException();
     }
 
     /**
@@ -68,13 +78,14 @@ class ClinicController extends AbstractController
 
                 $em->persist($clinicInfo);
                 $em->flush();
+                return new RedirectResponse($urlGenerator->generate('clinic'));
+            } else {
+                return $this->render('clinic/edit.html.twig', [
+                    'clinic_info_form' => $form->createView(),
+                ]);
             }
-
-            return $this->render('clinic/edit.html.twig', [
-                'clinic_info_form' => $form->createView()
-            ]);
         }
 
-        return new RedirectResponse($urlGenerator->generate('app_login'));
+        throw $this->createNotFoundException();
     }
 }
