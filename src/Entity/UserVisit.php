@@ -40,7 +40,7 @@ class UserVisit
     private $visitDate;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @ORM\Column(type="string", length=2000, nullable=true)
      */
     private $description;
 
@@ -61,6 +61,14 @@ class UserVisit
     public function getCabinetNumber()
     {
         return $this->cabinetNumber;
+    }
+
+    /**
+     * @param mixed $cabinetNumber
+     */
+    public function setCabinetNumber($cabinetNumber): void
+    {
+        $this->cabinetNumber = $cabinetNumber;
     }
 
     /**

@@ -19,10 +19,6 @@ class UserVisitRepository extends ServiceEntityRepository
         parent::__construct($registry, UserVisit::class);
     }
 
-    // /**
-    //  * @return UserVisit[] Returns an array of UserVisit objects
-    //  */
-
     public function findBySpecialistId($value)
     {
         return $this->createQueryBuilder('u')
@@ -35,16 +31,13 @@ class UserVisitRepository extends ServiceEntityRepository
         ;
     }
 
-
-    /*
-    public function findOneBySomeField($value): ?UserVisit
+    public function checkIfWorkHourExists($date, $specialistId, $clinicId)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->getEntityManager()->getRepository(UserVisit::class)
+            ->findBy([
+                'specialistId' => $specialistId,
+                'clinicId' => $clinicId,
+                'visitDate' => $date
+            ]);
     }
-    */
 }
