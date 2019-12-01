@@ -166,6 +166,9 @@ class SpecialistService
             'clinicId' => $clinicId,
             'day' => $day,
         ]);
+        if (sizeof($spec) == 0) {
+            return null;
+        }
         if ($startOrEndOfDay == 'start') {
             return $spec[0]->getStartTime()->format('H:i');
         } else {

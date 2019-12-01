@@ -132,7 +132,7 @@ class SpecialistController extends AbstractController
                 $manager->flush();
             }
             return new RedirectResponse($urlGenerator->generate('specialist'));
-            $workHours = $this->specialistService->getSpecialistWorkHours($user);
+            /*$workHours = $this->specialistService->getSpecialistWorkHours($user);
 
             $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
 
@@ -140,7 +140,7 @@ class SpecialistController extends AbstractController
                 'workDayList' => $this->specialistService->getWorkdayList(),
                 'specClinics' => $specClinics,
                 'workHours' => $workHours,
-            ]);
+            ]);*/
         }
         throw $this->createNotFoundException('Puslapis nerastas');
     }
