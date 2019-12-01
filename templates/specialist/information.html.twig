@@ -3,6 +3,9 @@
         {% if specialist.getUserInfo() is not defined or specialist.getUserInfo() is  null %}
             <h1>Nepavyko rasti specialisto</h1>
         {% else %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ flashMessage }}</div>
+            {% endfor %}
             <div class="row">
                 <div class="col-sm-4">
                     <div class="panel text-center">

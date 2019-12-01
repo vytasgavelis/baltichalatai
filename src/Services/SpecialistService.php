@@ -47,8 +47,8 @@ class SpecialistService
                 $formattedTime = $d->format('H:i:s');
                 if ($this->checkIfDateIsOccupied(
                     new DateTime($formattedDate.$formattedTime),
-                    $workHour->getSpecialistId(),
-                    $workHour->getClinicId()
+                    $workHour->getSpecialistId()->getId(),
+                    $workHour->getClinicId()->getId()
                 )) {
                     continue;
                 } else {
@@ -178,10 +178,19 @@ class SpecialistService
      * @return string
      * @throws Exception
      */
-    public function getDateFromDayNumber($dayCount)
+    public function getDateFromDayNumber($dayCount): string
     {
         $date = new DateTime();
 
         return $date->modify('this week +'.($dayCount - 1).' days')->format('Y-m-d');
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getSpecialistVisits(int $id)
+    {
+        return $this->manager->getRepository(UserVisit::class)->findSpecialistVisits($id);
     }
 }
