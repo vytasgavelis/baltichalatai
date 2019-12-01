@@ -9,7 +9,6 @@
         {% elseif app.user.getRole() == 2 %}
           <li><button class="bc-link bc-spec" onclick="location.href='/specialist/edit'">Specialisto Paskyra</button></li>
           <li><button class="bc-link bc-spec" onclick="location.href='/userinfo/edit'">Mano Paskyra</button></li>
-          <li><button class="bc-link bc-spec" onclick="location.href='{{path('specialist_visits')}}'">Vizitai</button></li>
         {% elseif app.user.getRole() == 3 %}
           <li><button class="bc-link bc-spec" onclick="location.href='/clinic/edit'">Klinikos Paskyra</button></li>
         {% endif %}

@@ -47,8 +47,8 @@ class SpecialistService
                 $formattedTime = $d->format('H:i:s');
                 if ($this->checkIfDateIsOccupied(
                     new DateTime($formattedDate.$formattedTime),
-                    $workHour->getSpecialistId(),
-                    $workHour->getClinicId()
+                    $workHour->getSpecialistId()->getId(),
+                    $workHour->getClinicId()->getId()
                 )) {
                     continue;
                 } else {

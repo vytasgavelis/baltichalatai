@@ -206,6 +206,7 @@ class SpecialistController extends AbstractController
             $fullDate = new DateTime($reqInfo[1].$reqInfo[2]);
             // pries idedant pachekinam ar netycia kazkas anksciau jau nebus ten pat uzsiregistraves
             // kolkas redirectinam atgal, poto galbut kazkokia zinute prideti
+
             if ($this->specialistService->checkIfDateIsOccupied(
                 $fullDate,
                 $specialist[0]->getId(),
@@ -231,21 +232,5 @@ class SpecialistController extends AbstractController
         } else {
             throw new NotFoundHttpException('Klinikos negali registruotis į vizitus');
         }
-    }
-
-    /**
-     * @Route ("specialist/visits", name="specialist_visits")
-     * @param UserInterface $user
-     * @return Response
-     */
-    public function showSpecialistVisits(UserInterface $user)
-    {
-        if ($user->getRole() != 2) {
-            throw new NotFoundHttpException('Puslapis nerastas');
-        }
-        $visits = $this->specialistService->getSpecialistVisits($user->getId());
-        return $this->render('specialist/visits.html.twig', [
-            'visits' => $visits
-        ]);
     }
 }
