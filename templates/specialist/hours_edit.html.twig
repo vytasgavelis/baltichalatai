@@ -1,5 +1,8 @@
 {% block hours_edit %}
     <div class="container">
+        {% if specClinics|length == 0 %}
+            <p>Norėdami redaguoti savo grafiką turite priklausyti gydymo įstaigai.</p>
+        {% endif %}
         {% for clinic in specClinics %}
             <h3>{{ clinic.getClinicId().getClinicInfo().getName() }}</h3>
             <form action="{{ path('specialist_hours_edit', {'id': clinic.specialistId.id}) }}" method="POST">
