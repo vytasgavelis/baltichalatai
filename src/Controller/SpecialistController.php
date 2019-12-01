@@ -222,6 +222,7 @@ class SpecialistController extends AbstractController
             $visit = new UserVisit();
             $visit->setClientId($user);
             $visit->setSpecialistId($specialist[0]);
+            $visit->setDescription('');
             $visit->setClinicId($clinic[0]);
             $visit->setCabinetNumber(0); // TO DO change to specialists cabinet number
             $visit->setVisitDate($fullDate);
