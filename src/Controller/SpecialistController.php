@@ -232,4 +232,20 @@ class SpecialistController extends AbstractController
             throw new NotFoundHttpException('Klinikos negali registruotis į vizitus');
         }
     }
+
+    /**
+     * @Route ("specialist/visits", name="specialist_visits")
+     * @param UserInterface $user
+     * @return Response
+     */
+    public function showSpecialistVisits(UserInterface $user)
+    {
+        if ($user->getRole() != 2) {
+            throw new NotFoundHttpException('Puslapis nerastas');
+        }
+        $visits = $this->specialistService->getSpecialistVisits($user->getId());
+        return $this->render('specialist/visits.html.twig', [
+            'visits' => $visits
+        ]);
+    }
 }

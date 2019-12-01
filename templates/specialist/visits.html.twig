@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <body class="bc-index">
+    {% include 'components/layout/navbar.html.twig' %}
+    </body>
+    <div class="container container-fluid">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-dark table-sm">
+                    <thead>
+                    <tr>
+                        <th> Vardas</th>
+                        <th> Pavardė</th>
+                        <th> Vizito laikas</th>
+                        <th> Statusas</th>
+                        <th> Peržiūrėti</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for visit in visits %}
+                        <tr class="align-middle">
+                            <td class="align-middle"> {{ visit.getClientId.getUserInfo.0.getName }} </td>
+                            <td class="align-middle"> {{ visit.getClientId.getUserInfo().0.getSurname }} </td>
+                            <td class="align-middle"> {{ visit.getVisitDate.format('Y-m-d H:i:s') }}</td>
+                            {% if visit.getIsCompleted is null %}
+                                <td>
+                                    <form action="{{ path('close_visit', {'id': visit.getId}) }}" method="post">
+                                        <button class="btn btn-dark p-1"> Uždaryti</button>
+                                    </form>
+                                </td>
+                            {% else %}
+                                <td class="align-middle"> Uždaryta</td>
+                            {% endif %}
+                            <td>
+                                <form action="#" method="post">
+                                    <button type="submit" class="btn btn-dark p-1"> Peržiūrėti</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

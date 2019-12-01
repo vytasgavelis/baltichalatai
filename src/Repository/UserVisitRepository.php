@@ -27,17 +27,45 @@ class UserVisitRepository extends ServiceEntityRepository
             ->orderBy('u.visitDate', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
-    public function checkIfWorkHourExists($date, $specialistId, $clinicId)
+    /**
+     * @param int $specialistId
+     * @return mixed
+     */
+    public function findSpecialistVisits(int $specialistId)
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.specialistId = :specialistId')
+            ->setParameter('specialistId', $specialistId)
+            ->orderBy('v.visitDate', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $date
+     * @param $specialistId
+     * @param $clinicId
+     * @return mixed
+     */
+    public function checkIfWorkHourExists($date, int $specialistId, int $clinicId)
     {
         return $this->getEntityManager()->getRepository(UserVisit::class)
             ->findBy([
                 'specialistId' => $specialistId,
                 'clinicId' => $clinicId,
-                'visitDate' => $date
+                'visitDate' => $date,
             ]);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getVisitById(int $id)
+    {
+        return $this->getEntityManager()->getRepository(UserVisit::class)->find($id);
     }
 }
