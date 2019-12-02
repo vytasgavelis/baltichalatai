@@ -13,6 +13,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @ORM\Table(
+ *      name="user",
+ *      indexes={
+ *          @ORM\Index(name="idx_email", columns={"email"})
+ *     }
+ * )
  */
 class User implements UserInterface
 {
