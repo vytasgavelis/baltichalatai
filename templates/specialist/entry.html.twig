@@ -44,17 +44,19 @@
 							</tr>
 							</thead>
 							{% for visit in visits %}
-							<tr>
-								<td>{{ visit.getVisitDate()|date('H:i') }}</td>
-								<td>{{ visit.getDescription() }}</td>
-								<td>{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}<br></td>
-								<td>
-									<button type="button" class="btn btn-secondary" onclick="location.href='/uservisit/{{ visit.getId() }}/delete'" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Komentuoti"><i class="fa fa-comment" aria-hidden="true"></i></button>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Siuntimas"><i class="fa fa-envelope" aria-hidden="true"></i></button>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Receptas"><i class="fa fa-medkit" aria-hidden="true"></i></button>
-								</td>
-							</tr>
+								{% if visit.isCompleted == false %}
+									<tr>
+										<td>{{ visit.getVisitDate()|date('H:i') }}</td>
+										<td>{{ visit.getDescription() }}</td>
+										<td>{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}<br></td>
+										<td>
+											<button type="button" class="btn btn-secondary" onclick="location.href='/uservisit/{{ visit.getId() }}/close'" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
+											<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Komentuoti"><i class="fa fa-comment" aria-hidden="true"></i></button>
+											<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Siuntimas"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+											<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Receptas"><i class="fa fa-medkit" aria-hidden="true"></i></button>
+										</td>
+									</tr>
+								{% endif %}
 							{% endfor %}
 						</table>
 						{# Create button pop up form#}
