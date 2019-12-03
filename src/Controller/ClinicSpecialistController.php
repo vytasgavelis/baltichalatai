@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ClinicSpecialists;
 use App\Services\ClinicSpecialistService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -34,6 +35,25 @@ class ClinicSpecialistController extends AbstractController
     {
         if ($user->getRole() == 3) {
             $this->clinicSpecialistService->addSpecialist($user, $specialist);
+        }
+        return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist->getId()]));
+    }
+
+    /**
+     * @Route("/clinicspecialist/{id}/remove", name="clinic_specialist_remove")
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param User $specialist
+     * @param UserInterface|null $user
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function remove(UrlGeneratorInterface $urlGenerator, User $specialist, UserInterface $user = null)
+    {
+        if ($user instanceof User && $user->getRole() == 3) {
+            $em = $this->getDoctrine()->getManager();
+            $clinicSpecialists = $em->getRepository(ClinicSpecialists::class)
+                ->findBySpecialistIdAndClinicId($specialist->getId(), $user->getId());
+            $em->remove($clinicSpecialists[0]);
+            $em->flush();
         }
         return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist->getId()]));
     }

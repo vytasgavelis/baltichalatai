@@ -4,3 +4,4 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         specialist_service: '@App\Services\SpecialistService'
+        clinic_specialist_service: '@App\Services\ClinicSpecialistService'

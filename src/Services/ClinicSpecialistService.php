@@ -34,4 +34,14 @@ class ClinicSpecialistService
             $this->manager->flush();
         }
     }
+
+    public function specialistBelongsToClinic(User $specialist, User $clinic): bool
+    {
+        $clinicSpecialists = $this->manager->getRepository(ClinicSpecialists::class)
+            ->findBySpecialistIdAndClinicId($specialist->getId(), $clinic->getId());
+        if (sizeof($clinicSpecialists) != 0) {
+            return true;
+        }
+        return false;
+    }
 }
