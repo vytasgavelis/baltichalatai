@@ -105,7 +105,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 30px 80px;
-  background: rgba(176, 205, 242, 0.95);
+  background: RGBA(255, 255, 255, 0.95);
   margin-top: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -122,9 +122,9 @@
 }
 
 #form_search:hover {
-  color: rgb(66, 104, 188);
+  color: white;
   border: none;
-  background: white;
+  background: #fea757;;
 }
 
 #form_specialties {
@@ -183,7 +183,6 @@
   border-radius: 10px;
   overflow: hidden;
 }
-
 
 .table {
   width: 100%;
@@ -284,14 +283,14 @@
 
 .btn {
   margin-top: 10px;
-  background: white;
-  color: black;
-  border: 1px solid #196cba;
+  background: #5185fa;
+  color: white;
+  //border: 1px solid #196cba;
   border-radius: 5px;  
 }
 .btn:hover {
-  background: #196cba;
-  border: 1px solid #196cba;
+  background: #fea757;
+  //border: 1px solid #196cba;
   color: white;
 }
 
@@ -318,10 +317,10 @@
 // Patient Profile
 .bc-patient-container {
   width: 80%;
-  border: 3px solid #5185fa;
-  background: rgba(255, 255, 255, 0.9);
+  background: RGBA(255, 255, 255, 0.95);
   margin-top: 50px;
   max-width: 1200px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .bc-patient-column-8 {
@@ -347,7 +346,7 @@
 }
 
 
-//Specialist
+//Specialist page
 .specialist-work-hours {
   border-right: 2px solid rgba(66, 104, 188, 0.8);
   margin-left: 20px;
@@ -381,6 +380,7 @@
  
 #one, #two, #three {
   overflow: auto;
+  //min-height: 356px;
  }
 
 .edit-user-info {
@@ -500,9 +500,9 @@
 }
 
 #user_info_save:hover {
-    color: rgb(66, 104, 188);
+    color: white;
     border: none;
-    background: white;
+    background: #fea757;
 }
 
 .edit-wrap {
@@ -567,15 +567,15 @@
 }
 
 #clinic_info_save:hover {
-  color: rgb(66, 104, 188);
+  color: white;
   border: none;
-  background: white;
+  background: #fea757;
 }
 
 #form_submit:hover {
-  color: rgb(66, 104, 188);
+  color: white;
   border: none;
-  background: white;
+  background: #fea757;
 }
 
 // Registration page:
