@@ -70,15 +70,31 @@ class UserVisitController extends AbstractController
     }
 
     /**
-     * @Route ("/visit/{id}/close", name="close_visit")
-     * @param int $id
+     * @Route ("/uservisit/{id}/close", name="close_visit")
+     * @param UserVisit $userVisit
+     * @param UserInterface $user
      * @return RedirectResponse
      */
-    public function closeVisit(int $id)
+    public function closeVisit(UserVisit $userVisit, UserInterface $user)
     {
-        $this->visitService->closeVisit($id);
-        $this->bag->add('success', 'Vizitas uždarytas');
+        if ($user->getId() == $userVisit->getClientId()->getId()) {
+            $em = $this->getDoctrine()->getManager();
+            $userVisit->setIsCompleted(true);
+            $em->flush();
 
-        return new RedirectResponse($this->urlGenerator->generate('specialist_visits'));
+            $this->bag->add('success', 'Vizitas uždarytas');
+
+            return new RedirectResponse($this->urlGenerator->generate('patient'));
+        } elseif ($user->getId() == $userVisit->getSpecialistId()->getId()) {
+            $em = $this->getDoctrine()->getManager();
+            $userVisit->setIsCompleted(true);
+            $em->flush();
+
+            $this->bag->add('success', 'Vizitas uždarytas');
+
+            return new RedirectResponse($this->urlGenerator->generate('specialist'));
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 }
