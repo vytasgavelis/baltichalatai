@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ClinicSpecialists;
 use App\Services\ClinicSpecialistService;
+use App\Services\SpecialistService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,9 +20,15 @@ class ClinicSpecialistController extends AbstractController
      */
     private $clinicSpecialistService;
 
-    public function __construct(ClinicSpecialistService $clinicSpecialistService)
+    /**
+     * @var SpecialistService
+     */
+    private $specialistService;
+
+    public function __construct(ClinicSpecialistService $clinicSpecialistService, SpecialistService $specialistService)
     {
         $this->clinicSpecialistService = $clinicSpecialistService;
+        $this->specialistService = $specialistService;
     }
 
     /**
@@ -50,6 +57,7 @@ class ClinicSpecialistController extends AbstractController
     {
         if ($user instanceof User && $user->getRole() == 3) {
             $em = $this->getDoctrine()->getManager();
+            $this->specialistService->removeSpecialistWorkHours($specialist, $user);
             $clinicSpecialists = $em->getRepository(ClinicSpecialists::class)
                 ->findBySpecialistIdAndClinicId($specialist->getId(), $user->getId());
             $em->remove($clinicSpecialists[0]);
