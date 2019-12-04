@@ -12,7 +12,15 @@
                         <div class="user-heading">
                             <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
                             {% if app.user and app.user.getRole() == 3 %}
-                                <button onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/add'">Prideti specialista i istaiga</button>
+                                {% if not clinic_specialist_service.specialistBelongsToClinic(specialist, app.user) %}
+                                    <button onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/add'">
+                                        Pridėti specialistą į įstaigą
+                                    </button>
+                                {% else %}
+                                    <button onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/remove'">
+                                        Panaikinti specialistą
+                                    </button>
+                                {% endif %}
                             {% endif %}
                             <h2>{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</h2>
                             {% for specialty in specialist.getUserSpecialties() %}
@@ -22,9 +30,9 @@
                                 Specialistas įstaigai nepriklauso
                             {% else %}
                                 {% for clinic in specialist.getSpecialistClinics() %}
-                                <a href="/clinic/show/{{ clinic.getClinicId().getId() }}">
-                                    <p>{{ clinic.getClinicId().getClinicInfo().getName() }}</p>
-                                </a>
+                                    <a href="/clinic/show/{{ clinic.getClinicId().getId() }}">
+                                        <p>{{ clinic.getClinicId().getClinicInfo().getName() }}</p>
+                                    </a>
                                 {% endfor %}
                             {% endif %}
                             <p>{{ specialist.getUserInfo().first().getCity() }}</p>
@@ -63,7 +71,8 @@
                                 {% if app.user and app.user.getRole() == 2 and app.user.getId() == specialist.getId() %}
                                     <span> <a href="{{ path('specialist_hours_edit') }}"> Redaguoti </a></span>
                                 {% endif %}
-                                <form action="{{ path('specialist_register_visit', {'specialistId':  specialist.getId()}) }}" method="POST">
+                                <form action="{{ path('specialist_register_visit', {'specialistId':  specialist.getId()}) }}"
+                                      method="POST">
                                     <div>
                                         <div class="row specialist-hours-row">
                                             {% for clinic in workHours %}
@@ -74,7 +83,7 @@
                                                     {% for key, hour in clinic.0.hours %}
                                                         <div class="row">
                                                             <input type="radio" name="reg_time"
-                                                                value="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}">
+                                                                   value="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}">
                                                             {{ hour }}
                                                         </div>
                                                     {% endfor %}
@@ -84,9 +93,10 @@
                                     </div>
                                     <br><br>
                                     {% if app.user and app.user.getRole() == 1 %}
-                                    <input type="submit" id="form_search" value="Pasirinkti">
+                                        <input type="submit" id="form_search" value="Pasirinkti">
                                     {% else %}
-                                        <p>Norėdami registruotis vizitui, turite <a href="{{ path('app_login') }}">prisijungti</a> arba <a href="{{ path('app_register') }}">susikurti paskyrą</a></p>
+                                        <p>Norėdami registruotis vizitui, turite <a href="{{ path('app_login') }}">prisijungti</a>
+                                            arba <a href="{{ path('app_register') }}">susikurti paskyrą</a></p>
                                     {% endif %}
                                 </form>
                             </div>
@@ -96,5 +106,5 @@
             </div>
         {% endif %}
     </div>
-{#    test#}
+    {#    test#}
 {% endblock %}
