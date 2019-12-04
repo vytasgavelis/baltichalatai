@@ -46,7 +46,7 @@ class SpecialistService
                 $formattedDate = $this->getDateFromDayNumber($workHour->getDay());
                 $formattedTime = $d->format('H:i:s');
                 if ($this->checkIfDateIsOccupied(
-                    new DateTime($formattedDate.$formattedTime),
+                    new DateTime($formattedDate . $formattedTime),
                     $workHour->getSpecialistId()->getId(),
                     $workHour->getClinicId()->getId()
                 )) {
@@ -185,7 +185,7 @@ class SpecialistService
     {
         $date = new DateTime();
 
-        return $date->modify('this week +'.($dayCount - 1).' days')->format('Y-m-d');
+        return $date->modify('this week +' . ($dayCount - 1) . ' days')->format('Y-m-d');
     }
 
     /**
@@ -195,5 +195,14 @@ class SpecialistService
     public function getSpecialistVisits(int $id)
     {
         return $this->manager->getRepository(UserVisit::class)->findSpecialistVisits($id);
+    }
+
+    public function removeSpecialistWorkHours(User $specialist, User $clinic)
+    {
+        $workHours = $this->getWorkHours($specialist->getId(), $clinic->getId());
+        foreach ($workHours as $workHour) {
+            $this->manager->remove($workHour);
+        }
+        //$this->manager->flush();
     }
 }
