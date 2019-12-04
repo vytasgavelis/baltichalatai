@@ -79,17 +79,17 @@ class HomeController extends AbstractController
 //            'edit' => false,
 //        ]);
 //    }
-    /**
-     * @Route("/clinic/edit", name="clinicEdit")
-     */
-    public function clinicEdit()
-    {
-        return $this->render('home/clinic.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-            'edit' => true,
-        ]);
-    }
+//    /**
+//     * @Route("/clinic/edit", name="clinicEdit")
+//     */
+//    public function clinicEdit()
+//    {
+//        return $this->render('home/clinic.html.twig', [
+//            'someVariable' => 'NFQ Akademija',
+//            'is_logged_in' => false,
+//            'edit' => true,
+//        ]);
+//    }
     
     /**
      * @Route("/results", name="results")
