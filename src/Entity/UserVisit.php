@@ -50,26 +50,26 @@ class UserVisit
      */
     private $sendingToDoctorId;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $cabinetNumber;
+//    /**
+//     * @ORM\Column(type="integer")
+//     */
+//    private $cabinetNumber;
 
-    /**
-     * @return mixed
-     */
-    public function getCabinetNumber()
-    {
-        return $this->cabinetNumber;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getCabinetNumber()
+//    {
+//        return $this->cabinetNumber;
+//    }
 
-    /**
-     * @param mixed $cabinetNumber
-     */
-    public function setCabinetNumber($cabinetNumber): void
-    {
-        $this->cabinetNumber = $cabinetNumber;
-    }
+//    /**
+//     * @param mixed $cabinetNumber
+//     */
+//    public function setCabinetNumber($cabinetNumber): void
+//    {
+//        $this->cabinetNumber = $cabinetNumber;
+//    }
 
     /**
      * @return mixed
