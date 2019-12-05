@@ -33,20 +33,20 @@
                             {% for specialist in specialists %}
                                 <div class="results-row">
                                     <div class="cell" data-title="Full Name">
-                                        <a href="/specialist/show/{{ specialist.id }}">{{ specialist.name }} {{ specialist.surname }}</a>
+                                        <a href="/specialist/show/{{ specialist.getId() }}">{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</a>
                                     </div>
                                 <div class="cell" data-title="Age">
-                                    {{ specialist.specialty }}
+                                    {{ specialist.getUserSpecialties.first().getSpecialtyId().getName() }}
                                 </div>
                                 <div class="cell" data-title="Job Title">
                                     {% if specialist.clinic is not defined %}
                                         Specialistas istaigai nepriklauso
                                     {% else %}
-                                        {{ specialist.clinic }}
+                                        {{ specialist.getUserClinics.first().getName() }}
                                     {% endif %}
                                 </div>
                                 <div class="cell" data-title="Location">
-                                    {{ specialist.city }}
+                                    {{ specialist.getUserInfo().first().getCity() }}
                                 </div>
                                 </div>
                             {% endfor %}
@@ -60,6 +60,8 @@
 {#                <i class="fa fa-chevron-circle-right" style="font-size:60px;"></i>#}
 {#            </a>#}
         </div>
+{#        {{ specialists.getTotalItemCount }}#}
+{#        {{ knp_pagination_render(specialists) }}#}
         </div>
 
     </body>

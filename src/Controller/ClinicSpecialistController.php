@@ -65,4 +65,25 @@ class ClinicSpecialistController extends AbstractController
         }
         return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist->getId()]));
     }
+
+    /**
+     * @Route("clinicspecialist/assignToNoClinic", name="assign_to_no_clinic")
+     * @param UserInterface|null $user
+     */
+    public function assignSpecialistToNoClinic(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
+    {
+        if ($user instanceof User && $user->getRole() == 2) {
+
+            $clinic = $this->clinicSpecialistService->getNoClinic();
+            $clinicSpecialist = new ClinicSpecialists();
+            $clinicSpecialist->setClinicId($clinic[0]);
+            $clinicSpecialist->setSpecialistId($user);
+
+            $this->getDoctrine()->getManager()->persist($clinicSpecialist);
+            $this->getDoctrine()->getManager()->flush();
+
+            return new RedirectResponse($urlGenerator->generate('specialist'));
+        }
+        throw $this->createNotFoundException();
+    }
 }

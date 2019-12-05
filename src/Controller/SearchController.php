@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Specialty;
 use App\Entity\User;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -51,33 +52,48 @@ class SearchController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function results(Request $request)
+    public function results(Request $request, PaginatorInterface $paginator)
     {
-        $specialists = $this->getDoctrine()->getRepository(User::class)->search(
+
+        $queryBuilder = $this->getDoctrine()->getRepository(User::class)->getWithSearchQueryBuilder(
             $request->get('name'),
             $request->get('city'),
             $request->get('specialties')
         );
-        $data = [];
 
-        foreach ($specialists as $specialist) {
-            if ($specialist->getSpecialistClinics()->first() && $specialist->getSpecialistClinics()
-                    ->first()->getClinicId()->getClinicInfo() != null) {
-                $arr['clinic'] = $specialist->getSpecialistClinics()
-                    ->first()->getClinicId()->getClinicInfo()->getName();
-            } else {
-                $arr['clinic'] = 'Specialistas klinikai nepriklauso';
-            }
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
 
-            $arr['id'] = $specialist->getId();
-            $arr['name'] = $specialist->getUserInfo()->first()->getName();
-            $arr['surname'] = $specialist->getUserInfo()->first()->getSurname();
-            $arr['city'] = $specialist->getUserInfo()->first()->getCity();
-            $arr['specialty'] = $specialist->getUserSpecialties()->first()->getSpecialtyId()->getName();
-            $data[] = $arr;
-        }
+        return $this->render('home/results.html.twig', ['specialists' => $pagination]);
 
-        return $this->render('home/results.html.twig', ['specialists' => $data]);
+//        $specialists = $this->getDoctrine()->getRepository(User::class)->search(
+//            $request->get('name'),
+//            $request->get('city'),
+//            $request->get('specialties')
+//        );
+//        $data = [];
+//
+//        foreach ($specialists as $specialist) {
+//            if ($specialist->getSpecialistClinics()->first() && $specialist->getSpecialistClinics()
+//                    ->first()->getClinicId()->getClinicInfo() != null) {
+//                $arr['clinic'] = $specialist->getSpecialistClinics()
+//                    ->first()->getClinicId()->getClinicInfo()->getName();
+//            } else {
+//                $arr['clinic'] = 'Specialistas klinikai nepriklauso';
+//            }
+//
+//            $arr['id'] = $specialist->getId();
+//            $arr['name'] = $specialist->getUserInfo()->first()->getName();
+//            $arr['surname'] = $specialist->getUserInfo()->first()->getSurname();
+//            $arr['city'] = $specialist->getUserInfo()->first()->getCity();
+//            $arr['specialty'] = $specialist->getUserSpecialties()->first()->getSpecialtyId()->getName();
+//            $data[] = $arr;
+//        }
+//
+//        return $this->render('home/results.html.twig', ['specialists' => $data]);
     }
 
     public function validateInput($input)
