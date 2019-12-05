@@ -2,6 +2,8 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    paths:
+        '%kernel.project_dir%/vendor/knplabs/knp-paginator-bundle/templates': KnpPaginator
     globals:
         specialist_service: '@App\Services\SpecialistService'
         clinic_specialist_service: '@App\Services\ClinicSpecialistService'

@@ -50,6 +50,7 @@ class SearchController extends AbstractController
     /**
      * @Route("/search", name="search")
      * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
     public function results(Request $request, PaginatorInterface $paginator)

@@ -73,7 +73,6 @@ class ClinicSpecialistController extends AbstractController
     public function assignSpecialistToNoClinic(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
         if ($user instanceof User && $user->getRole() == 2) {
-
             $clinic = $this->clinicSpecialistService->getNoClinic();
             $clinicSpecialist = new ClinicSpecialists();
             $clinicSpecialist->setClinicId($clinic[0]);
