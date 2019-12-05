@@ -40,7 +40,7 @@ class ClinicSpecialistController extends AbstractController
      */
     public function add(UrlGeneratorInterface $urlGenerator, User $specialist, UserInterface $user = null)
     {
-        if ($user->getRole() == 3) {
+        if ($user instanceof User && $user->getRole() == 3) {
             $this->clinicSpecialistService->addSpecialist($user, $specialist);
         }
         return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist->getId()]));

@@ -30,9 +30,11 @@
                                 Specialistas įstaigai nepriklauso
                             {% else %}
                                 {% for clinic in specialist.getSpecialistClinics() %}
-                                    <a href="/clinic/show/{{ clinic.getClinicId().getId() }}">
-                                        <p>{{ clinic.getClinicId().getClinicInfo().getName() }}</p>
-                                    </a>
+                                    {% if clinic.getClinicId().getClinicInfo().getName() is defined %}
+                                        <a href="/clinic/show/{{ clinic.getClinicId().getId() }}">
+                                            <p>{{ clinic.getClinicId().getClinicInfo().getName() }}</p>
+                                        </a>
+                                    {% endif %}
                                 {% endfor %}
                             {% endif %}
                             <p>{{ specialist.getUserInfo().first().getCity() }}</p>

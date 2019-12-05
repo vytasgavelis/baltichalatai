@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191204195004 extends AbstractMigration
+final class Version20191205094633 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -24,7 +24,7 @@ final class Version20191204195004 extends AbstractMigration
 
         $this->addSql('CREATE TABLE user_education (id INT AUTO_INCREMENT NOT NULL, user_id_id INT NOT NULL, description LONGTEXT NOT NULL, INDEX IDX_DBEAD3369D86650F (user_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, role INT NOT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), INDEX idx_email (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE clinic_specialists (id INT AUTO_INCREMENT NOT NULL, clinic_id_id INT NOT NULL, specialist_id_id INT NOT NULL, cabinet_number INT NOT NULL, INDEX IDX_D21A57C3F6C03764 (clinic_id_id), INDEX IDX_D21A57C3C6F2BC85 (specialist_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE clinic_specialists (id INT AUTO_INCREMENT NOT NULL, clinic_id_id INT NOT NULL, specialist_id_id INT NOT NULL, INDEX IDX_D21A57C3F6C03764 (clinic_id_id), INDEX IDX_D21A57C3C6F2BC85 (specialist_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE clinic_info (id INT AUTO_INCREMENT NOT NULL, user_id_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, address VARCHAR(255) NOT NULL, webpage VARCHAR(255) DEFAULT NULL, phone_number VARCHAR(32) DEFAULT NULL, email VARCHAR(255) DEFAULT NULL, description LONGTEXT DEFAULT NULL, INDEX idx_user_id (user_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user_language (id INT AUTO_INCREMENT NOT NULL, user_id_id INT NOT NULL, language_id_id INT NOT NULL, INDEX IDX_345695B59D86650F (user_id_id), INDEX IDX_345695B51C9A06 (language_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE recipe (id INT AUTO_INCREMENT NOT NULL, description VARCHAR(2000) NOT NULL, valid_from DATETIME NOT NULL, valid_duration VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

@@ -61,7 +61,8 @@ class SearchController extends AbstractController
         $data = [];
 
         foreach ($specialists as $specialist) {
-            if ($specialist->getSpecialistClinics()->first()) {
+            if ($specialist->getSpecialistClinics()->first() && $specialist->getSpecialistClinics()
+                    ->first()->getClinicId()->getClinicInfo() != null) {
                 $arr['clinic'] = $specialist->getSpecialistClinics()
                     ->first()->getClinicId()->getClinicInfo()->getName();
             } else {
