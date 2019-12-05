@@ -61,8 +61,11 @@ class UserRepository extends ServiceEntityRepository
      * @param int|null $specialty
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getWithSearchQueryBuilder(string $name = null, string $city = null, int $specialty = null): \Doctrine\ORM\QueryBuilder
-    {
+    public function getWithSearchQueryBuilder(
+        string $name = null,
+        string $city = null,
+        int $specialty = null
+    ): \Doctrine\ORM\QueryBuilder {
         $query = $this->createQueryBuilder('u')
             ->select('u, us, spec')
             ->join('u.userInfo', 'us')
