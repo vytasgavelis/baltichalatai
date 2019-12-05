@@ -33,6 +33,7 @@ class SearchController extends AbstractController
             ->add('name', TextType::class, ['required' => false])
             ->add('city', TextType::class, ['required' => false])
             ->add('specialties', ChoiceType::class, [
+                'placeholder' => 'Specialybė',
                 'choices' => $choices,
                 'required' => false,
             ])
