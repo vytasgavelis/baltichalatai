@@ -94,7 +94,7 @@ class UserVisitController extends AbstractController
 
             return new RedirectResponse($this->urlGenerator->generate('specialist'));
         }
-
+        // comment to force git to update migration
         return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 }
