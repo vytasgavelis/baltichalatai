@@ -94,7 +94,8 @@ class SpecialistService
      */
     public function getClinic($id)
     {
-        return $this->manager->getRepository(User::class)->findByIdAndRole($id, 3);
+        //return $this->manager->getRepository(User::class)->findByIdAndRole($id, 3);
+        return $this->manager->getRepository(User::class)->findby(['id' => $id]);
     }
 
     /**

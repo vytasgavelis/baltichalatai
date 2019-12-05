@@ -10,7 +10,9 @@
 							<li>{{ specialty.getSpecialtyId().getName() }}</li>
 						{% endfor %}
 						{% for clinic in app.user.getSpecialistClinics() %}
-							<p><a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a></p>
+							{% if clinic.getClinicId.getRole() != 4 %}
+								<p><a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a></p>
+							{% endif %}
 						{% endfor %}
 					</div>
 					<button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>

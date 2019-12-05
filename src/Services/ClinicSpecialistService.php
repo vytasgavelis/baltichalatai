@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Entity\ClinicSpecialists;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+use PhpParser\Node\Expr\Array_;
 
 class ClinicSpecialistService
 {
@@ -43,5 +44,17 @@ class ClinicSpecialistService
             return true;
         }
         return false;
+    }
+
+    /**
+     * @return User[]
+     */
+    public function getNoClinic(): Array
+    {
+        $clinic = $this->manager->getRepository(User::class)
+            ->findBy([
+                'role' => 4,
+            ]);
+        return $clinic;
     }
 }

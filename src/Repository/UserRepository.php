@@ -45,14 +45,42 @@ class UserRepository extends ServiceEntityRepository
 
         if (!is_null($specialty)) {
             $query->andWhere('spec.specialtyId = :specId');
-            $query->setParameters(['name' => '%'.$name.'%', 'city' => '%'.$city.'%', 'specId' => $specialty]);
+            $query->setParameters(['name' => '%' . $name . '%', 'city' => '%' . $city . '%', 'specId' => $specialty]);
         } else {
-            $query->setParameters(['name' => '%'.$name.'%', 'city' => '%'.$city.'%']);
+            $query->setParameters(['name' => '%' . $name . '%', 'city' => '%' . $city . '%']);
         }
 
         return $query->andWhere('u.role = 2')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param string|null $name
+     * @param string|null $city
+     * @param int|null $specialty
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getWithSearchQueryBuilder(
+        string $name = null,
+        string $city = null,
+        int $specialty = null
+    ): \Doctrine\ORM\QueryBuilder {
+        $query = $this->createQueryBuilder('u')
+            ->select('u, us, spec')
+            ->join('u.userInfo', 'us')
+            ->join('u.userSpecialties', 'spec')
+            ->where('concat(us.name, us.surname) like :name')
+            ->andWhere('us.city like :city');
+
+        if (!is_null($specialty)) {
+            $query->andWhere('spec.specialtyId = :specId');
+            $query->setParameters(['name' => '%' . $name . '%', 'city' => '%' . $city . '%', 'specId' => $specialty]);
+        } else {
+            $query->setParameters(['name' => '%' . $name . '%', 'city' => '%' . $city . '%']);
+        }
+
+        return $query->andWhere('u.role = 2');
     }
 
     public function getUsers()
