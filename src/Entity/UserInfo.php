@@ -58,10 +58,10 @@ class UserInfo
      */
     private $city;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $personCode;
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $personCode;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -163,17 +163,17 @@ class UserInfo
         return $this;
     }
 
-    public function getPersonCode(): ?string
-    {
-        return $this->personCode;
-    }
-
-    public function setPersonCode(string $personCode): self
-    {
-        $this->personCode = $personCode;
-
-        return $this;
-    }
+//    public function getPersonCode(): ?string
+//    {
+//        return $this->personCode;
+//    }
+//
+//    public function setPersonCode(string $personCode): self
+//    {
+//        $this->personCode = $personCode;
+//
+//        return $this;
+//    }
 
     public function getDescription(): ?string
     {

@@ -15,15 +15,15 @@ class UserInfoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ['label'=> 'Vardas'])
-            ->add('surname', null, ['label'=> 'Pavardė'])
-            ->add('phoneNumber', null, ['label'=> 'Telefono Nr.'])
-            ->add('personalEmail', null, ['label'=> 'El. Paštas'])
+            ->add('name', null, ['label'=> 'Vardas', 'empty_data' => '',])
+            ->add('surname', null, ['label'=> 'Pavardė', 'empty_data' => '',])
+            ->add('phoneNumber', null, ['label'=> 'Telefono Nr.', 'empty_data' => '',])
+            ->add('personalEmail', null, ['label'=> 'El. Paštas', 'empty_data' => '',])
             ->add('dateOfBirth', DateType::class, [
                 'years' => range(date('Y') - 100, date('Y')), 'label'=> 'Gimimo Data'])
-            ->add('city', TextType::class, ['label'=> 'Miestas'])
-            ->add('personCode', null, ['label'=> 'Asmens Kodas'])
-            ->add('description', TextType::class, ['label'=> 'Aprašymas'])
+            ->add('city', TextType::class, ['label'=> 'Miestas', 'empty_data' => '',])
+//            ->add('personCode', null, ['label'=> 'Asmens Kodas'])
+            ->add('description', TextType::class, ['label'=> 'Aprašymas', 'required' => false,])
             ->add('save', SubmitType::class, ['label'=> 'Išsaugoti']);
     }
 

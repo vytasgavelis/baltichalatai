@@ -3,6 +3,9 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="panel text-center">
+					{% for flashMessage in app.session.flashbag.get('success') %}
+						<div class="alert alert-success">{{ flashMessage }}</div>
+					{% endfor %}
 					<div class="user-heading">
 						<a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
 						<h2>{{ clinicInfo.getName() }}</h2>
