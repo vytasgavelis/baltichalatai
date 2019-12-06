@@ -162,7 +162,7 @@ class SpecialistController extends AbstractController
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(
                     $responseData['specialties'],
-                    $responseData['custom_specialty'],
+                    //                    $responseData['custom_specialty'],
                     $user
                 );
             }
@@ -188,7 +188,7 @@ class SpecialistController extends AbstractController
                 'choices' => $choices,
                 'required' => false,
             ])
-            ->add('custom_specialty', TextType::class, ['required' => false])
+//            ->add('custom_specialty', TextType::class, ['required' => false])
             ->add('submit', SubmitType::class, ['label' => 'Prideti'])
             ->getForm();
 

@@ -59,8 +59,10 @@ class UserInfoController extends AbstractController
 
             //Handle the request
             $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid() && $this->userInfoService->validateUserInfoForm($request->request->get('user_info')) == "") {
+            if ($form->isSubmitted() && $form->isValid() &&
+                $this->userInfoService->validateUserInfoForm($request->request->get('user_info')) == "") {
                 $userInfo->setUserId($user);
+                $userInfo->setPersonCode('');
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($userInfo);
                 $em->flush();

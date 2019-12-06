@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class UserInfoService
