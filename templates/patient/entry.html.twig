@@ -82,23 +82,15 @@
 								<th>Apsilankymo data</th>
 								<th>Gyd. komentaras</th>
 							</tr>
-							</thead>
-							<tr>
-								<td>2019/11/15</td>
-								<td>Itariama mažakraujystė.</td>
-							</tr>
-							<tr>
-								<td>2019/10/20</td>
-								<td>Siunčiama peršviesti stuburą dėl itariamos išvaržos.</td>
-							</tr>
-							<tr>
-								<td>2019/08/13</td>
-								<td>Peršalimo simptomai. Išduotas biuletenis.</td>
-							</tr>
-							<tr>
-								<td>2019/06/21</td>
-								<td>Nustatyta alergija gyvūnams.</td>
-							</tr>
+						</thead>
+						<tbody>
+							{% for visit in visits %}
+								<tr>
+									<td> {{ visit.visitDate.format('Y-m-d') }} </td>
+									<td> {{ visit.description }} </td>
+								</tr>
+							{% endfor %}
+						</tbody>
 						</table>
 						</div>
 					</div>
