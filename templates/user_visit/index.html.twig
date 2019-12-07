@@ -3,18 +3,53 @@
 {% block title %}Hello UserVisitController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container-fluid bc-patient-container">
+        <form action="{{ path('save_visit_info', {'id': userVisit.getId}) }}" method="post">
+            <div class="row">
+                <h3> Vizito informacija </h3>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <label for="visit-comment"> Vizito komentaras </label>
+                    <textarea class="form-control" name="visit-comment">{{ userVisit.description ?? '' }} </textarea>
+                </div>
+                <div class="col-md-3 offset-2 justify-content-center float-right mt-4">
+                    <button type="submit" class="btn"> Išsaugoti vizito informaciją </button>
+                </div>
+            </div>
+        </form>
+        <form action="{{ path('save_recipe_info', {'id': userVisit.getId}) }}" method="post">
+            <div class="row">
+                <h3> Recepto informacija </h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="recipe-description"> Recepto aprašas </label>
+                    <textarea class="form-control" name="recipe-comment">{{ userVisit.recipeId.getDescription ?? '' }}</textarea>
+                </div>
+                <div class="col-md-3">
+                    <label for="recipe-duration"> Recepto galiojimo laikas </label>
+                    <input type="text" class="form-control mt-2" name="recipe-duration" value="{{ userVisit.recipeId.getValidDuration ?? '' }}">
+                </div>
+                <div class="col-md-3 justify-content-center float-right mt-4">
+                    <button type="submit" class="btn">Išsaugoti recepto informaciją</button>
+                </div>
+            </div>
+        </form>
+        <form action="{{ path('save_sending_info', {'id': userVisit.getId}) }}" method="post">
+            <div class="row">
+                <h3>Siuntimo informacija </h3>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <label for="recipe-description"> Siuntimo aprašas </label>
+                    <textarea class="form-control" name="sending-to-doctor-comment">{{ userVisit.sendingToDoctorId.getDescription ?? '' }}</textarea>
+                </div>
+                <div class="col-md-3 offset-2 justify-content-center float-right mt-4">
+                    <button type="submit" class="btn"> Išsaugoti siuntimo informaciją </button>
+                </div>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/code/src/Controller/UserVisitController.php'|file_link(0) }}">src/Controller/UserVisitController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/code/templates/user_visit/index.html.twig'|file_link(0) }}">templates/user_visit/index.html.twig</a></code></li>
-    </ul>
-</div>
+        </form>
+    </div>
 {% endblock %}

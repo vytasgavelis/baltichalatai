@@ -56,9 +56,9 @@
 										<td>{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}<br></td>
 										<td>
 											<button type="button" class="btn btn-secondary" onclick="location.href='/uservisit/{{ visit.getId() }}/close'" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-											<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Komentuoti"><i class="fa fa-comment" aria-hidden="true"></i></button>
-											<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Siuntimas"><i class="fa fa-envelope" aria-hidden="true"></i></button>
-											<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Receptas"><i class="fa fa-medkit" aria-hidden="true"></i></button>
+											<a href="{{ path('visit_info', {'id': visit.getId}) }}" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Komentuoti"><i class="fa fa-comment" aria-hidden="true"></i></a>
+											<a href="{{ path('visit_info', {'id': visit.getId}) }}" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Siuntimas"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+											<a href="{{ path('visit_info', {'id': visit.getId}) }}" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Receptas"><i class="fa fa-medkit" aria-hidden="true"></i></a>
 										</td>
 									</tr>
 								{% endif %}

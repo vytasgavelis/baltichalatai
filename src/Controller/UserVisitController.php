@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\UserVisit;
 use App\Services\UserVisitService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -94,7 +97,67 @@ class UserVisitController extends AbstractController
 
             return new RedirectResponse($this->urlGenerator->generate('specialist'));
         }
+
         // comment to force git to update migration
         return new RedirectResponse($this->urlGenerator->generate('app_login'));
+    }
+
+    /**
+     * @Route ("/uservisit/{id}/visit_info", name="visit_info")
+     * @param UserVisit $userVisit
+     * @param UserInterface $user
+     * @return Response
+     */
+    public function showVisitCommentary(UserVisit $userVisit, UserInterface $user)
+    {
+        return $this->render('user_visit/index.html.twig', [
+            'userVisit' => $userVisit,
+        ]);
+    }
+
+    /**
+     * @Route ("/uservisit/{id}/save_visit_info", name="save_visit_info")
+     * @param UserVisit $visit
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function saveVisitInfo(UserVisit $visit, Request $request)
+    {
+        $this->visitService->saveVisitInfo($visit, $request->get('visit-comment'));
+
+        $this->bag->add('success', 'Išsaugota vizito informacija');
+
+        return $this->redirectToRoute('visit_info', ['id' => $visit->getId()]);
+    }
+
+    /**
+     * @Route ("/uservisit/{id}/save_recipe_info", name="save_recipe_info")
+     * @param UserVisit $visit
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function saveRecipeInfo(UserVisit $visit, Request $request)
+    {
+        $this->visitService->saveRecipeInfo($visit, $request->get('recipe-comment'), $request->get('recipe-duration'));
+
+        $this->bag->add('success', 'Išsaugota recepto informacija');
+
+        return $this->redirectToRoute('visit_info', ['id' => $visit->getId()]);
+    }
+
+    /**
+     * @Route ("/uservisit/{id}/save_sending_info", name="save_sending_info")
+     * @param UserVisit $visit
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function saveSendingToDoctorInfo(UserVisit $visit, Request $request)
+    {
+        $this->visitService->saveSendingToDoctorInfo($visit, $request->get('sending-to-doctor-comment'));
+
+        $this->bag->add('success', 'Išsaugota siuntimo informacija');
+
+        return $this->redirectToRoute('visit_info', ['id' => $visit->getId()]);
     }
 }
