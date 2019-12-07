@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Services\PatientServices;
+use App\Services\UserVisitService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +15,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class PatientController extends AbstractController
 {
+    /**
+     * @var PatientServices
+     */
+    private $patientServices;
+
+    /**
+     * PatientController constructor.
+     * @param PatientServices $patientServices
+     */
+    public function __construct(PatientServices $patientServices)
+    {
+        $this->patientServices = $patientServices;
+    }
+
+
     /**
      * @Route("/patient/show/{id}", name="patient_show")
      * @param $id
@@ -25,6 +42,7 @@ class PatientController extends AbstractController
         if (sizeof($patient) == 0) {
             $patient = null;
         }
+
         return $this->render('patient/index.html.twig', [
             'patient' => $patient[0],
         ]);
@@ -45,6 +63,8 @@ class PatientController extends AbstractController
             return $this->render('patient/home.html.twig', [
                 'visits' => $user->getUserVisits(),
                 'userInfo' => $user->getUserInfo()->first(),
+                'clientRecipes' => $this->patientServices->getClientRecipes($user),
+                'clientSendings' => $this->patientServices->getClientSendingsToDoctor($user),
             ]);
         }
 

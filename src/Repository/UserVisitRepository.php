@@ -68,4 +68,32 @@ class UserVisitRepository extends ServiceEntityRepository
     {
         return $this->getEntityManager()->getRepository(UserVisit::class)->find($id);
     }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getVisitsWithRecipesByClientId(int $id)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.clientId = :client')
+            ->andWhere('u.recipeId is not null')
+            ->setParameter('client', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getVisitsWithSendingsByClientId(int $id)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.clientId = :client')
+            ->andWhere('u.sendingToDoctorId is not null')
+            ->setParameter('client', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }
