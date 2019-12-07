@@ -41,7 +41,8 @@ class SpecialistController extends AbstractController
         SpecialistService $specialistService,
         UserSpecialtyService $userSpecialtyService,
         FlashBagInterface $bag
-    ) {
+    )
+    {
         $this->specialistService = $specialistService;
         $this->userSpecialtyService = $userSpecialtyService;
         $this->bag = $bag;
@@ -130,6 +131,7 @@ class SpecialistController extends AbstractController
                     $manager->persist($workHours);
                 }
                 $manager->flush();
+                $this->bag->add('success', 'Grafikas išsaugotas.');
             }
             return new RedirectResponse($urlGenerator->generate('specialist'));
             /*$workHours = $this->specialistService->getSpecialistWorkHours($user);
@@ -175,6 +177,25 @@ class SpecialistController extends AbstractController
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 
+    /**
+     * @Route("/specialist/userspecialty/remove/{id}", name="user_specialty_remove")
+     * @param UserSpecialty $userSpecialty
+     * @param UserInterface|null $user
+     */
+    public function deleteUserSpecialty(UserSpecialty $userSpecialty, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
+    {
+        if ($user instanceof User && $userSpecialty->getUserId()->getId() == $user->getId()){
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($userSpecialty);
+            $manager->flush();
+
+            $this->bag->add('success', 'Specialybė buvo pašalinta.');
+
+            return new RedirectResponse($urlGenerator->generate('specialist_edit'));
+        }
+        throw $this->createNotFoundException();
+    }
+
     private function createSpecialistForm(UserInterface $user = null)
     {
         $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
@@ -209,13 +230,14 @@ class SpecialistController extends AbstractController
         Request $request,
         UrlGeneratorInterface $urlGenerator,
         UserInterface $user = null
-    ) {
+    )
+    {
         if ($user instanceof User and $user->getRole() != 3) {
             $manager = $this->getDoctrine()->getManager();
             $reqInfo = explode(';', $request->get('reg_time'));
             $specialist = $this->specialistService->getSpecialist($specialistId);
             $clinic = $this->specialistService->getClinic($reqInfo[0]);
-            $fullDate = new DateTime($reqInfo[1].$reqInfo[2]);
+            $fullDate = new DateTime($reqInfo[1] . $reqInfo[2]);
             // pries idedant pachekinam ar netycia kazkas anksciau jau nebus ten pat uzsiregistraves
             // kolkas redirectinam atgal, poto galbut kazkokia zinute prideti
 

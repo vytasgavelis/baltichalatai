@@ -17,6 +17,7 @@
         <div>
             {% for specialty in app.user.getUserSpecialties() %}
                 <li>{{ specialty.getSpecialtyId().getName() }}</li>
+                <a href="{{ path('user_specialty_remove', {'id': specialty.getId()}) }}">Panaikinti</a>
             {% endfor %}
         </div>
         {{ form_start(specialtiesForm) }}
