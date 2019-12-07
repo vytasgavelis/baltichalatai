@@ -60,43 +60,19 @@
 						<thead>
 							<tr>
 								<th>Išduota</th>
-								<th>Galioja iki</th>
-								<th>Pavadinimas</th>
+								<th>Galioja</th>
+								<th>Aprašas</th>
 								<th>Veiksmai</th>
 							</tr>
 							</thead>
-							<tr>
-								<td>2019/11/15</td>
-								<td>2019/12/15</td>
-								<td>Aspirinas</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
-							<tr>
-								<td>2019/10/20</td>
-								<td>2020/11/10</td>
-								<td>Aktiprol</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
-							<tr>
-								<td>2019/08/13</td>
-								<td>2019/09/13</td>
-								<td>Diclac</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
-							<tr>
-								<td>2019/06/21</td>
-								<td>2019/07-21</td>
-								<td>Ketanov</td>
-								<td>
-									<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i class="fa fa-times" aria-hidden="true"></i></button>
-								</td>
-							</tr>
+							{% for recipe in clientRecipes %}
+								<tr>
+									<td> {{ recipe.getRecipeId.getValidFrom.format('Y-m-d') }}</td>
+									<td> {{ recipe.getRecipeId.getValidDuration }}</td>
+									<td> {{ recipe.getRecipeId.getDescription }} </td>
+									<td> <a href="https://vaistai.lt/paieska/{{ recipe.getRecipeId.getDescription }}"> ieškoti </a></td>
+								</tr>
+							{% endfor %}
 						</table>
 						</div>
 						<div class="tab-pane fade p-3" id="three" role="tabpanel" aria-labelledby="three-tab">
