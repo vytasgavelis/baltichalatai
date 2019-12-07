@@ -102,11 +102,11 @@ class AppFixtures extends Fixture
                 $userInfo->setPhoneNumber($this->getPhoneNumber());
                 $userInfo->setPersonalEmail($this->getEmail($name, $surname));
 
-                $date = '19' . mt_rand(30, 90) . '-' . mt_rand(1, 12) . '-' . mt_rand(1, 28);
+                $date = '19'.mt_rand(30, 90).'-'.mt_rand(1, 12).'-'.mt_rand(1, 28);
                 try {
                     $userInfo->setDateOfBirth(new DateTime($date));
                 } catch (Exception $e) {
-                    throw (new Exception('No date found ' . $e));
+                    throw (new Exception('No date found '.$e));
                 }
                 $userInfo->setCity('Kaunas');
                 $userInfo->setPersonCode('3000000000');
@@ -115,13 +115,13 @@ class AppFixtures extends Fixture
                 $manager->persist($userInfo);
             } else {
                 $clinicInfo = new ClinicInfo();
-                $clinicName = $this->getNames() . ' ' . $this->getSurname();
-                $clinicInfoName = str_replace(' ', '', strtolower($clinicName));
-                $clinicInfo->setName('Klinika kurią valdo: ' . $clinicInfoName);
+                $clinicNames = $this->getClinicName();
+                $clinicInfoName = $clinicNames[mt_rand(0, (sizeof($clinicNames) - 1))];
+                $clinicInfo->setName($clinicInfoName);
                 $clinicInfo->setAddress('Klinikos 14, Kaunas');
-                $clinicInfo->setWebpage('https://' . $clinicInfoName . 'klinika.lt');
+                $clinicInfo->setWebpage('https://'.$clinicInfoName.'.klinika.lt');
                 $clinicInfo->setPhoneNumber($this->getPhoneNumber());
-                $clinicInfo->setEmail('info@' . $clinicInfoName . 'klinika.com');
+                $clinicInfo->setEmail('info@'.$clinicInfoName.'.klinika.com');
                 $clinicInfo->setDescription($this->getDescription());
                 $clinicInfo->setUserId($usr);
                 $manager->persist($clinicInfo);
@@ -247,6 +247,7 @@ class AppFixtures extends Fixture
     {
         $clients = $manager->getRepository(User::class)->getUsers();
         $clinicSpecialists = $manager->getRepository(ClinicSpecialists::class)->findAll();
+        $visitDescriptions = $this->getVisitDescriptions();
         foreach ($clients as $client) {
             if (mt_rand(0, 10) < 3) { //simuliuojam, kad ne visi pacientai turejo vizitu
                 continue;
@@ -260,12 +261,12 @@ class AppFixtures extends Fixture
             $day = mt_rand(1, 28);
             $hour = mt_rand(8, 20);
             $visit->setVisitDate(new DateTime("2019-$month-$day $hour:00:00"));
-            $visit->setDescription($this->getDescription());
+            $visit->setDescription($visitDescriptions[mt_rand(0, sizeof($visitDescriptions) - 1)]);
             if (mt_rand(0, 10) < 3) { //simuliuojam, kad tik 30% vizitu metu bus gaunamas siuntimas
                 $sendToDoctor = new SendingToDoctor();
                 $sendToDoctor->setClientId($client);
                 $sendToDoctor->setSpecialistId($clinicSpec->getSpecialistId());
-                $sendToDoctor->setDescription($this->getDescription());
+                $sendToDoctor->setDescription($visitDescriptions[mt_rand(0, sizeof($visitDescriptions) - 1)]);
                 $manager->persist($sendToDoctor);
                 $manager->flush();
                 $visit->setSendingToDoctorId($sendToDoctor);
@@ -273,7 +274,20 @@ class AppFixtures extends Fixture
 
             if (mt_rand(0, 10) < 3) { //simuliuojam, kad tik 30% vizitu metu bus israsomas receptas
                 $recipe = new Recipe();
-                $recipe->setDescription($this->getDescription());
+                $drugNames = $this->getRecipeDrugNames();
+                $drugAmounts = $this->getRecipeDrugAmounts();
+                $drugSize = 0;
+                $timesPerDay = mt_rand(1, 3);
+                $timesPerDayPhrase = $timesPerDay == 1 ? 'kartą' : 'kartus';
+                $amount = $drugAmounts[mt_rand(0, sizeof($drugAmounts) - 1)];
+                if ($amount == 'tabletes') {
+                    $drugSize = mt_rand(2, 5);
+                } else {
+                    $drugSize = mt_rand(0, 100);
+                }
+                $description = 'Vartoti '.$drugNames[mt_rand(0, sizeof($drugNames) - 1)].'  '.$timesPerDay. ' '
+                    .$timesPerDayPhrase.' per dieną po '.$drugSize.' '.$amount;
+                $recipe->setDescription($description);
                 $recipe->setValidFrom(new DateTime("2019-$month-$day"));
                 $recipe->setValidDuration("$day menesių nuo išrašymo datos");
                 $manager->persist($recipe);
@@ -284,6 +298,7 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
     }
+
     protected function showTableLoadCompleteMessage($tableName): void
     {
         echo "Inserted $tableName table data\r\n";
@@ -293,25 +308,40 @@ class AppFixtures extends Fixture
     protected function getNames(): string
     {
         $nameArr = [
-            'Aidas', 'Aldas', 'Algirdas', 'Dainius', 'Eimantas', 'Gediminas', 'Irmantas', 'Jaunius', 'Kęstas', 'Linas',
-            'Mantas', 'Nerijus', 'Rimas', 'Tauras', 'Ugnius', 'Vaidas'
+            'Aidas',
+            'Aldas',
+            'Algirdas',
+            'Dainius',
+            'Eimantas',
+            'Gediminas',
+            'Irmantas',
+            'Jaunius',
+            'Kęstas',
+            'Linas',
+            'Mantas',
+            'Nerijus',
+            'Rimas',
+            'Tauras',
+            'Ugnius',
+            'Vaidas',
         ];
+
         return $nameArr[mt_rand(0, sizeof($nameArr) - 1)];
     }
 
     protected function getSurname(): string
     {
-        return str_replace('as', '', $this->getNames()) . 'auskas';
+        return str_replace('as', '', $this->getNames()).'auskas';
     }
 
     protected function getPhoneNumber(): string
     {
-        return '86' . mt_rand(1000000, 9999999);
+        return '86'.mt_rand(1000000, 9999999);
     }
 
     protected function getEmail($name, $surname): string
     {
-        return $name . '.' . $surname . '@test.com';
+        return $name.'.'.$surname.'@test.com';
     }
 
     protected function getDescription(): string
@@ -327,15 +357,97 @@ class AppFixtures extends Fixture
     protected function getSpecialties(): array
     {
         return [
-            'Chirurgas', 'Dermatologas', 'Kardiologas', 'Odontologas', 'Endokrinologas', 'Genetikas', 'Imunologas',
-            'Logopedas', 'Neurologas', 'Neurochirurgas', 'Psichologas', 'Toksikologas', 'Vaikų chirurgas'
+            'Chirurgas',
+            'Dermatologas',
+            'Kardiologas',
+            'Odontologas',
+            'Endokrinologas',
+            'Genetikas',
+            'Imunologas',
+            'Logopedas',
+            'Neurologas',
+            'Neurochirurgas',
+            'Psichologas',
+            'Toksikologas',
+            'Vaikų chirurgas',
         ];
     }
 
     protected function getLanguages(): array
     {
         return [
-            'LT' => 'Lietuvių', 'EN' => 'Anglų', 'RU' => 'Rusų', 'FR' => 'Prancūzų', 'DE' => 'Vokiečių'
+            'LT' => 'Lietuvių',
+            'EN' => 'Anglų',
+            'RU' => 'Rusų',
+            'FR' => 'Prancūzų',
+            'DE' => 'Vokiečių',
         ];
+    }
+
+    protected function getClinicName(): array
+    {
+        return [
+            'Centrinė konsultacinė poliklinika',
+            'Aleksoto PSP poliklinika',
+            'Baltic medicale',
+            'Achemos poliklinika',
+            'Lazdynų poliklinika',
+            'Sveikatos priežiūros poliklinika',
+            'Kauno klinikinė ligoninė',
+            'Lietuvos respublikinė ligoninė',
+            'Euromed klinika',
+            'Naujosios Vilnios poliklinika',
+        ];
+    }
+
+    protected function getVisitDescriptions(): array
+    {
+        return [
+            'Peršalimas',
+            'Kojos lūžis',
+            'Nemiga',
+            'Migrena',
+            'Apetito dingimas',
+            'Vizitas po operacijas',
+            'Kraujo tyrimai',
+            'Kraujo tyrimų aptarimas',
+            'Nusimušė pirštą',
+            'Išdžiuvo akys',
+            'Akių tyrimas',
+            'Skauda galvą',
+            'Pučia pilvą',
+            'Atminties praradimas',
+        ];
+    }
+
+    protected function getRecipeDrugNames(): array
+    {
+        return [
+            'Nimesil',
+            'Ospamox',
+            'Xanax',
+            'Actifed',
+            'Lexotanil',
+            'Meurorubine',
+            'Furadonins',
+            'Cavinton Forte',
+            'Omeprazol',
+            'Boncel',
+            'Cirrus',
+            'Movalis',
+            'Sirdalud',
+            'Uvamin',
+            'Mildronate',
+            'Xefo',
+            'Ventonil',
+            'Tardyferon',
+            'Olfen',
+            'Gelomyrtol forte',
+        ];
+    }
+
+    protected function getRecipeDrugAmounts(): array
+    {
+        return ['mg', 'ml', 'tabletes'];
     }
 }
