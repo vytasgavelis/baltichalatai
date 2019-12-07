@@ -41,8 +41,7 @@ class SpecialistController extends AbstractController
         SpecialistService $specialistService,
         UserSpecialtyService $userSpecialtyService,
         FlashBagInterface $bag
-    )
-    {
+    ) {
         $this->specialistService = $specialistService;
         $this->userSpecialtyService = $userSpecialtyService;
         $this->bag = $bag;
@@ -180,11 +179,16 @@ class SpecialistController extends AbstractController
     /**
      * @Route("/specialist/userspecialty/remove/{id}", name="user_specialty_remove")
      * @param UserSpecialty $userSpecialty
+     * @param UrlGeneratorInterface $urlGenerator
      * @param UserInterface|null $user
+     * @return RedirectResponse
      */
-    public function deleteUserSpecialty(UserSpecialty $userSpecialty, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
-    {
-        if ($user instanceof User && $userSpecialty->getUserId()->getId() == $user->getId()){
+    public function deleteUserSpecialty(
+        UserSpecialty $userSpecialty,
+        UrlGeneratorInterface $urlGenerator,
+        UserInterface $user = null
+    ) {
+        if ($user instanceof User && $userSpecialty->getUserId()->getId() == $user->getId()) {
             $manager = $this->getDoctrine()->getManager();
             $manager->remove($userSpecialty);
             $manager->flush();
@@ -231,8 +235,7 @@ class SpecialistController extends AbstractController
         Request $request,
         UrlGeneratorInterface $urlGenerator,
         UserInterface $user = null
-    )
-    {
+    ) {
         if ($user instanceof User and $user->getRole() != 3) {
             $manager = $this->getDoctrine()->getManager();
             $reqInfo = explode(';', $request->get('reg_time'));
