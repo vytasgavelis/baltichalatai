@@ -4,6 +4,11 @@
 
 {% block body %}
     <div class="container-fluid bc-patient-container">
+        <div class="row justify-content-center">
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">{{ flashMessage }}</div>
+            {% endfor %}
+        </div>
         <form action="{{ path('save_visit_info', {'id': userVisit.getId}) }}" method="post">
             <div class="row">
                 <h3> Vizito informacija </h3>
@@ -14,7 +19,7 @@
                     <textarea class="form-control" name="visit-comment">{{ userVisit.description ?? '' }} </textarea>
                 </div>
                 <div class="col-md-3 offset-2 justify-content-center float-right mt-4">
-                    <button type="submit" class="btn"> Išsaugoti vizito informaciją </button>
+                    <button type="submit" class="btn"> Išsaugoti vizito informaciją</button>
                 </div>
             </div>
         </form>
@@ -25,11 +30,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <label for="recipe-description"> Recepto aprašas </label>
-                    <textarea class="form-control" name="recipe-comment">{{ userVisit.recipeId.getDescription ?? '' }}</textarea>
+                    <textarea class="form-control"
+                              name="recipe-comment">{{ userVisit.recipeId.getDescription ?? '' }}</textarea>
                 </div>
                 <div class="col-md-3">
                     <label for="recipe-duration"> Recepto galiojimo laikas </label>
-                    <input type="text" class="form-control mt-2" name="recipe-duration" value="{{ userVisit.recipeId.getValidDuration ?? '' }}">
+                    <input type="text" class="form-control mt-2" name="recipe-duration"
+                           value="{{ userVisit.recipeId.getValidDuration ?? '' }}">
                 </div>
                 <div class="col-md-3 justify-content-center float-right mt-4">
                     <button type="submit" class="btn">Išsaugoti recepto informaciją</button>
@@ -43,10 +50,11 @@
             <div class="row">
                 <div class="col-md-7">
                     <label for="recipe-description"> Siuntimo aprašas </label>
-                    <textarea class="form-control" name="sending-to-doctor-comment">{{ userVisit.sendingToDoctorId.getDescription ?? '' }}</textarea>
+                    <textarea class="form-control"
+                              name="sending-to-doctor-comment">{{ userVisit.sendingToDoctorId.getDescription ?? '' }}</textarea>
                 </div>
                 <div class="col-md-3 offset-2 justify-content-center float-right mt-4">
-                    <button type="submit" class="btn"> Išsaugoti siuntimo informaciją </button>
+                    <button type="submit" class="btn"> Išsaugoti siuntimo informaciją</button>
                 </div>
             </div>
 
