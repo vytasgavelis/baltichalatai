@@ -206,6 +206,7 @@ class SpecialistController extends AbstractController
 
         $specialtiesForm = $this->createFormBuilder([])
             ->add('specialties', ChoiceType::class, [
+                'placeholder' => 'Specialybė',
                 'choices' => $choices,
                 'required' => false,
             ])
