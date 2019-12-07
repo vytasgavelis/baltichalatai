@@ -42,6 +42,7 @@ class PatientController extends AbstractController
         if (sizeof($patient) == 0) {
             $patient = null;
         }
+
         return $this->render('patient/index.html.twig', [
             'patient' => $patient[0],
         ]);
@@ -62,7 +63,8 @@ class PatientController extends AbstractController
             return $this->render('patient/home.html.twig', [
                 'visits' => $user->getUserVisits(),
                 'userInfo' => $user->getUserInfo()->first(),
-                'clientRecipes' => $this->patientServices->getClientRecipes($user)
+                'clientRecipes' => $this->patientServices->getClientRecipes($user),
+                'clientSendings' => $this->patientServices->getClientSendingsToDoctor($user),
             ]);
         }
 

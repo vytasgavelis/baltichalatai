@@ -264,9 +264,12 @@ class AppFixtures extends Fixture
             $visit->setDescription($visitDescriptions[mt_rand(0, sizeof($visitDescriptions) - 1)]);
             if (mt_rand(0, 10) < 3) { //simuliuojam, kad tik 30% vizitu metu bus gaunamas siuntimas
                 $sendToDoctor = new SendingToDoctor();
+                $specialtyList = $this->getSpecialties();
+                $specialist = str_replace('as', 'ą', $specialtyList[mt_rand(0, sizeof($specialtyList) - 1)]);
                 $sendToDoctor->setClientId($client);
                 $sendToDoctor->setSpecialistId($clinicSpec->getSpecialistId());
-                $sendToDoctor->setDescription($visitDescriptions[mt_rand(0, sizeof($visitDescriptions) - 1)]);
+                $sendToDoctor->setDescription($visitDescriptions[mt_rand(0, sizeof($visitDescriptions) - 1)]
+                    .'; Siunčiamas pas '.$specialist);
                 $manager->persist($sendToDoctor);
                 $manager->flush();
                 $visit->setSendingToDoctorId($sendToDoctor);
@@ -285,7 +288,7 @@ class AppFixtures extends Fixture
                 } else {
                     $drugSize = mt_rand(0, 100);
                 }
-                $description = 'Vartoti '.$drugNames[mt_rand(0, sizeof($drugNames) - 1)].'  '.$timesPerDay. ' '
+                $description = 'Vartoti '.$drugNames[mt_rand(0, sizeof($drugNames) - 1)].'  '.$timesPerDay.' '
                     .$timesPerDayPhrase.' per dieną po '.$drugSize.' '.$amount;
                 $recipe->setDescription($description);
                 $recipe->setValidFrom(new DateTime("2019-$month-$day"));

@@ -21,8 +21,21 @@ class PatientServices
         $this->manager = $manager;
     }
 
+    /**
+     * @param UserInterface $user
+     * @return mixed
+     */
     public function getClientRecipes(UserInterface $user)
     {
         return $this->manager->getRepository(UserVisit::class)->getVisitsWithRecipesByClientId($user->getId());
+    }
+
+    /**
+     * @param UserInterface $user
+     * @return mixed
+     */
+    public function getClientSendingsToDoctor(UserInterface $user)
+    {
+        return $this->manager->getRepository(UserVisit::class)->getVisitsWithSendingsByClientId($user->getId());
     }
 }
