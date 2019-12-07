@@ -6,11 +6,10 @@
     <body class="bc-index">
     {% include 'components/layout/navbar.html.twig' %}
     <div class="wrap edit-wrap">
-        {% if message is defined and message is not null %}
-            <h3 class="search-header">Užpildykite Anketą:</h3>
-            {% else %}
-            <h3 class="search-header">Redaguoti Profilį:</h3>
-        {% endif %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ flashMessage }}</div>
+        {% endfor %}
+        <h3 class="search-header">Redaguoti Profilį:</h3>
 
         {{ form(user_info_form) }}
     </div>

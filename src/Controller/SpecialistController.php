@@ -130,6 +130,7 @@ class SpecialistController extends AbstractController
                     $manager->persist($workHours);
                 }
                 $manager->flush();
+                $this->bag->add('success', 'Grafikas išsaugotas.');
             }
             return new RedirectResponse($urlGenerator->generate('specialist'));
             /*$workHours = $this->specialistService->getSpecialistWorkHours($user);
@@ -162,7 +163,7 @@ class SpecialistController extends AbstractController
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(
                     $responseData['specialties'],
-                    $responseData['custom_specialty'],
+                    //                    $responseData['custom_specialty'],
                     $user
                 );
             }
@@ -175,6 +176,30 @@ class SpecialistController extends AbstractController
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 
+    /**
+     * @Route("/specialist/userspecialty/remove/{id}", name="user_specialty_remove")
+     * @param UserSpecialty $userSpecialty
+     * @param UrlGeneratorInterface $urlGenerator
+     * @param UserInterface|null $user
+     * @return RedirectResponse
+     */
+    public function deleteUserSpecialty(
+        UserSpecialty $userSpecialty,
+        UrlGeneratorInterface $urlGenerator,
+        UserInterface $user = null
+    ) {
+        if ($user instanceof User && $userSpecialty->getUserId()->getId() == $user->getId()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($userSpecialty);
+            $manager->flush();
+
+            $this->bag->add('success', 'Specialybė buvo pašalinta.');
+
+            return new RedirectResponse($urlGenerator->generate('specialist_edit'));
+        }
+        throw $this->createNotFoundException();
+    }
+
     private function createSpecialistForm(UserInterface $user = null)
     {
         $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
@@ -185,10 +210,11 @@ class SpecialistController extends AbstractController
 
         $specialtiesForm = $this->createFormBuilder([])
             ->add('specialties', ChoiceType::class, [
+                'placeholder' => 'Specialybė',
                 'choices' => $choices,
                 'required' => false,
             ])
-            ->add('custom_specialty', TextType::class, ['required' => false])
+//            ->add('custom_specialty', TextType::class, ['required' => false])
             ->add('submit', SubmitType::class, ['label' => 'Prideti'])
             ->getForm();
 
@@ -215,7 +241,7 @@ class SpecialistController extends AbstractController
             $reqInfo = explode(';', $request->get('reg_time'));
             $specialist = $this->specialistService->getSpecialist($specialistId);
             $clinic = $this->specialistService->getClinic($reqInfo[0]);
-            $fullDate = new DateTime($reqInfo[1].$reqInfo[2]);
+            $fullDate = new DateTime($reqInfo[1] . $reqInfo[2]);
             // pries idedant pachekinam ar netycia kazkas anksciau jau nebus ten pat uzsiregistraves
             // kolkas redirectinam atgal, poto galbut kazkokia zinute prideti
 

@@ -7,17 +7,42 @@ use App\Entity\UserInfo;
 use App\Entity\UserVisit;
 use App\Form\ClinicInfoType;
 use App\Form\UserInfoType;
+use App\Services\UserInfoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Services\ClinicInfoService;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ClinicController extends AbstractController
 {
+
+    /**
+     * @var FlashBagInterface
+     */
+    private $bag;
+
+    /**
+     * @var ClinicInfoService
+     */
+    private $clinicInfoService;
+
+    /**
+     * ClinicController constructor.
+     * @param ClinicInfoService $clinicInfoService
+     * @param FlashBagInterface $bag
+     */
+    public function __construct(ClinicInfoService $clinicInfoService, FlashBagInterface $bag)
+    {
+        $this->clinicInfoService = $clinicInfoService;
+        $this->bag = $bag;
+    }
+
     /**
      * @Route("/clinic", name="clinic")
      * @param UrlGeneratorInterface $urlGenerator
@@ -72,12 +97,16 @@ class ClinicController extends AbstractController
             //Handle the request
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid() &&
+                $this->clinicInfoService->validateClinicInfoForm($request->request->get('clinic_info')) == "") {
                 $clinicInfo->setUserId($user);
                 $em = $this->getDoctrine()->getManager();
 
                 $em->persist($clinicInfo);
                 $em->flush();
+
+                $this->bag->add('success', 'Jūsų informacija buvo išsaugota.');
+
                 return new RedirectResponse($urlGenerator->generate('clinic'));
             } else {
                 return $this->render('clinic/edit.html.twig', [

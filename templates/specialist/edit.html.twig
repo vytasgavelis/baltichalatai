@@ -7,17 +7,22 @@
     {% include 'components/layout/navbar.html.twig' %}
 
     <div class="wrap edit-wrap">
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ flashMessage }}</div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
         <h3 class="search-header">Redaguoti specialybes:</h3>
         <div>
             {% for specialty in app.user.getUserSpecialties() %}
                 <li>{{ specialty.getSpecialtyId().getName() }}</li>
+                <a href="{{ path('user_specialty_remove', {'id': specialty.getId()}) }}">Panaikinti</a>
             {% endfor %}
         </div>
         {{ form_start(specialtiesForm) }}
         {{ form_widget(specialtiesForm.specialties) }}
-        {{ form_widget(specialtiesForm.custom_specialty, {'attr':
-            {'class': 'search-term', 'placeholder': 'Įvesti specialybę'}}
-        ) }}
+
         {{ form_widget(specialtiesForm.submit, {'attr':
             {'class': 'search-button', 'label': 'Pridėti'}}
         ) }}

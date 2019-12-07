@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Entity\Specialty;
 use App\Entity\UserSpecialty;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class UserSpecialtyService
 {
@@ -13,17 +14,23 @@ class UserSpecialtyService
      * @var EntityManagerInterface
      */
     private $manager;
+    /**
+     * @var FlashBagInterface
+     */
+    private $bag;
 
     /**
      * UserSpecialtyService constructor.
      * @param EntityManagerInterface $manager
+     * @param FlashBagInterface $bag
      */
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(EntityManagerInterface $manager, FlashBagInterface $bag)
     {
         $this->manager = $manager;
+        $this->bag = $bag;
     }
 
-    public function addSpecialty($specialtyData, $customSpecialtyData, $user)
+    public function addSpecialty($specialtyData, $user)
     {
         // Add specialty from dropdown
         if ($specialtyData != "") {
@@ -40,30 +47,32 @@ class UserSpecialtyService
 
                 $this->manager->persist($userSpecialty);
                 $this->manager->flush();
+
+                $this->bag->add('success', 'Specialybė pridėta.');
             } else {
-                // Flash message that you already have that specialty added.
-                echo 'jus jau pasirinkes tokia specialybe';
-            }
-        } elseif ($customSpecialtyData != "") {// Add specialty from text box.
-            // Check if specialty already exists.
-            $specialty = $this->manager->getRepository(Specialty::class)
-                ->findBySpecialtyName($customSpecialtyData);
-
-            if (sizeof($specialty) == 0) {
-                $userSpecialty = new UserSpecialty();
-                $specialty = new Specialty();
-                $specialty->setName($customSpecialtyData);
-
-                $this->manager->persist($specialty);
-
-                $userSpecialty->setUserId($user);
-                $userSpecialty->setSpecialtyId($specialty);
-                $this->manager->persist($userSpecialty);
-                $this->manager->flush();
-            } else {
-                // Flash message that specialty already exists
-                echo 'specialty already exists';
+                $this->bag->add('error', 'Jūs jau esate pasirinkęs šią specialybę.');
             }
         }
+//        } elseif ($customSpecialtyData != "") {// Add specialty from text box.
+//            // Check if specialty already exists.
+//            $specialty = $this->manager->getRepository(Specialty::class)
+//                ->findBySpecialtyName($customSpecialtyData);
+//
+//            if (sizeof($specialty) == 0) {
+//                $userSpecialty = new UserSpecialty();
+//                $specialty = new Specialty();
+//                $specialty->setName($customSpecialtyData);
+//
+//                $this->manager->persist($specialty);
+//
+//                $userSpecialty->setUserId($user);
+//                $userSpecialty->setSpecialtyId($specialty);
+//                $this->manager->persist($userSpecialty);
+//                $this->manager->flush();
+//            } else {
+//                // Flash message that specialty already exists
+//                echo 'specialty already exists';
+//            }
+//        }
     }
 }

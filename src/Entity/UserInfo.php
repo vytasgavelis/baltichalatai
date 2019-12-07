@@ -163,11 +163,11 @@ class UserInfo
         return $this;
     }
 
-    public function getPersonCode(): ?string
-    {
-        return $this->personCode;
-    }
-
+//    public function getPersonCode(): ?string
+//    {
+//        return $this->personCode;
+//    }
+//
     public function setPersonCode(string $personCode): self
     {
         $this->personCode = $personCode;

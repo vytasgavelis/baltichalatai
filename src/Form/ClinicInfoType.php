@@ -16,12 +16,12 @@ class ClinicInfoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, ['label'=> 'Vardas'])
-            ->add('address', null, ['label'=> 'Adresas'])
-            ->add('webpage', null, ['label'=> 'Svetainė'])
-            ->add('email', null, ['label'=> 'El. Paštas'])
-            ->add('description', TextType::class, ['label'=> 'Aprašymas'])
-            ->add('phoneNumber', null, ['label'=> 'Tel. Nr.'])
+            ->add('name', null, ['label'=> 'Pavadinimas', 'empty_data' => '',])
+            ->add('address', null, ['label'=> 'Adresas', 'empty_data' => '',])
+            ->add('webpage', null, ['label'=> 'Svetainė', 'empty_data' => '',])
+            ->add('email', null, ['label'=> 'El. Paštas', 'empty_data' => '',])
+            ->add('description', TextType::class, ['label'=> 'Aprašymas', 'empty_data' => '',])
+            ->add('phoneNumber', null, ['label'=> 'Tel. Nr.', 'empty_data' => '',])
             ->add('save', SubmitType::class);
     }
 
