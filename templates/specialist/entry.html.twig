@@ -19,6 +19,9 @@
                                 </p>
                             {% endif %}
                         {% endfor %}
+                        <p>{{ userInfo.getDateOfBirth()|date('Y-m-d') }} <i class="far fa-calendar-alt"></i></p>
+                        <p>{{ userInfo.getPhoneNumber() }} <i class="fas fa-phone"></i></p>
+                        <p>{{ userInfo.getPersonalEmail() }} <i class="fas fa-envelope"></i></p>
                     </div>
                     <button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
                     <div>

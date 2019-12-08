@@ -24,7 +24,8 @@
                             {% endif %}
                             <h2>{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</h2>
                             {% for specialty in specialist.getUserSpecialties() %}
-                                <li>{{ specialty.getSpecialtyId().getName() }}</li>
+                                <a href="/search?specialties={{ specialty.getSpecialtyId.getId() }}"><span
+                                            class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span></a>
                             {% endfor %}
                             {% if specialist.getSpecialistClinics().first().getClinicId() is not defined or specialist.getSpecialistClinics().first().getClinicId() is null %}
                                 Specialistas įstaigai nepriklauso
@@ -37,7 +38,11 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
-                            <p>{{ specialist.getUserInfo().first().getCity() }}</p>
+                            <p>{{ specialist.getUserInfo().first().getPhoneNumber() }} <i class="fas fa-phone"></i>
+                            </p>
+                            <p>{{ specialist.getUserInfo().first().getPersonalEmail() }} <i
+                                        class="fas fa-envelope"></i></p>
+                            <p>{{ specialist.getUserInfo().first().getCity() }} <i class="fas fa-map-marker"></i></p>
                         </div>
                     </div>
                 </div>
@@ -60,19 +65,14 @@
                             <div class="tab-pane fade show active p-3" id="one" role="tabpanel"
                                  aria-labelledby="one-tab">
                                 <p>Aprašymas</p>
-                                <p>{{ specialist.getUserInfo().first().getDescription() }}</p>
-                                <p>El. paštas</p>
-                                <p>{{ specialist.getUserInfo().first().getPersonalEmail() }}</p>
-                                <p>Tel. numeris</p>
-                                <p>{{ specialist.getUserInfo().first().getPhoneNumber() }}</p>
-                                {# Create button pop up form#}
+                                {{ specialist.getUserInfo().first().getDescription() }}
                             </div>
                             <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                                 {# Change to calendar view for future appointments #}
                                 <h5 class="card-title specialist-header">Pasirinkite vizito laiką:</h5>
-                                {% if app.user and app.user.getRole() == 2 and app.user.getId() == specialist.getId() %}
-                                    <span> <a href="{{ path('specialist_hours_edit') }}"> Redaguoti </a></span>
-                                {% endif %}
+{#                                {% if app.user and app.user.getRole() == 2 and app.user.getId() == specialist.getId() %}#}
+{#                                    <span> <a href="{{ path('specialist_hours_edit') }}"> Redaguoti </a></span>#}
+{#                                {% endif %}#}
                                 <form action="{{ path('specialist_register_visit', {'specialistId':  specialist.getId()}) }}"
                                       method="POST">
                                     <div>
