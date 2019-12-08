@@ -1,19 +1,19 @@
 {% block navbar %}
   <nav>
-    <a href="/"><img class="bc-logo2" src="/images/BCOrangeLogo.png"></img></a>
+    <a href="/"><img class="bc-logo" src="/images/BCOrangeLogo.png"></img></a>
     {% if app.user %}
-      <ul class="bc-list2">
+      <ul class="bc-item">
         <li><button class="bc-link bc-spec" onclick="location.href='/logout'">Atsijungti</button></li>
         {% if app.user.getRole() == 1 %}
-          <li><button class="bc-link2 bc-spec" onclick="location.href='/patient'">Mano Paskyra</button></li>
+          <li><button class="bc-link bc-spec" onclick="location.href='/patient'">Mano Paskyra</button></li>
         {% elseif app.user.getRole() == 2 %}
-          <li><button class="bc-link2 bc-spec" onclick="location.href='/specialist'">Mano Paskyra</button></li>
+          <li><button class="bc-link bc-spec" onclick="location.href='/specialist'">Mano Paskyra</button></li>
         {% elseif app.user.getRole() == 3 %}
-          <li><button class="bc-link2 bc-spec" onclick="location.href='/clinic'">Mano Paskyra</button></li>
+          <li><button class="bc-link bc-spec" onclick="location.href='/clinic'">Mano Paskyra</button></li>
         {% endif %}
       </ul>
     {% else %}
-      <ul class="bc-list2">
+      <ul class="bc-item">
         <li><button class="bc-link bc-spec" onclick="location.href='/login'">Prisijungti</button></li>
         <li><button class="bc-link" onclick="location.href='/register'">Registruotis</button></li>
       </ul>

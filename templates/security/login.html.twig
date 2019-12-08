@@ -4,9 +4,7 @@
 
 {% block body %}
 <form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+
 
     {% if app.user %}
         <div class="mb-3">
@@ -14,7 +12,7 @@
         </div>
     {% endif %}
     <body class="bc-index">
-    {% include 'components/layout/navbar.html.twig' %}
+    {% include 'components/layout/navbar_vertical.html.twig' %}
 <div class="wrap edit-wrap">
     <h2 class="search-header">Prisijunkite:</h2>
     <label for="inputEmail">El. Paštas</label>
@@ -36,7 +34,9 @@
             </label>
         </div>
     #}
-
+    {% if error %}
+        <div class="alert alert-danger">Neteisingi prisijungimo duomenys!</div>
+    {% endif %}
     <button id="form_submit" type="submit">
         Prisijungti
     </button>
