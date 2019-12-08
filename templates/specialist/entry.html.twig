@@ -59,8 +59,7 @@
                                         <tr>
                                             <td>{{ visit.getVisitDate()|date('H:i') }}</td>
                                             <td>{{ visit.getDescription() }}</td>
-                                            <td>{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}
-                                                <br></td>
+                                            <td><a href="{{ path('patient_show', {'id': visit.getClientId().getId() }) }}">{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}</a></td>
                                             <td>
                                                 <button type="button" class="btn btn-secondary"
                                                         onclick="location.href='/uservisit/{{ visit.getId() }}/close'"

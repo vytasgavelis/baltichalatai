@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pacientas{% endblock %}
+
+{% block body %}
+    <body class="bc-index">
+    <div class="container-fluid bc-patient-container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel text-center">
+                    <h2>{{ patient.getUserInfo().first().getName() }} {{ patient.getUserInfo().first().getSurName() }}</h2>
+                    <p>{{ patient.getUserInfo().first().getDateOfBirth()|date('Y-m-d') }} <i
+                                class="far fa-calendar-alt"></i></p>
+                    <p>{{ patient.getUserInfo().first().getPhoneNumber() }} <i class="fas fa-phone"></i></p>
+                    <p>{{ patient.getUserInfo().first().getPersonalEmail() }} <i class="fas fa-envelope"></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}

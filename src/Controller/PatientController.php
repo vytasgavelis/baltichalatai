@@ -31,23 +31,18 @@ class PatientController extends AbstractController
     }
 
 
-//    /**
-//     * @Route("/patient/show/{id}", name="patient_show")
-//     * @param $id
-//     * @return Response
-//     */
-//    public function show($id)
-//    {
-//        $patient = $this->getDoctrine()->getRepository(User::class)
-//            ->findByIdAndRole($id, 3);
-//        if (sizeof($patient) == 0) {
-//            $patient = null;
-//        }
-//
-//        return $this->render('patient/index.html.twig', [
-//            'patient' => $patient[0],
-//        ]);
-//    }
+    /**
+     * @Route("/patient/show/{id}", name="patient_show")
+     * @param User $patient
+     * @return Response
+     */
+    public function show(User $patient)
+    {
+
+        return $this->render('patient/show.html.twig', [
+            'patient' => $patient,
+        ]);
+    }
 
     /**
      * @Route("/patient", name="patient")
