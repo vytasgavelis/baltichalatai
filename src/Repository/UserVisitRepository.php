@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\UserVisit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Array_;
 
 /**
  * @method UserVisit|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,6 +24,21 @@ class UserVisitRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.specialistId = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.visitDate', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $value
+     * @return Array
+     */
+    public function findByPatientId($value): Array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.clientId = :val')
             ->setParameter('val', $value)
             ->orderBy('u.visitDate', 'ASC')
             ->setMaxResults(10)

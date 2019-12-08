@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Apie mus{% endblock %}
+
+{% block body %}
+    {% include 'components/layout/navbar.html.twig' %}
+    <h1>Apie mus</h1>
+    <p>Balti chalatai - tai medicinos specialistų paieškos bei registracijos į vizitų sistema.</p>
+
+    <h2>Pacientams</h2>
+        <p>Čia jūs galite:</p>
+        <ul>
+            <li>Susirasti reikalingą specialistą.</li>
+            <li>Sužinoti reikiamą specialisto informaciją(kontaktai, grafikas, darbovietė ir t.t.)</li>
+            <li>Užsiregistruoti į vizitą (jei specialistas suteikia tam galimybę).</li>
+            <li>Matyti savo vizitus, siuntimus, gydymo istoriją bei receptus vienoje vietoje.</li>
+        </ul>
+    <h2>Specialistams</h2>
+        <p>Čia jūs galite:</p>
+        <ul>
+            <li>Sulaukti daugiau pacientų.</li>
+            <li>Lengviau valdyti pacientų vizitus.</li>
+        </ul>
+{% endblock %}

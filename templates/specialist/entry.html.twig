@@ -10,7 +10,7 @@
                         <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
                         <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
                         {% for specialty in app.user.getUserSpecialties() %}
-                            <li>{{ specialty.getSpecialtyId().getName() }}</li>
+                            <span class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span>
                         {% endfor %}
                         {% for clinic in app.user.getSpecialistClinics() %}
                             {% if clinic.getClinicId.getRole() != 4 %}
