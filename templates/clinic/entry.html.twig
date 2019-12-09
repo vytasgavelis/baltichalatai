@@ -27,10 +27,6 @@
 
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-						{# Create a dataTable with vardas, specialybė, darbo laikas I-V: 8:00-15:00  +++ add specialist button AND delete #}
-{#                            <h5 class="card-title">Tab Card One</h5>#}
-{#							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
-{#							<a href="#" class="btn btn-primary">Go somewhere</a>#}
 							{%  for specialist in app.user.getClinicSpecialists() %}
 								<p><a href="/specialist/show/{{ specialist.getSpecialistId().getId() }}">{{ specialist.getSpecialistId().getUserInfo().first.getName() }} {{ specialist.getSpecialistId().getUserInfo().first.getSurname() }}</a></p>
 							{% endfor %}

@@ -93,10 +93,14 @@ class SpecialistController extends AbstractController
     /**
      * @Route("/specialist/show/{id}", name="specialist_show")
      * @param $id
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      * @throws Exception
      */
-    public function show($id)
+    public function show($id,
+        PaginatorInterface $paginator,
+        Request $request)
     {
         $specialist = $this->specialistService->getSpecialist($id);
         if (sizeof($specialist) == 0) {
@@ -105,9 +109,20 @@ class SpecialistController extends AbstractController
             $workHours = $this->specialistService->getSpecialistWorkHours($specialist[0]);
         }
 
+        $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours);
+        $page = $request->query->getInt('page', 1);
+
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $page,
+            5
+        );
+
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
-            'workHours' => $this->specialistService->getSpecialistHoursFormatted($workHours),
+            'workHours' => $pagination,
+            'id' => $id,
+            'page' => $page
         ]);
     }
 

@@ -6,6 +6,11 @@
   background-size: cover; 
 }
 
+// Main page
+html {
+  scroll-behavior: smooth;
+}
+
 // Alerts
 .alert-danger {
   margin-top: -40px;
@@ -15,7 +20,7 @@
   min-width: 300px;
 }
 
-// Navigation bar
+// Navbar_vertical
 .bc-logo {
   width: 150px;
   height: 150px;
@@ -100,7 +105,7 @@
 }
 
 
-// Navbar 2
+// Navbar
 .bc-logo2 {
   width: 100px;
   height: 100px;
@@ -257,6 +262,28 @@
   color: #2f5caf;
 }
 
+// About us
+.about-us {
+  margin-top: 800px;
+  padding-bottom: 30px;
+  background: white;
+  height: 100vh;
+}
+
+.section2-circle, .section1-circle {
+   height: 70px;
+   width: 70px;
+   border-radius: 35px;
+   background: white;
+   position: absolute;
+   top: 90%;
+   left: 49%;
+ }
+
+.section1-circle {
+  top: 110%;
+}
+
 // Results table display
 .grid {
   display: grid;
@@ -350,22 +377,6 @@
 }
 
 
-// Pagination
-.page-forward {
-  margin: auto;
-  display: flex;
-  align-items: center;
-  float: right;
-  transform: translate(-100%, -200%)
-}
-
-.page-back {
-  grid-column: 15%;
-  margin: auto;
-  display: flex;
-  align-items: center;
-}
-
 // Registration
 .registration-form {
   background: white;
@@ -378,19 +389,17 @@
   transform: translate(-50%, -50%);
   text-align: left;
   border: 3px solid #196cba;
-  border-radius: 5px;  
+  border-radius: 5px;
 }
 
 .btn {
   margin-top: 10px;
   background: #5185fa;
   color: white;
-  //border: 1px solid #196cba;
   border-radius: 5px;  
 }
 .btn:hover {
   background: #fea757;
-  //border: 1px solid #196cba;
   color: white;
 }
 
@@ -430,7 +439,6 @@
   padding-top: 25px;
   padding-right: 40px;
   padding-bottom: 25px;
-  //min-height: 90%;
 }
 
 .bc-patient-tab-header {
@@ -456,9 +464,13 @@
  transform: translate(-50%,-60%);
 }
 
+.badge-info {
+  background-color: #5185fa;
+}
+
 //Specialist page
 .specialist-work-hours {
-  border-right: 2px solid rgba(66, 104, 188, 0.8);
+  border-right: 2px solid #b0a49f;
   margin-left: 20px;
   overflow-y: auto;
   max-height: 300px;
@@ -470,6 +482,40 @@
 
 .specialist-header {
   margin-bottom: 20px;
+}
+
+.specialist-work-day {
+    margin-bottom: 0;
+}
+
+.specialist-row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.specialist-hours-error {
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+div.col-xl-2:nth-child(1) > div:nth-child(1) {
+  font-weight: bold;
+}
+
+div.col-xl-2:nth-child(2) > div:nth-child(1) {
+  font-weight: bold;
+}
+
+div.col-xl-2:nth-child(3) > div:nth-child(1) {
+  font-weight: bold;
+}
+
+div.col-xl-2:nth-child(4) > div:nth-child(1) {
+  font-weight: bold;
+}
+
+div.col-xl-2:nth-child(5) > div:nth-child(1) {
+  font-weight: bold;
 }
 
 // Tables for doctor, clinic and patient
@@ -599,7 +645,6 @@
 }
 
 #user_info_save, #form_submit, #clinic_info_save {
-  //margin-top: auto;
   float: right;
   width: 20%;
   border-radius: 4px;

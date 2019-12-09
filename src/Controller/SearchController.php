@@ -66,7 +66,7 @@ class SearchController extends AbstractController
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
-            10
+            5
         );
 
         return $this->render('home/results.html.twig', ['specialists' => $pagination]);

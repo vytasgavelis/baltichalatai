@@ -5,10 +5,6 @@
 {% block body %}
         <body class="bc-index">
         {% include 'components/layout/navbar.html.twig' %}
-{#        {% if edit == true %}#}
-{#                {% include 'components/page/doctor/edit.html.twig' %}#}
-{#        {% else %}#}
-                {% include 'specialist/information.html.twig' %}
-{#        {% endif %}#}
+        {% include 'specialist/information.html.twig' %}
         </body>
 {% endblock %}
