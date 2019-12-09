@@ -48,6 +48,8 @@ class PatientController extends AbstractController
     /**
      * @Route("/patient", name="patient")
      * @param UrlGeneratorInterface $urlGenerator
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @param UserInterface|null $user
      * @return Response
      */
