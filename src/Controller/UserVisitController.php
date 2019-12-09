@@ -79,24 +79,22 @@ class UserVisitController extends AbstractController
      * @param UserInterface $user
      * @return RedirectResponse
      */
-    public function closeVisit(UserVisit $userVisit, UserInterface $user)
+    public function closeVisit(UserVisit $userVisit, UserInterface $user = null)
     {
-        if ($user->getId() == $userVisit->getClientId()->getId()) {
-            $em = $this->getDoctrine()->getManager();
-            $userVisit->setIsCompleted(true);
-            $em->flush();
+        if ($user instanceof User && $user->getId() == $userVisit->getSpecialistId()->getId()) {
+            if($userVisit->getDescription() != "") {
+                $em = $this->getDoctrine()->getManager();
+                $userVisit->setIsCompleted(true);
+                $em->flush();
 
-            $this->bag->add('success', 'Vizitas uždarytas');
+                $this->bag->add('success', 'Vizitas uždarytas');
 
-            return new RedirectResponse($this->urlGenerator->generate('patient'));
-        } elseif ($user->getId() == $userVisit->getSpecialistId()->getId()) {
-            $em = $this->getDoctrine()->getManager();
-            $userVisit->setIsCompleted(true);
-            $em->flush();
+                return new RedirectResponse($this->urlGenerator->generate('specialist'));
+            } else {
+                $this->bag->add('error', 'Prašome užpildyti vizito informaciją.');
 
-            $this->bag->add('success', 'Vizitas uždarytas');
-
-            return new RedirectResponse($this->urlGenerator->generate('specialist'));
+                return new RedirectResponse($this->urlGenerator->generate('visit_info', ['id' => $userVisit->getId()]));
+            }
         }
 
         // comment to force git to update migration

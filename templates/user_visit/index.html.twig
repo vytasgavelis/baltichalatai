@@ -8,7 +8,15 @@
             {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">{{ flashMessage }}</div>
             {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-warning">{{ flashMessage }}</div>
+            {% endfor %}
         </div>
+        <button type="button" class="btn btn-secondary"
+                onclick="location.href='/uservisit/{{ userVisit.getId() }}/close'"
+                data-toggle="tooltip" data-placement="bottom" title="Uždaryti">
+            Uždaryti vizitą</button>
+
         <form action="{{ path('save_visit_info', {'id': userVisit.getId}) }}" method="post">
             <div class="row">
                 <h3> Vizito informacija </h3>
