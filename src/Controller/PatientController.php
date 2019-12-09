@@ -6,8 +6,10 @@ use App\Entity\User;
 use App\Entity\UserVisit;
 use App\Services\PatientServices;
 use App\Services\UserVisitService;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
@@ -38,7 +40,6 @@ class PatientController extends AbstractController
      */
     public function show(User $patient)
     {
-
         return $this->render('patient/show.html.twig', [
             'patient' => $patient,
         ]);
@@ -50,16 +51,27 @@ class PatientController extends AbstractController
      * @param UserInterface|null $user
      * @return Response
      */
-    public function panel(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
-    {
+    public function panel(
+        UrlGeneratorInterface $urlGenerator,
+        PaginatorInterface $paginator,
+        Request $request,
+        UserInterface $user = null
+    ) {
         if (is_bool($user->getUserInfo()->first())) {
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
         if ($user instanceof User && $user->getRole() == 1) {
-            $visits = $this->getDoctrine()->getRepository(UserVisit::class)
-                ->findByPatientId($user->getId());
+            $queryBuilder = $this->getDoctrine()->getRepository(UserVisit::class)
+                ->getWithPatientIdQueryBuilder($user->getId());
+
+            $pagination = $paginator->paginate(
+                $queryBuilder,
+                $request->query->getInt('page', 1),
+                5
+            );
+
             return $this->render('patient/home.html.twig', [
-                'visits' => $visits,
+                'visits' => $pagination,
                 'userInfo' => $user->getUserInfo()->first(),
                 'clientRecipes' => $this->patientServices->getClientRecipes($user),
                 'clientSendings' => $this->patientServices->getClientSendingsToDoctor($user),
