@@ -8,6 +8,7 @@ use App\Services\UserSpecialtyService;
 use App\Entity\UserVisit;
 use DateTime;
 use Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Specialty;
 use App\Entity\User;
@@ -50,11 +51,17 @@ class SpecialistController extends AbstractController
     /**
      * @Route("/specialist", name="specialist")
      * @param UrlGeneratorInterface $urlGenerator
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @param UserInterface|null $user
      * @return Response
      */
-    public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
-    {
+    public function index(
+        UrlGeneratorInterface $urlGenerator,
+        PaginatorInterface $paginator,
+        Request $request,
+        UserInterface $user = null
+    ) {
         if ($user instanceof User && $user->getRole() == 2) {
             if (is_bool($user->getUserInfo()->first())) {
                 return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
@@ -62,10 +69,19 @@ class SpecialistController extends AbstractController
 
             $workHours = $this->specialistService->getSpecialistWorkHours($user);
 
+            $queryBuilder = $this->getDoctrine()->getRepository(UserVisit::class)
+                ->getWithSpecialistIdQueryBuilder($user->getId());
+
+            $pagination = $paginator->paginate(
+                $queryBuilder,
+                $request->query->getInt('page', 1),
+                5
+            );
+
             $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
             return $this->render('specialist/home.html.twig', [
                 'userInfo' => $user->getUserInfo()->first(),
-                'visits' => $this->getDoctrine()->getRepository(UserVisit::class)->findBySpecialistId($user->getId()),
+                'visits' => $pagination,
                 'workDayList' => $this->specialistService->getWorkdayList(),
                 'specClinics' => $specClinics,
                 'workHours' => $workHours,
