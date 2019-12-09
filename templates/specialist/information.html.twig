@@ -7,17 +7,17 @@
                 <div class="alert alert-success">{{ flashMessage }}</div>
             {% endfor %}
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4 bc-patient-column-4">
                     <div class="panel text-center">
                         <div class="user-heading">
                             <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
                             {% if app.user and app.user.getRole() == 3 %}
                                 {% if not clinic_specialist_service.specialistBelongsToClinic(specialist, app.user) %}
-                                    <button onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/add'">
+                                    <button class = "btn btn-margin" onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/add'">
                                         Pridėti specialistą į įstaigą
                                     </button>
                                 {% else %}
-                                    <button onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/remove'">
+                                    <button class = "btn btn-margin" onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/remove'">
                                         Panaikinti specialistą
                                     </button>
                                 {% endif %}
@@ -51,23 +51,23 @@
                         <div class="card-header tab-card-header bc-patient-tab-header">
                             <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                                 <li class="nav-item patient-tab">
-                                    <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab"
-                                       aria-controls="One" aria-selected="true" selected="true">Apie</a>
+                                    <a class="nav-link active" id="two-tab" data-toggle="tab" href="#two" role="tab"
+                                       aria-controls="Two" aria-selected="false">Kalendorius</a>
                                 </li>
                                 <li class="nav-item patient-tab">
-                                    <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab"
-                                       aria-controls="Two" aria-selected="false">Kalendorius</a>
+                                    <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab"
+                                       aria-controls="One" aria-selected="true" selected="true">Apie</a>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active p-3" id="one" role="tabpanel"
+                            <div class="tab-pane fade p-3" id="one" role="tabpanel"
                                  aria-labelledby="one-tab">
                                 <p>Aprašymas</p>
                                 {{ specialist.getUserInfo().first().getDescription() }}
                             </div>
-                            <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+                            <div class="tab-pane fade show active p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                                 {# Change to calendar view for future appointments #}
                                 <h5 class="card-title specialist-header">Pasirinkite vizito laiką:</h5>
 {#                                {% if app.user and app.user.getRole() == 2 and app.user.getId() == specialist.getId() %}#}

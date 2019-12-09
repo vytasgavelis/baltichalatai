@@ -22,7 +22,7 @@ class ClinicInfoType extends AbstractType
             ->add('email', null, ['label'=> 'El. Paštas', 'empty_data' => '',])
             ->add('description', TextType::class, ['label'=> 'Aprašymas', 'empty_data' => '',])
             ->add('phoneNumber', null, ['label'=> 'Tel. Nr.', 'empty_data' => '',])
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, ['label'=> 'Išsaugoti']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,7 +1,7 @@
 {% block patient_profile %}
     <div class="container-fluid bc-patient-container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4 bc-patient-column-4">
                 <div class="panel text-center">
                     {% for flashMessage in app.session.flashbag.get('success') %}
                         <div class="alert alert-success">{{ flashMessage }}</div>
