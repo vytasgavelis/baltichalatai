@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\UserVisit;
 use App\Services\UserVisitService;
 use Exception;
@@ -108,11 +109,15 @@ class UserVisitController extends AbstractController
      * @param UserInterface $user
      * @return Response
      */
-    public function showVisitCommentary(UserVisit $userVisit, UserInterface $user)
+    public function showVisitCommentary(UserVisit $userVisit, UserInterface $user = null)
     {
-        return $this->render('user_visit/index.html.twig', [
-            'userVisit' => $userVisit,
-        ]);
+        if($user instanceof User && $user->getId() == $userVisit->getSpecialistId()->getId()) {
+            return $this->render('user_visit/index.html.twig', [
+                'userVisit' => $userVisit,
+            ]);
+        } else {
+            throw $this->createNotFoundException('Puslapis nerastas');
+        }
     }
 
     /**
