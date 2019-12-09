@@ -60,6 +60,7 @@ class PatientController extends AbstractController
         UserInterface $user = null
     ) {
         if (is_bool($user->getUserInfo()->first())) {
+
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
         if ($user instanceof User && $user->getRole() == 1) {
