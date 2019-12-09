@@ -44,7 +44,7 @@
                                         {{ specialist.getUserSpecialties.first().getSpecialtyId().getName() }}
                                     </div>
                                     <div class="cell" data-title="Job Title">
-                                        {% if specialist.getSpecialistClinics.first() != false %}
+                                        {% if specialist.getSpecialistClinics.first() != false  and specialist.getSpecialistClinics.first().getClinicId().getClinicInfo() is not null%}
                                         {{ specialist.getSpecialistClinics.first().getClinicId().getClinicInfo().getName() }}
                                         {% else %}
                                             Specialistas įstaigai nepriklauso

@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -22,14 +23,19 @@ class PatientController extends AbstractController
      * @var PatientServices
      */
     private $patientServices;
+    /**
+     * @var FlashBagInterface
+     */
+    private $bag;
 
     /**
      * PatientController constructor.
      * @param PatientServices $patientServices
      */
-    public function __construct(PatientServices $patientServices)
+    public function __construct(PatientServices $patientServices, FlashBagInterface $bag)
     {
         $this->patientServices = $patientServices;
+        $this->bag = $bag;
     }
 
 
@@ -60,7 +66,7 @@ class PatientController extends AbstractController
         UserInterface $user = null
     ) {
         if (is_bool($user->getUserInfo()->first())) {
-
+            $this->bag->add('error', 'Prašomė užpildyti asmeninę informaciją');
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
         if ($user instanceof User && $user->getRole() == 1) {

@@ -70,6 +70,7 @@
                                     </tr>
                                 {% endfor %}
                             </table>
+                            {{ knp_pagination_render(visits) }}
                         </div>
                         <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                             <table class="table">
@@ -129,7 +130,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{ knp_pagination_render(visits) }}
                     </div>
                 </div>
             </div>

@@ -85,13 +85,13 @@
                                     {% endif %}
                                 {% endfor %}
                             </table>
+                            {{ knp_pagination_render(visits) }}
                         </div>
                         <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                             {% include 'specialist/hours_edit.html.twig' %}
                         </div>
                     </div>
                 </div>
-                {{ knp_pagination_render(visits) }}
             </div>
         </div>
     </div>

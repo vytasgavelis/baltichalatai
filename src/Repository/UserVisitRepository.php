@@ -53,6 +53,7 @@ class UserVisitRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.clientId = :val')
+            ->andWhere('u.isCompleted = 0')
             ->setParameter('val', $value)
             ->orderBy('u.visitDate', 'ASC');
 
@@ -67,6 +68,7 @@ class UserVisitRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.specialistId = :val')
+            ->andWhere('u.isCompleted = 0')
             ->setParameter('val', $value)
             ->orderBy('u.visitDate', 'ASC');
 
