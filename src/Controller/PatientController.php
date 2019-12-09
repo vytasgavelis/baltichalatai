@@ -71,7 +71,7 @@ class PatientController extends AbstractController
         }
         if ($user instanceof User && $user->getRole() == 1) {
             $queryBuilder = $this->getDoctrine()->getRepository(UserVisit::class)
-                ->getWithPatientIdQueryBuilder($user->getId());
+                ->getWithPatientIdCompletedQueryBuilder($user->getId());
 
             $pagination = $paginator->paginate(
                 $queryBuilder,
@@ -79,8 +79,12 @@ class PatientController extends AbstractController
                 5
             );
 
+            $upcomingVisits = $this->getDoctrine()->getRepository(UserVisit::class)
+                ->findByPatientIdNotCompleted($user->getId());
+
             return $this->render('patient/home.html.twig', [
-                'visits' => $pagination,
+                'upcomingVisits' => $upcomingVisits,
+                'pastVisits' => $pagination,
                 'userInfo' => $user->getUserInfo()->first(),
                 'clientRecipes' => $this->patientServices->getClientRecipes($user),
                 'clientSendings' => $this->patientServices->getClientSendingsToDoctor($user),

@@ -34,10 +34,11 @@ class UserVisitRepository extends ServiceEntityRepository
      * @param $value
      * @return Array
      */
-    public function findByPatientId($value): Array
+    public function findByPatientIdNotCompleted($value): Array
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.clientId = :val')
+            ->andWhere('u.isCompleted = 0')
             ->setParameter('val', $value)
             ->orderBy('u.visitDate', 'ASC')
             ->setMaxResults(10)
@@ -49,13 +50,13 @@ class UserVisitRepository extends ServiceEntityRepository
      * @param $value
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getWithPatientIdQueryBuilder($value): \Doctrine\ORM\QueryBuilder
+    public function getWithPatientIdCompletedQueryBuilder($value): \Doctrine\ORM\QueryBuilder
     {
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.clientId = :val')
-            ->andWhere('u.isCompleted = 0')
+            ->andWhere('u.isCompleted = 1')
             ->setParameter('val', $value)
-            ->orderBy('u.visitDate', 'ASC');
+            ->orderBy('u.visitDate', 'DESC');
 
         return $query;
     }
