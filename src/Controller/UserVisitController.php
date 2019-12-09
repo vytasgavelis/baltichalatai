@@ -82,7 +82,7 @@ class UserVisitController extends AbstractController
     public function closeVisit(UserVisit $userVisit, UserInterface $user = null)
     {
         if ($user instanceof User && $user->getId() == $userVisit->getSpecialistId()->getId()) {
-            if($userVisit->getDescription() != "") {
+            if ($userVisit->getDescription() != "") {
                 $em = $this->getDoctrine()->getManager();
                 $userVisit->setIsCompleted(true);
                 $em->flush();
@@ -109,7 +109,7 @@ class UserVisitController extends AbstractController
      */
     public function showVisitCommentary(UserVisit $userVisit, UserInterface $user = null)
     {
-        if($user instanceof User && $user->getId() == $userVisit->getSpecialistId()->getId()) {
+        if ($user instanceof User && $user->getId() == $userVisit->getSpecialistId()->getId()) {
             return $this->render('user_visit/index.html.twig', [
                 'userVisit' => $userVisit,
             ]);
