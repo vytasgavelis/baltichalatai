@@ -68,7 +68,7 @@ class UserVisitController extends AbstractController
 
             return new RedirectResponse($this->urlGenerator->generate('specialist'));
         }
-
+        $this->bag->add('success', 'Vizitas buvo atšauktas.');
         return new RedirectResponse($this->urlGenerator->generate('app_login'));
     }
 

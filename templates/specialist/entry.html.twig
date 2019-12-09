@@ -10,7 +10,7 @@
                         <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
                         <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
                         {% for specialty in app.user.getUserSpecialties() %}
-                            <li>{{ specialty.getSpecialtyId().getName() }}</li>
+                            <span class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span>
                         {% endfor %}
                         {% for clinic in app.user.getSpecialistClinics() %}
                             {% if clinic.getClinicId.getRole() != 4 %}
@@ -19,6 +19,9 @@
                                 </p>
                             {% endif %}
                         {% endfor %}
+                        <p>{{ userInfo.getDateOfBirth()|date('Y-m-d') }} <i class="far fa-calendar-alt"></i></p>
+                        <p>{{ userInfo.getPhoneNumber() }} <i class="fas fa-phone"></i></p>
+                        <p>{{ userInfo.getPersonalEmail() }} <i class="fas fa-envelope"></i></p>
                     </div>
                     <button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
                     <div>
@@ -59,8 +62,7 @@
                                         <tr>
                                             <td>{{ visit.getVisitDate()|date('H:i') }}</td>
                                             <td>{{ visit.getDescription() }}</td>
-                                            <td>{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}
-                                                <br></td>
+                                            <td><a href="{{ path('patient_show', {'id': visit.getClientId().getId() }) }}">{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}</a></td>
                                             <td>
                                                 <button type="button" class="btn btn-secondary"
                                                         onclick="location.href='/uservisit/{{ visit.getId() }}/close'"

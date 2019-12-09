@@ -13,85 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/asd", name="home")
-     */
-    public function index()
-    {
-        $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
-        return $this->render('home/index.html.twig', [
-            'specialties' => $specialties,
-            'is_logged_in' => false,
-        ]);
-    }
-
-    /**
-     * @Route("/doctor", name="doctor")
-     */
-    public function doctor()
-    {
-        return $this->render('home/doctor.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-            'edit' => false,
-        ]);
-    }
-    /**
-     * @Route("/doctor/edit", name="doctorEdit")
-     */
-    public function doctorEdit()
-    {
-        return $this->render('home/doctor.html.twig', [
-            'someVariable' => 'NFQ Akademija',
-            'is_logged_in' => false,
-            'edit' => true,
-        ]);
-    }
-//    /**
-//     * @Route("/patient", name="patient")
-//     */
-//    public function patient()
-//    {
-//        return $this->render('home/patient.html.twig', [
-//            'someVariable' => 'NFQ Akademija',
-//            'is_logged_in' => false,
-//            'edit' => false,
-//        ]);
-//    }
-//    /**
-//     * @Route("/patient/edit", name="patientEdit")
-//     */
-//    public function patientEdit()
-//    {
-//        return $this->render('home/patient.html.twig', [
-//            'someVariable' => 'NFQ Akademija',
-//            'is_logged_in' => false,
-//            'edit' => true,
-//        ]);
-//    }
-//    /**
-//     * @Route("/clinic", name="clinic")
-//     */
-//    public function clinic()
-//    {
-//        return $this->render('home/clinic.html.twig', [
-//            'someVariable' => 'NFQ Akademija',
-//            'is_logged_in' => false,
-//            'edit' => false,
-//        ]);
-//    }
-//    /**
-//     * @Route("/clinic/edit", name="clinicEdit")
-//     */
-//    public function clinicEdit()
-//    {
-//        return $this->render('home/clinic.html.twig', [
-//            'someVariable' => 'NFQ Akademija',
-//            'is_logged_in' => false,
-//            'edit' => true,
-//        ]);
-//    }
-    
-    /**
      * @Route("/results", name="results")
      */
     public function results()
@@ -114,5 +35,13 @@ class HomeController extends AbstractController
             ],
             'is_logged_in' => false,
         ]);
+    }
+
+    /**
+     * @Route("/about", name="about")
+     */
+    public function about()
+    {
+        return $this->render('home/about.html.twig');
     }
 }

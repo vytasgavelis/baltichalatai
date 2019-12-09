@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserVisit;
 use App\Services\PatientServices;
 use App\Services\UserVisitService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,19 +33,14 @@ class PatientController extends AbstractController
 
     /**
      * @Route("/patient/show/{id}", name="patient_show")
-     * @param $id
+     * @param User $patient
      * @return Response
      */
-    public function show($id)
+    public function show(User $patient)
     {
-        $patient = $this->getDoctrine()->getRepository(User::class)
-            ->findByIdAndRole($id, 3);
-        if (sizeof($patient) == 0) {
-            $patient = null;
-        }
 
-        return $this->render('patient/index.html.twig', [
-            'patient' => $patient[0],
+        return $this->render('patient/show.html.twig', [
+            'patient' => $patient,
         ]);
     }
 
@@ -60,8 +56,10 @@ class PatientController extends AbstractController
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
         if ($user instanceof User && $user->getRole() == 1) {
+            $visits = $this->getDoctrine()->getRepository(UserVisit::class)
+                ->findByPatientId($user->getId());
             return $this->render('patient/home.html.twig', [
-                'visits' => $user->getUserVisits(),
+                'visits' => $visits,
                 'userInfo' => $user->getUserInfo()->first(),
                 'clientRecipes' => $this->patientServices->getClientRecipes($user),
                 'clientSendings' => $this->patientServices->getClientSendingsToDoctor($user),

@@ -38,7 +38,7 @@
                                 {% for specialist in specialists %}
                                     <div class="results-row">
                                         <div class="cell" data-title="Full Name">
-                                            <a href="/specialist/show/{{ specialist.getId() }}">{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</a>
+                                            <a href="{{ path('specialist_show', {'id': specialist.getId() }) }}">{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</a>
                                         </div>
                                     <div class="cell" data-title="Age">
                                         {{ specialist.getUserSpecialties.first().getSpecialtyId().getName() }}

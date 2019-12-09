@@ -6,6 +6,9 @@
     <body class="bc-index">
     {% include 'components/layout/navbar_vertical.html.twig' %}
     <div class="wrap">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
         <h3 class="search-header">Gydytojų Paieška:</h3>
         {{ form_start(search_form) }}
         {{ form_widget(search_form.name, {'attr':
