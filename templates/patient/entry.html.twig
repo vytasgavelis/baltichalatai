@@ -52,7 +52,7 @@
                                     <th>Veiksmai</th>
                                 </tr>
                                 </thead>
-                                {% for visit in visits %}
+                                {% for visit in upcomingVisits %}
                                     <tr>
                                         <td>{{ visit.getVisitDate()|date('Y-m-d') }}</td>
                                         <td>{{ visit.getVisitDate()|date('H:i') }}</td>
@@ -102,7 +102,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for visit in visits %}
+                                {% for visit in pastVisits %}
                                     <tr>
                                         <td> {{ visit.visitDate.format('Y-m-d') }} </td>
                                         <td> {{ visit.description }} </td>
@@ -110,6 +110,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            {{ knp_pagination_render(pastVisits) }}
                         </div>
                         <div class="tab-pane fade p-3" id="four" role="tabpanel" aria-labelledby="four-tab">
                             <table class="table">
@@ -129,7 +130,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{ knp_pagination_render(visits) }}
                     </div>
                 </div>
             </div>

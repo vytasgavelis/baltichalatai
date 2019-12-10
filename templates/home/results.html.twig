@@ -41,11 +41,11 @@
                                         {{ specialist.getUserSpecialties.first().getSpecialtyId().getName() }}
                                     </div>
                                     <div class="cell" data-title="Job Title">
-                                        {% if specialist.clinic is not defined %}
-                                            Specialistas istaigai nepriklauso
+                                        {% if specialist.getSpecialistClinics.first() != false  and specialist.getSpecialistClinics.first().getClinicId().getClinicInfo() is not null%}
+                                        {{ specialist.getSpecialistClinics.first().getClinicId().getClinicInfo().getName() }}
                                         {% else %}
-                                            {{ specialist.getUserClinics.first().getName() }}
-                                        {% endif %}
+                                            Specialistas įstaigai nepriklauso
+                                            {% endif %}
                                     </div>
                                     <div class="cell" data-title="Location">
                                         {{ specialist.getUserInfo().first().getCity() }}
