@@ -98,10 +98,11 @@ class SpecialistController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function show($id,
+    public function show(
+        $id,
         PaginatorInterface $paginator,
-        Request $request)
-    {
+        Request $request
+    ) {
         $specialist = $this->specialistService->getSpecialist($id);
         if (sizeof($specialist) == 0) {
             throw $this->createNotFoundException();

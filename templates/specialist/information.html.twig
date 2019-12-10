@@ -115,7 +115,11 @@
                                     </div>
                                     <br><br>
                                     {% if app.user and app.user.getRole() == 1 %}
-                                        <input type="submit" id="form_search" value="Pasirinkti">
+                                        {% if app.user.getUserInfo().first() != false %}
+                                            <input type="submit" id="form_search" value="Pasirinkti">
+                                        {% else %}
+                                            Norėdami registruotis vizitui, turite užpildyti <a href="{{ path('userinfo_edit') }}">asmeninę informaciją</a>
+                                        {% endif %}
                                     {% else %}
                                         <p>Norėdami registruotis vizitui, turite <a href="{{ path('app_login') }}">prisijungti</a>
                                             arba <a href="{{ path('app_register') }}">susikurti paskyrą</a></p>
