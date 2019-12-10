@@ -62,20 +62,26 @@
                                         <tr>
                                             <td>{{ visit.getVisitDate()|date('H:i') }}</td>
                                             <td>{{ visit.getDescription() }}</td>
-                                            <td><a href="{{ path('patient_show', {'id': visit.getClientId().getId() }) }}">{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}</a></td>
                                             <td>
-{#                                                <button type="button" class="btn btn-secondary"#}
-{#                                                        onclick="location.href='/uservisit/{{ visit.getId() }}/close'"#}
-{#                                                        data-toggle="tooltip" data-placement="bottom" title="Uždaryti">#}
-{#                                                    <i class="fa fa-times" aria-hidden="true"></i></button>#}
-{#                                                <a href="{{ path('visit_info', {'id': visit.getId}) }}"#}
-{#                                                   class="btn btn-secondary" data-toggle="tooltip"#}
-{#                                                   data-placement="bottom" title="Komentuoti"><i class="fa fa-comment"#}
-{#                                                                                                 aria-hidden="true"></i></a>#}
-{#                                                <a href="{{ path('visit_info', {'id': visit.getId}) }}"#}
-{#                                                   class="btn btn-secondary" data-toggle="tooltip"#}
-{#                                                   data-placement="bottom" title="Siuntimas"><i class="fa fa-envelope"#}
-{#                                                                                                aria-hidden="true"></i></a>#}
+                                                {% if visit.getClientId().getUserInfo().first() != false %}
+                                                    <a href="{{ path('patient_show', {'id': visit.getClientId().getId() }) }}">{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}</a>
+                                                {% else %}
+                                                    Pacientas neužpildęs informacijos apie save.
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {#                                                <button type="button" class="btn btn-secondary"#}
+                                                {#                                                        onclick="location.href='/uservisit/{{ visit.getId() }}/close'"#}
+                                                {#                                                        data-toggle="tooltip" data-placement="bottom" title="Uždaryti">#}
+                                                {#                                                    <i class="fa fa-times" aria-hidden="true"></i></button>#}
+                                                {#                                                <a href="{{ path('visit_info', {'id': visit.getId}) }}"#}
+                                                {#                                                   class="btn btn-secondary" data-toggle="tooltip"#}
+                                                {#                                                   data-placement="bottom" title="Komentuoti"><i class="fa fa-comment"#}
+                                                {#                                                                                                 aria-hidden="true"></i></a>#}
+                                                {#                                                <a href="{{ path('visit_info', {'id': visit.getId}) }}"#}
+                                                {#                                                   class="btn btn-secondary" data-toggle="tooltip"#}
+                                                {#                                                   data-placement="bottom" title="Siuntimas"><i class="fa fa-envelope"#}
+                                                {#                                                                                                aria-hidden="true"></i></a>#}
                                                 <a href="{{ path('visit_info', {'id': visit.getId}) }}"
                                                    class="btn btn-secondary" data-toggle="tooltip"
                                                    data-placement="bottom" title="Receptas"><i class="fa fa-medkit"
