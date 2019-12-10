@@ -44,7 +44,7 @@ class SpecialistService
             $arr = [];
             foreach ($period as $d) {
                 $formattedDate = $this->getDateFromDayNumber($workHour->getDay());
-                $formattedTime = $d->format('H:i:s');
+                $formattedTime = $d->format('H:i');
                 if ($this->checkIfDateIsOccupied(
                     new DateTime($formattedDate . $formattedTime),
                     $workHour->getSpecialistId()->getId(),
