@@ -26,30 +26,60 @@
         {{ form_end(search_form) }}
     </div>
     <div class="section2-circle">
-        <a href="#section2"><i class="fa fa-angle-down" style="margin: 1px 10px; font-size:78px; color: #fca85e"></i></a>
+        <a href="#section2"><i class="fa fa-angle-down"
+                               style="margin: 1px 10px; font-size:78px; color: #fca85e"></i></a>
     </div>
 
     <div id="section2" class="about-us">
-        <div class="section1-circle">
+        <h1 class="reason-header">Apie mus</h1>
+        <p class="reason-paragraph">Balti chalatai - tai medicinos specialistų paieškos bei registracijos į vizitus
+            sistema. Nauda ras tiek pacientai tiek specialistai. Mes Jums siūlome: </p>
+
+            <div class="bc-reasons1">
+                <div class="patient-reason-container">
+                    <h2 class="patient-reason-header">Pacientams</h2>
+                </div>
+                <div class="patient-reason-container">
+                    <img class="patient-reason-image" src="/images/Reason1.jpg" alt="" title="">
+                    <p class="reason-text">Lengvai rasti norimą gydytoją pagal vardą, įstaigą ar miestą.</p>
+                </div>
+                <div class="patient-reason-container">
+                    <img class="patient-reason-image" src="/images/Reason2.jpg" alt="" title="">
+                    <p class="reason-text">Matyti kada gydytojas yra laisvas ir registruotis vizitui.</p>
+                </div>
+                <div class="patient-reason-container">
+                    <img class="patient-reason-image" src="/images/Reason3.jpg" alt="" title="">
+                    <p class="reason-text">Peržiūrėti savo ligos istoriją ir Jums skirtą gydymą.</p>
+                </div>
+            </div>
+
+            <div class="bc-reasons2">
+                <div class="specialist-reason-container">
+                    <h2 class="specialist-reason-header">Specialistams</h2>
+                </div>
+                <div class="specialist-reason-container">
+                    <img class="specialist-reason-image" src="/images/SpecialistReason1.png" alt="" title="">
+                    <p class="reason-text">Sulaukti daugiau pacientų.</p>
+                </div>
+                <div class="specialist-reason-container">
+                    <img class="specialist-reason-image" src="/images/SpecialistReason2.jpg" alt="" title="">
+                    <p class="reason-text">Lengviau valdyti pacientų vizitus.</p>
+                </div>
+            </div>
+        <div id="backToTop" class="section1-circle">
             <a href="#section1"><i class="fa fa-angle-up" style="margin: 1px 10px; font-size:78px; color: #fca85e"></i></a>
         </div>
-    <h1>Apie mus</h1>
-    <p>Balti chalatai - tai medicinos specialistų paieškos bei registracijos į vizitų sistema.</p>
-
-    <h2>Pacientams</h2>
-    <p>Čia jūs galite:</p>
-    <ul>
-        <li>Susirasti reikalingą specialistą.</li>
-        <li>Sužinoti reikiamą specialisto informaciją(kontaktai, grafikas, darbovietė ir t.t.)</li>
-        <li>Užsiregistruoti į vizitą (jei specialistas suteikia tam galimybę).</li>
-        <li>Matyti savo vizitus, siuntimus, gydymo istoriją bei receptus vienoje vietoje.</li>
-    </ul>
-    <h2>Specialistams</h2>
-    <p>Čia jūs galite:</p>
-    <ul>
-        <li>Sulaukti daugiau pacientų.</li>
-        <li>Lengviau valdyti pacientų vizitus.</li>
-    </ul>
-    </div>
+        </div>
+    <script>
+        window.onscroll = function() {
+            let offset = window.pageYOffset;
+            let docHeight = document.documentElement.clientHeight;
+            if (offset > docHeight * 0.8) {
+                document.getElementById("backToTop").classList.add("show");
+            } else {
+                document.getElementById("backToTop").classList.remove("show");
+            }
+        }
+    </script>
     </body>
 {% endblock %}

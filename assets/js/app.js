@@ -17,7 +17,6 @@ require('bootstrap-datepicker');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
     $('.datepicker').datepicker();
-    document.getElementById("defaultOpen").click();
 });
 
 
