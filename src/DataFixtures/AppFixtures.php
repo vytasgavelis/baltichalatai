@@ -98,9 +98,12 @@ class AppFixtures extends Fixture
                 $name = $this->getNames();
                 $userInfo->setName($name);
                 $surname = $this->getSurname();
+                $city = 'Kaunas';
+                $email = str_replace(' ', '', strtolower($this->getEmail($name, $surname)));
+                $phone = $this->getPhoneNumber();
                 $userInfo->setSurname($surname);
-                $userInfo->setPhoneNumber($this->getPhoneNumber());
-                $userInfo->setPersonalEmail($this->getEmail($name, $surname));
+                $userInfo->setPhoneNumber($phone);
+                $userInfo->setPersonalEmail($email);
 
                 $date = '19'.mt_rand(30, 90).'-'.mt_rand(1, 12).'-'.mt_rand(1, 28);
                 try {
@@ -108,21 +111,27 @@ class AppFixtures extends Fixture
                 } catch (Exception $e) {
                     throw (new Exception('No date found '.$e));
                 }
-                $userInfo->setCity('Kaunas');
+                $userInfo->setCity($city);
                 $userInfo->setPersonCode('3000000000');
-                $userInfo->setDescription($this->getDescription());
+                $usr->getRole() == 1 ?
+                    $userInfo->setDescription($this->getUserDescription($name, $surname, $city, $email, $phone)) :
+                    $userInfo->setDescription($this->getSpecialistDescription($name, $surname, $city, $email));
                 $userInfo->setUserId($usr);
                 $manager->persist($userInfo);
             } else {
                 $clinicInfo = new ClinicInfo();
+                $address = 'Klinikos 14, Kaunas';
                 $clinicNames = $this->getClinicName();
                 $clinicInfoName = $clinicNames[mt_rand(0, (sizeof($clinicNames) - 1))];
+                $webpage = 'https://'.str_replace(' ', '', strtolower($clinicInfoName)).'.klinika.lt';
+                $email = 'info@'.str_replace(' ', '', strtolower($clinicInfoName)).'.klinika.com';
+                $phoneNo = $this->getPhoneNumber();
                 $clinicInfo->setName($clinicInfoName);
-                $clinicInfo->setAddress('Klinikos 14, Kaunas');
-                $clinicInfo->setWebpage('https://'.$clinicInfoName.'.klinika.lt');
-                $clinicInfo->setPhoneNumber($this->getPhoneNumber());
-                $clinicInfo->setEmail('info@'.$clinicInfoName.'.klinika.com');
-                $clinicInfo->setDescription($this->getDescription());
+                $clinicInfo->setAddress($address);
+                $clinicInfo->setWebpage($webpage);
+                $clinicInfo->setPhoneNumber($phoneNo);
+                $clinicInfo->setEmail($email);
+                $clinicInfo->setDescription($this->getClinicDescription($address, $webpage, $email, $phoneNo));
                 $clinicInfo->setUserId($usr);
                 $manager->persist($clinicInfo);
             }
@@ -304,8 +313,8 @@ class AppFixtures extends Fixture
 
     protected function showTableLoadCompleteMessage($tableName): void
     {
-        echo "Inserted $tableName table data\r\n";
-        echo "====================================\r\n";
+        echo "Inserted $tableName table data\r\r\n";
+        echo "====================================\r\r\n";
     }
 
     protected function getNames(): string
@@ -355,6 +364,37 @@ class AppFixtures extends Fixture
         condimentum eget. Aenean lacinia dolor dolor, vitae sollicitudin metus consectetur id. Duis elementum orci neque
         , nec rutrum purus dapibus non. Phasellus tincidunt diam ultrices, elementum mauris sed, scelerisque enim. Nunc 
         elementum erat ac libero feugiat imperdiet.';
+    }
+
+    protected function getUserDescription(
+        string $name,
+        string $surn,
+        string $city,
+        string $email,
+        string $phone
+    ): string {
+        return "Sveiki, aš esu $name $surn\r\n".
+            " Gyvenu $city\r\n".
+            " Esant reikalu su manimi galite susisiekti el. paštu: $email".
+            " arba telefonu: ".$phone.".";
+    }
+
+    protected function getSpecialistDescription(string $name, string $surname, string $address, string $email): string
+    {
+        return "Sveiki, aš esu $name $surname\r\n".
+            " Mano dabartinis darbo adresas yra: $address\r\n".
+            " Užsiregistruoti pas mane galite per Baltų Chalatų puslapį. \r\n".
+            " Asmeniniais klausimais kreipkitės el. paštu: $email.";
+    }
+
+    protected function getClinicDescription(string $address, string $webpage, string $email, string $phoneNo): string
+    {
+        return "Sveiki atvykę į mūsų klinikos paskyrą. \r\n".
+            " Trumpa informacija apie mus. \r\n".
+            " Mus galite rasti adresu: $address\r\n".
+            " Mūsų klinikos puslapis: $webpage\r\n".
+            " Jeigu turi klausimų kreipkitės el. paštu: $email".
+            " arba skambinkite telefonu: ".$phoneNo;
     }
 
     protected function getSpecialties(): array

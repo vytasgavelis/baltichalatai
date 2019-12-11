@@ -31,7 +31,7 @@
 
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-                                <pre>{{ clinic.getClinicInfo().getDescription() }}</pre>
+                                <div>{{ clinic.getClinicInfo().getDescription() }}</div>
                             </div>
                             <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
                                 {%  for specialist in clinic.getClinicSpecialists() %}
