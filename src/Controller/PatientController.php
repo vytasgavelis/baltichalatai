@@ -39,8 +39,11 @@ class PatientController extends AbstractController
      * @param UserAuthService $userAuthService
      * @param FlashBagInterface $bag
      */
-    public function __construct(PatientServices $patientServices, UserAuthService $userAuthService, FlashBagInterface $bag)
-    {
+    public function __construct(
+        PatientServices $patientServices,
+        UserAuthService $userAuthService,
+        FlashBagInterface $bag
+    ) {
         $this->patientServices = $patientServices;
         $this->userAuthService = $userAuthService;
         $this->bag = $bag;
