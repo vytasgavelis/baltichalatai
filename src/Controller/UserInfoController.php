@@ -41,8 +41,11 @@ class UserInfoController extends AbstractController
      * @param FlashBagInterface $bag
      * @param UserSpecialtyService $userSpecialtyService
      */
-    public function __construct(UserInfoService $userInfoService, FlashBagInterface $bag, UserSpecialtyService $userSpecialtyService)
-    {
+    public function __construct(
+        UserInfoService $userInfoService,
+        FlashBagInterface $bag,
+        UserSpecialtyService $userSpecialtyService
+    ) {
         $this->userInfoService = $userInfoService;
         $this->userSpecialtyService = $userSpecialtyService;
         $this->bag = $bag;
@@ -58,7 +61,6 @@ class UserInfoController extends AbstractController
     public function edit(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
         if ($user instanceof User && ($user->getRole() == 2 || $user->getRole() == 1)) {
-            $message = null;
             $userInfo = $user->getUserInfo()->first();
             if ($userInfo == false) {
                 $userInfo = new UserInfo();
@@ -80,7 +82,6 @@ class UserInfoController extends AbstractController
                 $em->flush();
 
                 $this->bag->add('success', 'Jūsų informacija buvo išsaugota.');
-
             } elseif ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(
