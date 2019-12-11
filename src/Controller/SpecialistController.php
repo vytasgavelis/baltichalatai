@@ -200,11 +200,11 @@ class SpecialistController extends AbstractController
                 );
             }
 
-            return $this->render('specialist/edit.html.twig', [
-                'specialtiesForm' => $specialtiesForm->createView(),
-            ]);
+//            return $this->render('specialist/edit.html.twig', [
+//                'specialtiesForm' => $specialtiesForm->createView(),
+//            ]);
+            return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
-
         return new RedirectResponse($urlGenerator->generate('app_login'));
     }
 

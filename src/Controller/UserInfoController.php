@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Specialty;
 use App\Entity\User;
 use App\Entity\UserInfo;
 use App\Form\UserInfoType;
 use App\Services\UserInfoService;
+use App\Services\UserSpecialtyService;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,14 +30,24 @@ class UserInfoController extends AbstractController
      * @var FlashBagInterface
      */
     private $bag;
+    /**
+     * @var UserSpecialtyService
+     */
+    private $userSpecialtyService;
 
     /**
      * UserInfoController constructor.
      * @param UserInfoService $userInfoService
+     * @param FlashBagInterface $bag
+     * @param UserSpecialtyService $userSpecialtyService
      */
-    public function __construct(UserInfoService $userInfoService, FlashBagInterface $bag)
-    {
+    public function __construct(
+        UserInfoService $userInfoService,
+        FlashBagInterface $bag,
+        UserSpecialtyService $userSpecialtyService
+    ) {
         $this->userInfoService = $userInfoService;
+        $this->userSpecialtyService = $userSpecialtyService;
         $this->bag = $bag;
     }
 
@@ -47,18 +61,18 @@ class UserInfoController extends AbstractController
     public function edit(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
         if ($user instanceof User && ($user->getRole() == 2 || $user->getRole() == 1)) {
-            $message = null;
             $userInfo = $user->getUserInfo()->first();
             if ($userInfo == false) {
                 $userInfo = new UserInfo();
-                $message = 'Prašome užpildyti asmeninę informaciją';
             }
             $form = $this->createForm(UserInfoType::class, $userInfo, [
                 'action' => $this->generateUrl('userinfo_edit'),
             ]);
+            $specialtiesForm = $this->createSpecialistForm();
 
             //Handle the request
             $form->handleRequest($request);
+            $specialtiesForm->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid() &&
                 $this->userInfoService->validateUserInfoForm($request->request->get('user_info')) == "") {
                 $userInfo->setUserId($user);
@@ -68,21 +82,39 @@ class UserInfoController extends AbstractController
                 $em->flush();
 
                 $this->bag->add('success', 'Jūsų informacija buvo išsaugota.');
-
-                if ($user->getRole() == 1) {
-                    return new RedirectResponse($urlGenerator->generate('patient'));
-                } else {
-                    return new RedirectResponse($urlGenerator->generate('specialist'));
-                }
-                return $this->render('user_info/edit.html.twig', [
-                    'user_info_form' => $form->createView(),
-                ]);
-            } else {
-                return $this->render('user_info/edit.html.twig', [
-                    'user_info_form' => $form->createView(),
-                ]);
+            } elseif ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
+                $responseData = $request->request->get('form');
+                $this->userSpecialtyService->addSpecialty(
+                    $responseData['specialties'],
+                    $user
+                );
             }
+            return $this->render('user_info/edit.html.twig', [
+                'user_info_form' => $form->createView(),
+                'specialtiesForm' => $specialtiesForm->createView(),
+            ]);
         }
         return new RedirectResponse($urlGenerator->generate('app_login'));
+    }
+
+    private function createSpecialistForm(UserInterface $user = null)
+    {
+        $specialties = $this->getDoctrine()->getRepository(Specialty::class)->findAll();
+        $choices = array();
+        foreach ($specialties as $specialty) {
+            $choices += array($specialty->getName() => $specialty->getId());
+        }
+
+        $specialtiesForm = $this->createFormBuilder([])
+            ->add('specialties', ChoiceType::class, [
+                'placeholder' => 'Specialybė',
+                'choices' => $choices,
+                'required' => false,
+            ])
+//            ->add('custom_specialty', TextType::class, ['required' => false])
+            ->add('submit', SubmitType::class, ['label' => 'Prideti'])
+            ->getForm();
+
+        return $specialtiesForm;
     }
 }
