@@ -366,12 +366,17 @@ class AppFixtures extends Fixture
         elementum erat ac libero feugiat imperdiet.';
     }
 
-    protected function getUserDescription(string $name, string $surn, string $city, string $email, string $phone): string
-    {
+    protected function getUserDescription(
+        string $name,
+        string $surn,
+        string $city,
+        string $email,
+        string $phone
+    ): string {
         return "Sveiki, aš esu $name $surn\r\n".
             " Gyvenu $city\r\n".
             " Esant reikalu su manimi galite susisiekti el. paštu: $email".
-            " arba telefonu: ". $phone.".";
+            " arba telefonu: ".$phone.".";
     }
 
     protected function getSpecialistDescription(string $name, string $surname, string $address, string $email): string

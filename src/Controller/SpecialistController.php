@@ -113,12 +113,6 @@ class SpecialistController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours, $page);
 
-        /*$pagination = $paginator->paginate(
-            $queryBuilder,
-            $page,
-            5
-        );*/
-
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
             'workHours' => $queryBuilder,
