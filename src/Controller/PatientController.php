@@ -76,12 +76,12 @@ class PatientController extends AbstractController
         Request $request,
         UserInterface $user = null
     ) {
-        if (is_bool($user->getUserInfo()->first())) {
-            $this->bag->add('error', 'Prašomė užpildyti asmeninę informaciją');
-            return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
-        }
         if (!$this->userAuthService->isPatient($user)) {
             return new RedirectResponse($urlGenerator->generate('app_login'));
+        }
+        if (is_bool($user->getUserInfo()->first())) {
+            $this->bag->add('error', 'Prašome užpildyti asmeninę informaciją');
+            return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
         $queryBuilder = $this->getDoctrine()->getRepository(UserVisit::class)
             ->getWithPatientIdCompletedQueryBuilder($user->getId());

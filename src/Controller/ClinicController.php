@@ -62,9 +62,10 @@ class ClinicController extends AbstractController
     public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
         if (!$this->userAuthService->isClinic($user)) {
-            throw $this->createNotFoundException();
+            throw $this->createAccessDeniedException('Turite būti prisijungęs');
         }
         if ($user->getClinicInfo() == null) {
+            $this->bag->add('error', 'Prašome užpildyti informaciją apie jūsų įstaigą.');
             return new RedirectResponse($urlGenerator->generate('clinic_edit'));
         }
         return $this->render('clinic/home.html.twig', [
@@ -75,7 +76,7 @@ class ClinicController extends AbstractController
     /**
      * @Route("/clinic/show/{id}", name="clinic_show")
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -99,7 +100,7 @@ class ClinicController extends AbstractController
     public function edit(Request $request, UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
         if (!$this->userAuthService->isClinic($user)) {
-            throw $this->createNotFoundException();
+            throw $this->createAccessDeniedException('Turite būti prisijungęs');
         }
         $clinicInfo = $user->getClinicInfo();
         if (is_null($clinicInfo)) {
