@@ -1,11 +1,11 @@
 {% block patient_profile %}
     <div class="container-fluid bc-patient-container">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
         <div class="row">
             <div class="col-sm-4 bc-patient-column-4">
                 <div class="panel text-center">
-                    {% for flashMessage in app.session.flashbag.get('success') %}
-                        <div class="alert alert-success">{{ flashMessage }}</div>
-                    {% endfor %}
                     <div class="user-heading">
                         <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
                         <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
@@ -48,7 +48,7 @@
                                     <th>Laikas</th>
                                     <th>Specialistas</th>
                                     <th>Gydytojas</th>
-                                    <th>Kabinetas</th>
+                                    <th>Įstaiga</th>
                                     <th>Veiksmai</th>
                                 </tr>
                                 </thead>
@@ -60,11 +60,15 @@
                                         <td>
                                             <a href="{{ path('specialist_show', {'id': visit.getSpecialistId().getId()}) }}">{{ visit.getSpecialistId().getUserInfo().first().getName() }} {{ visit.getSpecialistId().getUserInfo().first().getSurname() }}</a>
                                         </td>
-                                        <td>203</td>
+                                        <td>
+                                            {% if visit.getClinicId().getRole() == 3 %}
+                                                <a href="{{  path('clinic_show', {'id': visit.getClinicId().getId()}) }}">{{ visit.getClinicId().getClinicInfo().getName() }}</a>
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             <button class="btn btn-secondary"
                                                     onclick="location.href='/uservisit/{{ visit.getId() }}/delete'"
-                                                    data-toggle="tooltip" data-placement="bottom" title="Atšaukti"><i
+                                                    data-toggle="tooltip" data-placement="bottom" title="Atšaukti">Atšaukti<i
                                                         class="fa fa-times" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>

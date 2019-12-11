@@ -12,16 +12,20 @@
                         <div class="user-heading">
                             <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
                             {% if app.user and app.user.getRole() == 3 %}
-                                {% if not clinic_specialist_service.specialistBelongsToClinic(specialist, app.user) %}
-                                    <button class="btn btn-margin"
-                                            onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/add'">
-                                        Pridėti specialistą į įstaigą
-                                    </button>
+                                {% if app.user.getClinicInfo() != null %}
+                                    {% if not clinic_specialist_service.specialistBelongsToClinic(specialist, app.user) %}
+                                        <button class="btn btn-margin"
+                                                onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/add'">
+                                            Pridėti specialistą į įstaigą
+                                        </button>
+                                    {% else %}
+                                        <button class="btn btn-margin"
+                                                onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/remove'">
+                                            Panaikinti specialistą
+                                        </button>
+                                    {% endif %}
                                 {% else %}
-                                    <button class="btn btn-margin"
-                                            onclick="location.href='/clinicspecialist/{{ specialist.getId() }}/remove'">
-                                        Panaikinti specialistą
-                                    </button>
+                                    Norėdami pridėti specialistą turite užpildyti informaciją apie savo įstaigą <a href="{{ path('clinic_edit') }}">čia</a>
                                 {% endif %}
                             {% endif %}
                             <h2>{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</h2>
@@ -76,10 +80,12 @@
                                       method="POST">
                                     <div>
                                         {% if page > 1 %}
-                                            <p><a href="/specialist/show/{{ id }}?page={{ page-1 }}"><i class="fa fa-arrow-circle-left"></i></a> Grįžti atgal</p>
+                                            <p><a href="/specialist/show/{{ id }}?page={{ page-1 }}"><i
+                                                            class="fa fa-arrow-circle-left"></i></a> Grįžti atgal</p>
                                         {% endif %}
-                                        {% if workHours is not empty  %}
-                                                <p> Rodyti daugiau <a href="/specialist/show/{{ id }}?page={{ page+1 }}"><i class="fa fa-arrow-circle-right"></i></a></p>
+                                        {% if workHours is not empty %}
+                                            <p> Rodyti daugiau <a href="/specialist/show/{{ id }}?page={{ page+1 }}"><i
+                                                            class="fa fa-arrow-circle-right"></i></a></p>
                                         {% endif %}
                                         <div class="row specialist-hours-row">
                                             {% if workHours is empty %}
@@ -97,7 +103,7 @@
                                                                    id="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}">
                                                             <label
                                                                     class="specialist-work-day"
-                                                                for="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}"
+                                                                    for="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}"
                                                             >
                                                                 {{ hour }}
                                                             </label>

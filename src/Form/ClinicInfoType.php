@@ -20,7 +20,7 @@ class ClinicInfoType extends AbstractType
             ->add('address', null, ['label'=> 'Adresas', 'empty_data' => '',])
             ->add('webpage', null, ['label'=> 'Svetainė', 'empty_data' => '',])
             ->add('email', null, ['label'=> 'El. Paštas', 'empty_data' => '',])
-            ->add('description', TextType::class, ['label'=> 'Aprašymas', 'empty_data' => '',])
+            ->add('description', TextType::class, ['label'=> 'Aprašymas', 'empty_data' => '', 'required' => false,])
             ->add('phoneNumber', null, ['label'=> 'Tel. Nr.', 'empty_data' => '',])
             ->add('save', SubmitType::class, ['label'=> 'Išsaugoti']);
     }
