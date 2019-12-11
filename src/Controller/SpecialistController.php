@@ -116,21 +116,14 @@ class SpecialistController extends AbstractController
         } else {
             $workHours = $this->specialistService->getSpecialistWorkHours($specialist[0]);
         }
-
-        $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours);
         $page = $request->query->getInt('page', 1);
-
-        $pagination = $paginator->paginate(
-            $queryBuilder,
-            $page,
-            5
-        );
+        $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours, $page);
 
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
-            'workHours' => $pagination,
+            'workHours' => $queryBuilder,
             'id' => $id,
-            'page' => $page
+            'page' => $page,
         ]);
     }
 
@@ -268,7 +261,7 @@ class SpecialistController extends AbstractController
             $reqInfo = explode(';', $request->get('reg_time'));
             $specialist = $this->specialistService->getSpecialist($specialistId);
             $clinic = $this->specialistService->getClinic($reqInfo[0]);
-            $fullDate = new DateTime($reqInfo[1] . $reqInfo[2]);
+            $fullDate = new DateTime($reqInfo[1].$reqInfo[2]);
             // pries idedant pachekinam ar netycia kazkas anksciau jau nebus ten pat uzsiregistraves
             // kolkas redirectinam atgal, poto galbut kazkokia zinute prideti
 
@@ -295,6 +288,7 @@ class SpecialistController extends AbstractController
             $manager->flush();
 
             $this->bag->add('success', 'Užregistruota sėkmingai');
+
             return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist[0]->getId()]));
         }
     }
