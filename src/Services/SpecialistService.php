@@ -29,13 +29,15 @@ class SpecialistService
 
     /**
      * @param $workHours
+     * @param int $page
      * @return array
      * @throws Exception
      */
-    public function getSpecialistHoursFormatted($workHours): array
+    public function getSpecialistHoursFormatted($workHours, int $page): array
     {
         $dateArr = [];
         foreach ($workHours as $workHour) {
+            $workDay = $workHour->getDay() + (($page - 1) * 7);
             $period = new DatePeriod(
                 $workHour->getStartTime(),
                 CarbonInterval::minutes(30),
@@ -43,7 +45,7 @@ class SpecialistService
             );
             $arr = [];
             foreach ($period as $d) {
-                $formattedDate = $this->getDateFromDayNumber($workHour->getDay());
+                $formattedDate = $this->getDateFromDayNumber($workDay);
                 $formattedTime = $d->format('H:i');
                 if ($this->checkIfDateIsOccupied(
                     new DateTime($formattedDate . $formattedTime),
@@ -58,7 +60,7 @@ class SpecialistService
             $dateArr[] = array(
                 'clinicId' => $workHour->getClinicId(),
                 array(
-                    'day' => $workHour->getDay(),
+                    'day' => $workDay,
                     'hours' => $arr,
                 ),
             );

@@ -7,10 +7,11 @@
                         <div class="alert alert-success">{{ flashMessage }}</div>
                     {% endfor %}
                     <div class="user-heading">
-                        <a href="#"><img src="/build/profile-avatar.png" alt="" title=""></a>
+                        <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
                         <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
                         {% for specialty in app.user.getUserSpecialties() %}
-                            <span class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span>
+                            <a href="/search?specialties={{ specialty.getSpecialtyId.getId() }}"><span
+                                        class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span></a>
                         {% endfor %}
                         {% for clinic in app.user.getSpecialistClinics() %}
                             {% if clinic.getClinicId.getRole() != 4 %}
@@ -24,11 +25,6 @@
                         <p>{{ userInfo.getPersonalEmail() }} <i class="fas fa-envelope"></i></p>
                     </div>
                     <button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
-                    <div>
-                        <button class="btn btn-margin" onclick="location.href='/specialist/edit'">Redaguoti
-                            specialybes
-                        </button>
-                    </div>
                 </div>
             </div>
             <div class="col-sm-8 bc-patient-column-8">

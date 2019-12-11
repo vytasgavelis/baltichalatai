@@ -6,12 +6,32 @@
     <body class="bc-index">
     {% include 'components/layout/navbar.html.twig' %}
     <div class="wrap edit-wrap">
-        <h3 class="search-header">Redaguoti Profilį:</h3>
-
-        {{ form(user_info_form) }}
         {% for flashMessage in app.session.flashbag.get('error') %}
             <div class="alert alert-danger">{{ flashMessage }}</div>
         {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
+        <h3 class="search-header">Redaguoti Profilį:</h3>
+
+        {{ form(user_info_form) }}
+
+        {% if app.user.getRole() == 2 %}
+            <h3 class="search-header">Redaguoti specialybes:</h3>
+            <div>
+                {% for specialty in app.user.getUserSpecialties() %}
+                    <li>{{ specialty.getSpecialtyId().getName() }}</li>
+                    <a href="{{ path('user_specialty_remove', {'id': specialty.getId()}) }}">Panaikinti</a>
+                {% endfor %}
+            </div>
+            {{ form_start(specialtiesForm) }}
+            {{ form_widget(specialtiesForm.specialties) }}
+
+            {{ form_widget(specialtiesForm.submit, {'attr':
+                {'class': 'search-button', 'label': 'Pridėti'}}
+            ) }}
+            {{ form_end(specialtiesForm) }}
+        {% endif %}
     </div>
     </body>
 {% endblock %}
