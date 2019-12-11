@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use App\Entity\User;
 
 class UserAuthService
@@ -24,5 +23,14 @@ class UserAuthService
     public function isPatient($user)
     {
         return $user instanceof User && $user->getRole() == 1;
+    }
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function isClinic($user)
+    {
+        return $user instanceof User && $user->getRole() == 3;
     }
 }
