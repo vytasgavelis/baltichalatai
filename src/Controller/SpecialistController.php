@@ -79,6 +79,7 @@ class SpecialistController extends AbstractController
             );
 
             $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
+
             return $this->render('specialist/home.html.twig', [
                 'userInfo' => $user->getUserInfo()->first(),
                 'visits' => $pagination,
@@ -98,31 +99,31 @@ class SpecialistController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function show($id,
+    public function show(
+        $id,
         PaginatorInterface $paginator,
-        Request $request)
-    {
+        Request $request
+    ) {
         $specialist = $this->specialistService->getSpecialist($id);
         if (sizeof($specialist) == 0) {
             throw $this->createNotFoundException();
         } else {
             $workHours = $this->specialistService->getSpecialistWorkHours($specialist[0]);
         }
-
-        $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours);
         $page = $request->query->getInt('page', 1);
+        $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours, $page);
 
-        $pagination = $paginator->paginate(
+        /*$pagination = $paginator->paginate(
             $queryBuilder,
             $page,
             5
-        );
+        );*/
 
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
-            'workHours' => $pagination,
+            'workHours' => $queryBuilder,
             'id' => $id,
-            'page' => $page
+            'page' => $page,
         ]);
     }
 
@@ -163,6 +164,7 @@ class SpecialistController extends AbstractController
                 $manager->flush();
                 $this->bag->add('success', 'Grafikas išsaugotas.');
             }
+
             return new RedirectResponse($urlGenerator->generate('specialist'));
             /*$workHours = $this->specialistService->getSpecialistWorkHours($user);
 
@@ -272,7 +274,7 @@ class SpecialistController extends AbstractController
             $reqInfo = explode(';', $request->get('reg_time'));
             $specialist = $this->specialistService->getSpecialist($specialistId);
             $clinic = $this->specialistService->getClinic($reqInfo[0]);
-            $fullDate = new DateTime($reqInfo[1] . $reqInfo[2]);
+            $fullDate = new DateTime($reqInfo[1].$reqInfo[2]);
             // pries idedant pachekinam ar netycia kazkas anksciau jau nebus ten pat uzsiregistraves
             // kolkas redirectinam atgal, poto galbut kazkokia zinute prideti
 
@@ -299,6 +301,7 @@ class SpecialistController extends AbstractController
             $manager->flush();
 
             $this->bag->add('success', 'Užregistruota sėkmingai');
+
             return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist[0]->getId()]));
         } else {
             throw new NotFoundHttpException('Klinikos negali registruotis į vizitus');
