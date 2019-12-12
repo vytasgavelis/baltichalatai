@@ -49,18 +49,18 @@ class PatientController extends AbstractController
         $this->bag = $bag;
     }
 
-
-    /**
-     * @Route("/patient/show/{id}", name="patient_show")
-     * @param User $patient
-     * @return Response
-     */
-    public function show(User $patient)
-    {
-        return $this->render('patient/show.html.twig', [
-            'patient' => $patient,
-        ]);
-    }
+//
+//    /**
+//     * @Route("/patient/show/{id}", name="patient_show")
+//     * @param User $patient
+//     * @return Response
+//     */
+//    public function show(User $patient)
+//    {
+//        return $this->render('patient/show.html.twig', [
+//            'patient' => $patient,
+//        ]);
+//    }
 
     /**
      * @Route("/patient", name="patient")

@@ -1,30 +1,35 @@
 {% block doctor_profile %}
     <div class="container-fluid bc-patient-container">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
         <div class="row">
             <div class="col-sm-4 bc-patient-column-4">
-                <div class="panel text-center">
-                    {% for flashMessage in app.session.flashbag.get('success') %}
-                        <div class="alert alert-success">{{ flashMessage }}</div>
-                    {% endfor %}
+                <div class="panel">
                     <div class="user-heading">
-                        <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
-                        <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
-                        {% for specialty in app.user.getUserSpecialties() %}
-                            <a href="/search?specialties={{ specialty.getSpecialtyId.getId() }}"><span
-                                        class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span></a>
-                        {% endfor %}
-                        {% for clinic in app.user.getSpecialistClinics() %}
-                            {% if clinic.getClinicId.getRole() != 4 %}
-                                <p>
-                                    <a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a>
-                                </p>
-                            {% endif %}
-                        {% endfor %}
-                        <p>{{ userInfo.getDateOfBirth()|date('Y-m-d') }} <i class="far fa-calendar-alt"></i></p>
-                        <p>{{ userInfo.getPhoneNumber() }} <i class="fas fa-phone"></i></p>
-                        <p>{{ userInfo.getPersonalEmail() }} <i class="fas fa-envelope"></i></p>
+                        <div class="user-heading text-center">
+                            <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
+                            <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
+                            {% for specialty in app.user.getUserSpecialties() %}
+                                <a href="/search?specialties={{ specialty.getSpecialtyId.getId() }}"><span
+                                            class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span></a>
+                            {% endfor %}
+                            {% for clinic in app.user.getSpecialistClinics() %}
+                                {% if clinic.getClinicId.getRole() != 4 %}
+                                    <p>
+                                        <a href="{{ path('clinic_show', {'id': clinic.getClinicId().getId()}) }}">{{ clinic.getClinicId().getClinicInfo().getName() }}</a>
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p><i class="far fa-calendar-alt"></i> {{ userInfo.getDateOfBirth()|date('Y-m-d') }}</p>
+                        <p><i class="fas fa-phone"></i> {{ userInfo.getPhoneNumber() }}</p>
+                        <p><i class="fas fa-envelope"></i> {{ userInfo.getPersonalEmail() }}</p>
                     </div>
-                    <button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
+                    <div class="text-center">
+                        <button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-8 bc-patient-column-8">
@@ -60,7 +65,7 @@
                                             <td>{{ visit.getDescription() }}</td>
                                             <td>
                                                 {% if visit.getClientId().getUserInfo().first() != false %}
-                                                    <a href="{{ path('patient_show', {'id': visit.getClientId().getId() }) }}">{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}</a>
+                                                    {{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}
                                                 {% else %}
                                                     Pacientas neužpildęs informacijos apie save.
                                                 {% endif %}

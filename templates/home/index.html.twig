@@ -4,7 +4,7 @@
 
 {% block body %}
     <body id="section1" class="bc-index">
-    {% include 'components/layout/navbar_vertical.html.twig' %}
+    {% include 'components/layout/navbar.html.twig' %}
     <div class="wrap">
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">{{ flashMessage }}</div>

@@ -8,8 +8,9 @@
             {% endfor %}
             <div class="row">
                 <div class="col-sm-4 bc-patient-column-4">
-                    <div class="panel text-center">
+                    <div class="panel">
                         <div class="user-heading">
+                            <div class="user-heading text-center">
                             <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
                             {% if app.user and app.user.getRole() == 3 %}
                                 {% if app.user.getClinicInfo() != null %}
@@ -33,6 +34,11 @@
                                 <a href="/search?specialties={{ specialty.getSpecialtyId.getId() }}"><span
                                             class="badge badge-info">{{ specialty.getSpecialtyId().getName() }}</span></a>
                             {% endfor %}
+                            </div>
+                            <p><i class="fas fa-phone"></i> {{ specialist.getUserInfo().first().getPhoneNumber()}}</p>
+                            <p><i class="fas fa-envelope"></i> {{ specialist.getUserInfo().first().getPersonalEmail() }}</p>
+                            <p><i class="fas fa-map-marker"></i> {{ specialist.getUserInfo().first().getCity() }}</p>
+                            <div class="text-center"><b>Darbovietės</b></div>
                             {% if specialist.getSpecialistClinics().first().getClinicId() is not defined or specialist.getSpecialistClinics().first().getClinicId() is null %}
                                 Specialistas įstaigai nepriklauso
                             {% else %}
@@ -44,11 +50,6 @@
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
-                            <p>{{ specialist.getUserInfo().first().getPhoneNumber() }} <i class="fas fa-phone"></i>
-                            </p>
-                            <p>{{ specialist.getUserInfo().first().getPersonalEmail() }} <i
-                                        class="fas fa-envelope"></i></p>
-                            <p>{{ specialist.getUserInfo().first().getCity() }} <i class="fas fa-map-marker"></i></p>
                         </div>
                     </div>
                 </div>
