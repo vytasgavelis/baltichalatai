@@ -5,9 +5,6 @@
 {% block body %}
     <div class="container-fluid bc-patient-container">
         <div class="row justify-content-center">
-            {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="alert alert-success">{{ flashMessage }}</div>
-            {% endfor %}
             {% for flashMessage in app.session.flashbag.get('error') %}
                 <div class="alert alert-warning">{{ flashMessage }}</div>
             {% endfor %}

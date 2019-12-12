@@ -1,15 +1,10 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
     <body class="bc-index">
     {% include 'components/layout/navbar.html.twig' %}
     </body>
     <div class="container container-fluid">
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">{{ flashMessage }}</div>
-        {% endfor %}
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-dark table-sm">

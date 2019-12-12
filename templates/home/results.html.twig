@@ -34,20 +34,20 @@
                                 </div>
                                 {% for specialist in specialists %}
                                     <div class="results-row">
-                                        <div class="cell" data-title="Full Name">
+                                        <div class="cell" data-title="Gyd. Vardas">
                                             <a href="{{ path('specialist_show', {'id': specialist.getId() }) }}">{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</a>
                                         </div>
-                                    <div class="cell" data-title="Age">
+                                    <div class="cell" data-title="Specialybė">
                                         {{ specialist.getUserSpecialties.first().getSpecialtyId().getName() }}
                                     </div>
-                                    <div class="cell" data-title="Job Title">
+                                    <div class="cell" data-title="Įstaiga">
                                         {% if specialist.getSpecialistClinics.first() != false  and specialist.getSpecialistClinics.first().getClinicId().getClinicInfo() is not null%}
                                         {{ specialist.getSpecialistClinics.first().getClinicId().getClinicInfo().getName() }}
                                         {% else %}
                                             Specialistas įstaigai nepriklauso
                                             {% endif %}
                                     </div>
-                                    <div class="cell" data-title="Location">
+                                    <div class="cell" data-title="Miestas">
                                         {{ specialist.getUserInfo().first().getCity() }}
                                     </div>
                                     </div>

@@ -90,7 +90,6 @@ class UserInfoController extends AbstractController
                 $em->persist($userInfo);
                 $em->flush();
 
-                $this->bag->add('success', 'Jūsų informacija buvo išsaugota.');
             } elseif ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(
