@@ -1,14 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserVisitController!{% endblock %}
+{% block title %}Vizitas{% endblock %}
 
 {% block body %}
+<body class="bc-index">
+    {% include 'components/layout/navbar.html.twig' %}
+    <div class="row justify-content-center">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-warning">{{ flashMessage }}</div>
+        {% endfor %}
+    </div>
     <div class="container-fluid bc-patient-container">
-        <div class="row justify-content-center">
-            {% for flashMessage in app.session.flashbag.get('error') %}
-                <div class="alert alert-warning">{{ flashMessage }}</div>
-            {% endfor %}
+        <div class="user-heading">
+            <h2>{{ userVisit.getClientId().getUserInfo().first().getName() }} {{ userVisit.getClientId().getUserInfo().first().getSurName() }}</h2>
+            <p><i class="far fa-calendar-alt"></i> {{ userVisit.getClientId().getUserInfo().first().getDateOfBirth()|date('Y-m-d') }}</p>
+            <p><i class="fas fa-phone"></i> {{ userVisit.getClientId().getUserInfo().first().getPhoneNumber() }}</p>
+            <p><i class="fas fa-envelope"></i> {{ userVisit.getClientId().getUserInfo().first().getPersonalEmail() }}</p>
+            <p><i class="fas fa-map-marker-alt"></i> {{ userVisit.getClientId().getUserInfo().first().getCity() }}</p>
         </div>
+
         <button type="button" class="btn btn-secondary"
                 onclick="location.href='/uservisit/{{ userVisit.getId() }}/close'"
                 data-toggle="tooltip" data-placement="bottom" title="Uždaryti">
@@ -16,12 +29,9 @@
 
         <form action="{{ path('save_visit_info', {'id': userVisit.getId}) }}" method="post">
             <div class="row">
-                <h3> Vizito informacija </h3>
-            </div>
-            <div class="row">
                 <div class="col-md-7">
                     <label for="visit-comment"> Vizito komentaras </label>
-                    <textarea class="form-control" name="visit-comment">{{ userVisit.description ?? '' }} </textarea>
+                    <textarea class="form-control" name="visit-comment">{{ userVisit.description ?? '' }}</textarea>
                 </div>
                 <div class="col-md-3 offset-2 justify-content-center float-right mt-4">
                     <button type="submit" class="btn"> Išsaugoti vizito informaciją</button>
@@ -29,9 +39,6 @@
             </div>
         </form>
         <form action="{{ path('save_recipe_info', {'id': userVisit.getId}) }}" method="post">
-            <div class="row">
-                <h3> Recepto informacija </h3>
-            </div>
             <div class="row">
                 <div class="col-md-6">
                     <label for="recipe-description"> Recepto aprašas </label>
@@ -50,9 +57,6 @@
         </form>
         <form action="{{ path('save_sending_info', {'id': userVisit.getId}) }}" method="post">
             <div class="row">
-                <h3>Siuntimo informacija </h3>
-            </div>
-            <div class="row">
                 <div class="col-md-7">
                     <label for="recipe-description"> Siuntimo aprašas </label>
                     <textarea class="form-control"
@@ -62,7 +66,7 @@
                     <button type="submit" class="btn"> Išsaugoti siuntimo informaciją</button>
                 </div>
             </div>
-
         </form>
     </div>
+</body>
 {% endblock %}

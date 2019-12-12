@@ -3,16 +3,20 @@
 {% block title %}Pacientas{% endblock %}
 
 {% block body %}
+    {% include 'components/layout/navbar.html.twig' %}
     <body class="bc-index">
     <div class="container-fluid bc-patient-container">
         <div class="row">
-            <div class="col-sm-4">
-                <div class="panel text-center">
-                    <h2>{{ patient.getUserInfo().first().getName() }} {{ patient.getUserInfo().first().getSurName() }}</h2>
-                    <p>{{ patient.getUserInfo().first().getDateOfBirth()|date('Y-m-d') }} <i
-                                class="far fa-calendar-alt"></i></p>
-                    <p>{{ patient.getUserInfo().first().getPhoneNumber() }} <i class="fas fa-phone"></i></p>
-                    <p>{{ patient.getUserInfo().first().getPersonalEmail() }} <i class="fas fa-envelope"></i></p>
+            <div class="col-sm-14 bc-patient-column-4">
+                <div class="panel">
+                    <div class="user-heading">
+                        <div class="user-heading text-center"><a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a></div>
+                        <h2>{{ patient.getUserInfo().first().getName() }} {{ patient.getUserInfo().first().getSurName() }}</h2>
+                        <p><i class="far fa-calendar-alt"></i> {{ patient.getUserInfo().first().getDateOfBirth()|date('Y-m-d') }}</p>
+                        <p><i class="fas fa-phone"></i> {{ patient.getUserInfo().first().getPhoneNumber() }}</p>
+                        <p><i class="fas fa-envelope"></i> {{ patient.getUserInfo().first().getPersonalEmail() }}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> {{ patient.getUserInfo().first().getCity() }}</p>
+                    </div>
                 </div>
             </div>
         </div>

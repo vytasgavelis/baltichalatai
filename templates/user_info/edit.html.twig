@@ -17,8 +17,8 @@
             <h3 class="search-header">Redaguoti specialybes:</h3>
             <div>
                 {% for specialty in app.user.getUserSpecialties() %}
-                    <li>{{ specialty.getSpecialtyId().getName() }}</li>
-                    <a href="{{ path('user_specialty_remove', {'id': specialty.getId()}) }}">Panaikinti</a>
+                    <li>{{ specialty.getSpecialtyId().getName() }}
+                        <a href="{{ path('user_specialty_remove', {'id': specialty.getId()}) }}">Panaikinti</a></li>
                 {% endfor %}
             </div>
             {{ form_start(specialtiesForm) }}
@@ -28,6 +28,7 @@
                 {'class': 'search-button', 'label': 'Pridėti'}}
             ) }}
             {{ form_end(specialtiesForm) }}
+{#            {{ form(specialtiesForm) }}#}
         {% endif %}
     </div>
     </body>
