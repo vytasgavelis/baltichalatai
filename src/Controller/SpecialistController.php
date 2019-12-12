@@ -88,6 +88,7 @@ class SpecialistController extends AbstractController
         );
 
         $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
+
         return $this->render('specialist/home.html.twig', [
             'userInfo' => $user->getUserInfo()->first(),
             'visits' => $pagination,
@@ -166,6 +167,7 @@ class SpecialistController extends AbstractController
             $manager->flush();
             $this->bag->add('success', 'Grafikas išsaugotas.');
         }
+
         return new RedirectResponse($urlGenerator->generate('specialist'));
     }
 
@@ -192,6 +194,7 @@ class SpecialistController extends AbstractController
                 $user
             );
         }
+
         return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
     }
 
