@@ -49,8 +49,7 @@ class ClinicController extends AbstractController
         ClinicInfoService $clinicInfoService,
         UserAuthService $userAuthService,
         FlashBagInterface $bag
-    )
-    {
+    ) {
         $this->clinicInfoService = $clinicInfoService;
         $this->userAuthService = $userAuthService;
         $this->bag = $bag;
@@ -64,8 +63,12 @@ class ClinicController extends AbstractController
      * @param UserInterface|null $user
      * @return RedirectResponse|Response
      */
-    public function index(UrlGeneratorInterface $urlGenerator, Request $request, PaginatorInterface $paginator, UserInterface $user = null)
-    {
+    public function index(
+        UrlGeneratorInterface $urlGenerator,
+        Request $request,
+        PaginatorInterface $paginator,
+        UserInterface $user = null
+    ) {
         if (!$this->userAuthService->isClinic($user)) {
             throw $this->createAccessDeniedException('Turite būti prisijungęs');
         }

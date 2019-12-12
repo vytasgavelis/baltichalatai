@@ -8,6 +8,7 @@ use App\Services\SpecialistService;
 use App\Services\UserAuthService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -35,15 +36,18 @@ class ClinicSpecialistController extends AbstractController
      * @param ClinicSpecialistService $clinicSpecialistService
      * @param SpecialistService $specialistService
      * @param UserAuthService $userAuthService
+     * @param FlashBagInterface $bag
      */
     public function __construct(
         ClinicSpecialistService $clinicSpecialistService,
         SpecialistService $specialistService,
-        UserAuthService $userAuthService
+        UserAuthService $userAuthService,
+        FlashBagInterface $bag
     ) {
         $this->clinicSpecialistService = $clinicSpecialistService;
         $this->specialistService = $specialistService;
         $this->userAuthService = $userAuthService;
+        $this->bag = $bag;
     }
 
     /**
@@ -57,6 +61,7 @@ class ClinicSpecialistController extends AbstractController
     {
         if ($this->userAuthService->isClinic($user)) {
             $this->clinicSpecialistService->addSpecialist($user, $specialist);
+            $this->bag->add('success', 'Specialistas pridėtas.');
         }
         return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist->getId()]));
     }
@@ -77,6 +82,8 @@ class ClinicSpecialistController extends AbstractController
                 ->findBySpecialistIdAndClinicId($specialist->getId(), $user->getId());
             $em->remove($clinicSpecialists[0]);
             $em->flush();
+
+            $this->bag->add('success', 'Specialistas pašalintas.');
         }
         return new RedirectResponse($urlGenerator->generate('specialist_show', ['id' => $specialist->getId()]));
     }
