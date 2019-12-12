@@ -5,15 +5,20 @@
         {% endfor %}
         <div class="row">
             <div class="col-sm-4 bc-patient-column-4">
-                <div class="panel text-center">
+                <div class="panel">
                     <div class="user-heading">
-                        <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
-                        <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
-                        <p>{{ userInfo.getDateOfBirth()|date('Y-m-d') }} <i class="far fa-calendar-alt"></i></p>
-                        <p>{{ userInfo.getPhoneNumber() }} <i class="fas fa-phone"></i></p>
-                        <p>{{ userInfo.getPersonalEmail() }} <i class="fas fa-envelope"></i></p>
+                        <div class="user-heading text-center">
+                            <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
+                            <h2>{{ userInfo.getName() }} {{ userInfo.getSurname() }}</h2>
+                        </div>
+                        <p><i class="far fa-calendar-alt"></i> {{ userInfo.getDateOfBirth()|date('Y-m-d') }}</p>
+                        <p><i class="fas fa-phone"></i> {{ userInfo.getPhoneNumber() }}</p>
+                        <p><i class="fas fa-envelope"></i> {{ userInfo.getPersonalEmail() }}</p>
                     </div>
-                    <button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį</button>
+                    <div class="text-center">
+                        <button class="btn btn-margin" onclick="location.href='/userinfo/edit'">Redaguoti profilį
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-8 bc-patient-column-8">
@@ -62,13 +67,14 @@
                                         </td>
                                         <td>
                                             {% if visit.getClinicId().getRole() == 3 %}
-                                                <a href="{{  path('clinic_show', {'id': visit.getClinicId().getId()}) }}">{{ visit.getClinicId().getClinicInfo().getName() }}</a>
+                                                <a href="{{ path('clinic_show', {'id': visit.getClinicId().getId()}) }}">{{ visit.getClinicId().getClinicInfo().getName() }}</a>
                                             {% endif %}
                                         </td>
                                         <td>
                                             <button class="btn btn-secondary"
                                                     onclick="location.href='/uservisit/{{ visit.getId() }}/delete'"
-                                                    data-toggle="tooltip" data-placement="bottom" title="Atšaukti">Atšaukti<i
+                                                    data-toggle="tooltip" data-placement="bottom" title="Atšaukti">
+                                                Atšaukti<i
                                                         class="fa fa-times" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
