@@ -60,7 +60,7 @@
                                             <td>{{ visit.getDescription() }}</td>
                                             <td>
                                                 {% if visit.getClientId().getUserInfo().first() != false %}
-                                                    <a href="{{ path('patient_show', {'id': visit.getClientId().getId() }) }}">{{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}</a>
+                                                    {{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}
                                                 {% else %}
                                                     Pacientas neužpildęs informacijos apie save.
                                                 {% endif %}
