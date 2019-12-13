@@ -35,8 +35,16 @@ class ClinicSpecialistsRepository extends ServiceEntityRepository
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }
+
+    public function findByClinicIdQueryBuilder($id)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.clinicId = :id')
+            ->setParameter('id', $id)
+            ->orderBy('c.id', 'ASC')
+            ->getQuery();
     }
 
     /*

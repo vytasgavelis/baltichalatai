@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\ClinicInfo;
+use App\Entity\ClinicSpecialists;
 use App\Entity\UserInfo;
 use App\Entity\UserVisit;
 use App\Form\ClinicInfoType;
 use App\Form\UserInfoType;
 use App\Services\UserAuthService;
 use App\Services\UserInfoService;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,37 +58,68 @@ class ClinicController extends AbstractController
     /**
      * @Route("/clinic", name="clinic")
      * @param UrlGeneratorInterface $urlGenerator
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @param UserInterface|null $user
      * @return RedirectResponse|Response
      */
-    public function index(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
-    {
+    public function index(
+        UrlGeneratorInterface $urlGenerator,
+        Request $request,
+        PaginatorInterface $paginator,
+        UserInterface $user = null
+    ) {
         if (!$this->userAuthService->isClinic($user)) {
             throw $this->createAccessDeniedException('Turite būti prisijungęs');
         }
+
         if ($user->getClinicInfo() == null) {
             $this->bag->add('error', 'Prašome užpildyti informaciją apie jūsų įstaigą.');
             return new RedirectResponse($urlGenerator->generate('clinic_edit'));
         }
+
+        $queryBuilder = $this->getDoctrine()->getRepository(ClinicSpecialists::class)
+            ->findByClinicIdQueryBuilder($user->getId());
+
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('clinic/home.html.twig', [
             'clinicInfo' => $user->getClinicInfo(),
+            'clinicSpecialists' => $pagination,
         ]);
     }
 
     /**
      * @Route("/clinic/show/{id}", name="clinic_show")
      * @param $id
-     * @return Response
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return void
      */
-    public function show($id)
+    public function show($id, Request $request, PaginatorInterface $paginator)
     {
         $clinic = $this->getDoctrine()->getRepository(User::class)
             ->findByIdAndRole($id, 3);
         if (sizeof($clinic) == 0) {
             throw $this->createNotFoundException();
         }
+
+        $queryBuilder = $this->getDoctrine()->getRepository(ClinicSpecialists::class)
+            ->findByClinicIdQueryBuilder($clinic[0]->getId());
+
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('clinic/index.html.twig', [
             'clinic' => $clinic[0],
+            'clinicSpecialists' => $pagination,
         ]);
     }
 

@@ -1,47 +1,94 @@
 {% block clinic_profile %}
     <div class="container-fluid bc-patient-container">
-        {% if clinic.getClinicInfo() is not defined or clinic.getClinicInfo() is  null %}
-            <h1>Nepavyko rasti įstaigos</h1>
-        {% else %}
-            <div class="row">
-                <div class="col-sm-4 bc-patient-column-4">
-                    <div class="panel text-center">
-                        <div class="user-heading">
-                            <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-sm-4 bc-patient-column-4">
+                <div class="panel">
+                    <div class="user-heading">
+                        <div class="user-heading text-center">
+                            <a href="#"><img src="/images/clinic-avatar.png" alt="" title=""></a>
                             <h2>{{ clinic.getClinicInfo().getName() }}</h2>
-                            <p>{{ clinic.getClinicInfo().getPhoneNumber() }}</p>
-                            <p>{{ clinic.getClinicInfo().getEmail() }}</p>
-                            <p>{{ clinic.getClinicInfo().getWebpage() }}</p>
-                            <p>{{ clinic.getClinicInfo().getAddress() }}</p>
                         </div>
+                        <p><i class="fas fa-phone"></i> {{ clinic.getClinicInfo().getPhoneNumber() }}</p>
+                        <p><i class="fas fa-envelope"></i> {{ clinic.getClinicInfo().getEmail() }}</p>
+                        <p><i class="fas fa-map-marker"></i> {{ clinic.getClinicInfo().getAddress() }}</p>
+                        <p><i class="fas fa-globe"></i> <a href="{{ clinic.getClinicInfo().getWebpage() }}"> {{ clinic.getClinicInfo().getWebpage() }}</a></p>
                     </div>
                 </div>
-                <div class="col-sm-8 bc-patient-column-8">
-                    <div class="card mt-3 tab-card">
-                        <div class="card-header tab-card-header bc-patient-tab-header">
-                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                                <li class="nav-item patient-tab">
-                                    <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" selected="true">Apie</a>
-                                </li>
-                                <li class="nav-item patient-tab">
-                                    <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">Gydytojų sarašas</a>
-                                </li>
-                            </ul>
-                        </div>
+            </div>
 
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-                                <div>{{ clinic.getClinicInfo().getDescription() }}</div>
-                            </div>
-                            <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
-                                {%  for specialist in clinic.getClinicSpecialists() %}
-                                    <p><a href="/specialist/show/{{ specialist.getSpecialistId().getId() }}">{{ specialist.getSpecialistId().getUserInfo().first.getName() }} {{ specialist.getSpecialistId().getUserInfo().first.getSurname() }}</a></p>
-                                {% endfor %}
+            <div class="col-sm-8 bc-patient-column-8">
+                <div class="card mt-3 tab-card">
+                    <div class="card-header tab-card-header bc-patient-tab-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                            <li class="nav-item patient-tab">
+                                <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab"
+                                   aria-controls="One" aria-selected="true" selected="true">Apie</a>
+                            </li>
+                            <li class="nav-item patient-tab">
+                                <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab"
+                                   aria-controls="Two" aria-selected="false">Specialistai</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+                            {{ clinic.getClinicInfo().getDescription() }}
+                        </div>
+                        <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+                            <div class="limiter">
+                                <div class="container-table">
+                                    <div class="wrap-table">
+                                        {% if clinic.getClinicSpecialists()|length == 0 %}
+                                            <div class="alert alert-warning">
+                                                <h1>Ši poliklinika specialistų neturi.</h1>
+                                            </div>
+                                        {% else %}
+                                            <div class="table">
+                                                <div class="results-row header">
+                                                    <div class="cell">
+                                                        Gyd. Vardas
+                                                    </div>
+                                                    <div class="cell">
+                                                        Specialybė
+                                                    </div>
+                                                    <div class="cell">
+                                                        Tel. numeris
+                                                    </div>
+                                                    <div class="cell">
+                                                        El. paštas
+                                                    </div>
+                                                </div>
+                                                {% for specialist in clinicSpecialists %}
+                                                    <div class="results-row">
+                                                        <div class="cell" data-title="Full Name">
+                                                            <a href="{{ path('specialist_show', {'id': specialist.getSpecialistId().getId() }) }}">{{ specialist.getSpecialistId().getUserInfo().first().getName() }} {{ specialist.getSpecialistId().getUserInfo().first().getSurname() }}</a>
+                                                        </div>
+                                                        <div class="cell" data-title="Age">
+                                                            {{ specialist.getSpecialistId().getUserSpecialties.first().getSpecialtyId().getName() }}
+                                                        </div>
+                                                        <div class="cell" data-title="Job Title">
+                                                            {{ specialist.getSpecialistId().getUserInfo().first().getPhoneNumber()}}
+                                                        </div>
+                                                        <div class="cell" data-title="Location">
+                                                            {{ specialist.getSpecialistId().getUserInfo().first().getPersonalEmail()}}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                {{ knp_pagination_render(clinicSpecialists) }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        {% endif %}
+
+        </div>
     </div>
 {% endblock %}
