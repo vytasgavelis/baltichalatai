@@ -89,7 +89,6 @@ class UserInfoController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($userInfo);
                 $em->flush();
-
             } elseif ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(
