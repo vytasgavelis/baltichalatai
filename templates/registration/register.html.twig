@@ -3,17 +3,40 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-        <body class="bc-index">
-        {% include 'components/layout/navbar_vertical.html.twig' %}
+    <body class="bc-index">
+    {% include 'components/layout/navbar_vertical.html.twig' %}
     <div class="wrap edit-wrap">
-    <h3 class="search-header">Registracija:</h3>
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email, {'label': 'El. Paštas'}) }}
-        {{ form_row(registrationForm.plainPassword, {'label': 'Slaptažodis'}) }}
-        {{ form_row(registrationForm.agreeTerms, {'label': 'Sutinku su taisyklėmis'}) }}
+        <h3 class="search-header">Registracija:</h3>
+        {{ form_start(registrationForm) }}
+        <div>
+            <label class="required" for=registration_form[email]">El. paštas</label>
+            {{ form_widget(registrationForm.email) }}
+            <div class="alert-warning">
+                {{ form_errors(registrationForm.email) }}
+            </div>
+        </div>
+        <div>
+            <label for="registration_form[plainPassword]">Slaptažodis</label>
+            {{ form_widget(registrationForm.plainPassword) }}
+            <div class="alert-warning">
+                {{ form_errors(registrationForm.plainPassword) }}
+            </div>
+        </div>
+        <div>
+            <label class="required" for="registration_form[role]">Jūs esate</label>
+            {{ form_widget(registrationForm.role) }}
+        </div>
+        <div>
+            <label for="registration_form[agreeTerms]">Sutinku su taisyklėmis</label>
+            {{ form_widget(registrationForm.agreeTerms) }}
+        </div>
 
         <button id="user_info_save">Registruotis</button>
-    {{ form_end(registrationForm) }}
+        {#        {% if form_errors(registrationForm.email) or form_errors(registrationForm.plainPassword) %}#}
+        {#            {{ form_errors(registrationForm.email) }}#}
+        {#            {{ form_errors(registrationForm.plainPassword) }}#}
+        {#        {% endif %}#}
+        {{ form_end(registrationForm) }}
     </div>
-        </body>
+    </body>
 {% endblock %}
