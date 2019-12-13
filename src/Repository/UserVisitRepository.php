@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\UserVisit;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,7 +20,11 @@ class UserVisitRepository extends ServiceEntityRepository
         parent::__construct($registry, UserVisit::class);
     }
 
-    public function findBySpecialistId($value)
+    /**
+     * @param int $value
+     * @return mixed
+     */
+    public function findBySpecialistId(int $value)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.specialistId = :val')
@@ -31,10 +36,10 @@ class UserVisitRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
+     * @param int $value
      * @return Array
      */
-    public function findByPatientIdNotCompleted($value): Array
+    public function findByPatientIdNotCompleted(int $value): Array
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.clientId = :val')
@@ -47,10 +52,10 @@ class UserVisitRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
+     * @param int $value
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getWithPatientIdCompletedQueryBuilder($value): \Doctrine\ORM\QueryBuilder
+    public function getWithPatientIdCompletedQueryBuilder(int $value): \Doctrine\ORM\QueryBuilder
     {
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.clientId = :val')
@@ -62,10 +67,10 @@ class UserVisitRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
+     * @param int $value
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getWithSpecialistIdQueryBuilder($value): \Doctrine\ORM\QueryBuilder
+    public function getWithSpecialistIdQueryBuilder(int $value): \Doctrine\ORM\QueryBuilder
     {
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.specialistId = :val')
@@ -91,12 +96,12 @@ class UserVisitRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $date
-     * @param $specialistId
-     * @param $clinicId
-     * @return mixed
+     * @param DateTime $date
+     * @param int $specialistId
+     * @param int $clinicId
+     * @return array|object[]
      */
-    public function checkIfWorkHourExists($date, int $specialistId, int $clinicId)
+    public function checkIfWorkHourExists(DateTime $date, int $specialistId, int $clinicId)
     {
         return $this->getEntityManager()->getRepository(UserVisit::class)
             ->findBy([

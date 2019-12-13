@@ -94,6 +94,10 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\ClinicSpecialists", mappedBy="specialistId")
      */
     private $specialistClinics;
+    /**
+     * @var ArrayCollection
+     */
+    private $sendingToDoctors;
 
     public function getClinicInfo()
     {

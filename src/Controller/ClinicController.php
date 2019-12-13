@@ -95,12 +95,12 @@ class ClinicController extends AbstractController
 
     /**
      * @Route("/clinic/show/{id}", name="clinic_show")
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @param PaginatorInterface $paginator
-     * @return void
+     * @return Response
      */
-    public function show($id, Request $request, PaginatorInterface $paginator)
+    public function show(int $id, Request $request, PaginatorInterface $paginator)
     {
         $clinic = $this->getDoctrine()->getRepository(User::class)
             ->findByIdAndRole($id, 3);

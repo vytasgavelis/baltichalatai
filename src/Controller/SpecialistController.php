@@ -99,14 +99,14 @@ class SpecialistController extends AbstractController
 
     /**
      * @Route("/specialist/show/{id}", name="specialist_show")
-     * @param $id
+     * @param int $id
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      * @throws Exception
      */
     public function show(
-        $id,
+        int $id,
         PaginatorInterface $paginator,
         Request $request
     ) {
@@ -118,7 +118,6 @@ class SpecialistController extends AbstractController
         }
         $page = $request->query->getInt('page', 1);
         $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours, $page);
-
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
             'workHours' => $queryBuilder,

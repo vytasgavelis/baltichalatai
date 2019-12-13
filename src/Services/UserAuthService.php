@@ -8,28 +8,28 @@ use App\Entity\User;
 class UserAuthService
 {
     /**
-     * @param $user
+     * @param User $user
      * @return bool
      */
-    public function isSpecialist($user)
+    public function isSpecialist(User $user)
     {
         return $user instanceof User && $user->getRole() == 2;
     }
 
     /**
-     * @param $user
+     * @param User $user
      * @return bool
      */
-    public function isPatient($user)
+    public function isPatient(User $user)
     {
         return $user instanceof User && $user->getRole() == 1;
     }
 
     /**
-     * @param $user
+     * @param User $user
      * @return bool
      */
-    public function isClinic($user)
+    public function isClinic(User $user)
     {
         return $user instanceof User && $user->getRole() == 3;
     }

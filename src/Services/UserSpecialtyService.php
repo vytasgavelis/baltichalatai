@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Entity\Specialty;
+use App\Entity\User;
 use App\Entity\UserSpecialty;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -30,7 +31,11 @@ class UserSpecialtyService
         $this->bag = $bag;
     }
 
-    public function addSpecialty($specialtyData, $user)
+    /**
+     * @param $specialtyData
+     * @param User $user
+     */
+    public function addSpecialty($specialtyData, User $user)
     {
         // Add specialty from dropdown
         if ($specialtyData != "") {

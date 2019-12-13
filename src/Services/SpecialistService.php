@@ -28,12 +28,12 @@ class SpecialistService
     }
 
     /**
-     * @param $workHours
+     * @param array $workHours
      * @param int $page
      * @return array
      * @throws Exception
      */
-    public function getSpecialistHoursFormatted($workHours, int $page): array
+    public function getSpecialistHoursFormatted(array $workHours, int $page): array
     {
         $dateArr = [];
         foreach ($workHours as $workHour) {
@@ -70,50 +70,50 @@ class SpecialistService
     }
 
     /**
-     * @param $date
-     * @param $specialistId
-     * @param $clinicId
+     * @param DateTime $date
+     * @param int $specialistId
+     * @param int $clinicId
      * @return bool
      */
-    public function checkIfDateIsOccupied($date, $specialistId, $clinicId)
+    public function checkIfDateIsOccupied(DateTime $date, int $specialistId, int $clinicId)
     {
         return sizeof($this->manager->getRepository(UserVisit::class)
                 ->checkIfWorkHourExists($date, $specialistId, $clinicId)) > 0;
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return mixed
      */
-    public function getSpecialist($id)
+    public function getSpecialist(int $id)
     {
         return $this->manager->getRepository(User::class)->findByIdAndRole($id, 2);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return mixed
      */
-    public function getClinic($id)
+    public function getClinic(int $id)
     {
         //return $this->manager->getRepository(User::class)->findByIdAndRole($id, 3);
         return $this->manager->getRepository(User::class)->findby(['id' => $id]);
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return ClinicSpecialists[]|object[]
      */
-    public function getSpecialistClinics($id)
+    public function getSpecialistClinics(int $id)
     {
         return $this->manager->getRepository(ClinicSpecialists::class)->findBy(['specialistId' => $id]);
     }
 
     /**
-     * @param $specialist
+     * @param User $specialist
      * @return SpecialistWorkHours[]|array|object[]
      */
-    public function getSpecialistWorkHours($specialist)
+    public function getSpecialistWorkHours(User $specialist)
     {
         return $this->manager->getRepository(SpecialistWorkHours::class)->getWorkHours($specialist);
     }

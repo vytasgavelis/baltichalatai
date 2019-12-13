@@ -45,14 +45,6 @@ class UserSpecialtyRepository extends ServiceEntityRepository
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
-        /*return $this->createQueryBuilder('u')
-            ->andWhere('u.specialty_id_id = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;*/
     }
     // /**
     //  * @return UserSpecialty[] Returns an array of UserSpecialty objects
@@ -85,17 +77,4 @@ class UserSpecialtyRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?UserSpecialty
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

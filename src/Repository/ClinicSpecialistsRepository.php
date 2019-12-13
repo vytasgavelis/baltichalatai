@@ -20,12 +20,12 @@ class ClinicSpecialistsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
-     * @param $clinicId
-     * @return ClinicSpecialists[] Returns an array of ClinicSpecialists objects
+     * @param int $value
+     * @param int $clinicId
+     * @return mixed
      */
 
-    public function findBySpecialistIdAndClinicId($value, $clinicId)
+    public function findBySpecialistIdAndClinicId(int $value, int $clinicId)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.specialistId = :val')
@@ -38,7 +38,11 @@ class ClinicSpecialistsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByClinicIdQueryBuilder($id)
+    /**
+     * @param int $id
+     * @return \Doctrine\ORM\Query
+     */
+    public function findByClinicIdQueryBuilder(int $id)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.clinicId = :id')

@@ -30,6 +30,10 @@ class ClinicSpecialistController extends AbstractController
      * @var UserAuthService
      */
     private $userAuthService;
+    /**
+     * @var FlashBagInterface
+     */
+    private $bag;
 
     /**
      * ClinicSpecialistController constructor.
@@ -91,6 +95,7 @@ class ClinicSpecialistController extends AbstractController
     /**
      * @Route("clinicspecialist/assignToNoClinic", name="assign_to_no_clinic")
      * @param UserInterface|null $user
+     * @return RedirectResponse
      */
     public function assignSpecialistToNoClinic(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {

@@ -20,7 +20,7 @@ class UserInfoType extends AbstractType
             ->add('phoneNumber', null, ['label'=> 'Telefono Nr.', 'empty_data' => '',])
             ->add('personalEmail', null, ['label'=> 'El. Paštas', 'empty_data' => '',])
             ->add('dateOfBirth', DateType::class, [
-                'years' => range(date('Y') - 100, date('Y')), 'label'=> 'Gimimo Data'])
+                'years' => range(date('Y', strtotime("-100 years")), date('Y')), 'label'=> 'Gimimo Data'])
             ->add('city', TextType::class, ['label'=> 'Miestas', 'empty_data' => '',])
 //            ->add('personCode', null, ['label'=> 'Asmens Kodas'])
             ->add('description', TextType::class, ['label'=> 'Aprašymas', 'required' => false,])
