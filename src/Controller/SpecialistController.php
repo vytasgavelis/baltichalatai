@@ -166,8 +166,8 @@ class SpecialistController extends AbstractController
                 $workHours->setClinicId($clinic[0]);
                 $workHours->setSpecialistId($user);
                 $workHours->setDay($key);
-                $workHours->setStartTime(new DateTime($day['startTime']));
-                $workHours->setEndTime(new DateTime($day['endTime']));
+                $workHours->setStartTime(new DateTime($timeStart));
+                $workHours->setEndTime(new DateTime($timeEnd));
 
                 $manager->persist($workHours);
             }
