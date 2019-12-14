@@ -384,16 +384,16 @@ class AppFixtures extends Fixture
         string $email,
         string $phone
     ): string {
-        return "Sveiki, aš esu $name $surn\r\n".
-            " Gyvenu $city\r\n".
-            " Esant reikalu su manimi galite susisiekti el. paštu: $email".
+        return "Sveiki, aš esu $name $surn.\r\n".
+            " Gyvenu $city.\r\n".
+            " Esant reikalu su manimi galite susisiekti el. paštu: $email.".
             " arba telefonu: ".$phone.".";
     }
 
     protected function getSpecialistDescription(string $name, string $surname, string $address, string $email): string
     {
-        return "Sveiki, aš esu $name $surname\r\n".
-            " Mano dabartinis darbo adresas yra: $address\r\n".
+        return "Sveiki, aš esu $name $surname.\r\n".
+            " Mano dabartinis darbo adresas yra: $address.\r\n".
             " Užsiregistruoti pas mane galite per Baltų Chalatų puslapį. \r\n".
             " Asmeniniais klausimais kreipkitės el. paštu: $email.";
     }
@@ -402,8 +402,8 @@ class AppFixtures extends Fixture
     {
         return "Sveiki atvykę į mūsų klinikos paskyrą. \r\n".
             " Trumpa informacija apie mus. \r\n".
-            " Mus galite rasti adresu: $address\r\n".
-            " Mūsų klinikos puslapis: $webpage\r\n".
+            " Mus galite rasti adresu: $address.\r\n".
+            " Mūsų klinikos puslapis: $webpage.\r\n".
             " Jeigu turi klausimų kreipkitės el. paštu: $email".
             " arba skambinkite telefonu: ".$phoneNo;
     }
