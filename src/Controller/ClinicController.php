@@ -153,7 +153,7 @@ class ClinicController extends AbstractController
 
             $em->persist($clinicInfo);
             $em->flush();
-
+            $this->bag->add('success', 'Informacija buvo išsaugota.');
             return new RedirectResponse($urlGenerator->generate('clinic'));
         } else {
             return $this->render('clinic/edit.html.twig', [
