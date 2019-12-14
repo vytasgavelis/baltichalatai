@@ -52,8 +52,7 @@ class UserInfoController extends AbstractController
         FlashBagInterface $bag,
         UserSpecialtyService $userSpecialtyService,
         UserAuthService $userAuthService
-    )
-    {
+    ) {
         $this->userInfoService = $userInfoService;
         $this->userSpecialtyService = $userSpecialtyService;
         $this->userAuthService = $userAuthService;
@@ -71,7 +70,6 @@ class UserInfoController extends AbstractController
     {
         if ($this->userAuthService->isSpecialist($user) ||
             $this->userAuthService->isPatient($user)) {
-
             $userInfo = $user->getUserInfo()->first();
             if ($userInfo == false) {
                 $userInfo = new UserInfo();
@@ -86,14 +84,13 @@ class UserInfoController extends AbstractController
             $specialtiesForm->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid() &&
                 $this->userInfoService->validateUserInfoForm($request->request->get('user_info')) == "") {
-
                 $userInfo->setUserId($user);
                 $userInfo->setPersonCode('');
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($userInfo);
                 $em->flush();
 
-                if($this->userAuthService->isPatient($user)){
+                if ($this->userAuthService->isPatient($user)) {
                     return new RedirectResponse($urlGenerator->generate('patient'));
                 } else {
                     return new RedirectResponse($urlGenerator->generate('specialist'));
