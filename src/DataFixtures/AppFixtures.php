@@ -86,6 +86,12 @@ class AppFixtures extends Fixture
             $user->setEmail("user$i@test.com");
             $manager->persist($user);
         }
+        $user = new User();
+        $user->setRole(4);
+        $user->setPassword($this->encoder->encodePassword($user, 'testas'));
+        $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        $user->setEmail('noclinic@test.com');
+        $manager->persist($user);
         $manager->flush();
     }
 
@@ -167,10 +173,15 @@ class AppFixtures extends Fixture
         $clinics = $manager->getRepository(User::class)->getClinics();
         $specialists = $manager->getRepository(User::class)->getSpecialists();
 
-        foreach ($specialists as $specialist) {
+        foreach ($specialists as $key => $specialist) {
             $clinicSpecialist = new ClinicSpecialists();
             $clinicSpecialist->setSpecialistId($specialist);
-            $clinicSpecialist->setClinicId($clinics[mt_rand(0, sizeof($clinics) - 1)]);
+            if ($key % 10 == 0) {
+                $noClinic = $manager->getRepository(User::class)->findBy(['role' => 4]);
+                $clinicSpecialist->setClinicId($noClinic[0]);
+            } else {
+                $clinicSpecialist->setClinicId($clinics[mt_rand(0, sizeof($clinics) - 1)]);
+            }
             $manager->persist($clinicSpecialist);
         }
         $manager->flush();

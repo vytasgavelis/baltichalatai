@@ -23,6 +23,6 @@ class SpecialistWorkHoursRepository extends ServiceEntityRepository
     public function getWorkHours(User $user)
     {
         return $this->getEntityManager()->getRepository(SpecialistWorkHours::class)
-            ->findBy(['specialistId' => $user->getId()]);
+            ->findBy(['specialistId' => $user->getId()], ['clinicId' => 'ASC']);
     }
 }

@@ -95,20 +95,21 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h5>{{ workHours.0.clinicId.getClinicInfo.getName }} </h5>
+                                        <h5>{{ workHours.0.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
                                         <div class="row specialist-hours-row">
                                             {% if workHours is empty %}
                                                 <p class="specialist-hours-error">Šiam periodui vizitui vietų nėra</p>
                                             {% endif %}
                                             {% set previous = workHours.0.clinicId.getId %}
                                             {% for clinic in workHours %}
-                                            {% if clinic.clinicId.getId != previous %}
-                                        </div>
-                                        <h5>{{ clinic.clinicId.getClinicInfo.getName }} </h5>
-                                        <div class="row specialist-hours-row">
-                                            {% else %}
+                                                {% if clinic.clinicId.getId != previous %}
                                                 {% set previous = clinic.clinicId.getId %}
-                                            {% endif %}
+                                                    </div>
+                                                    <h5>{{ clinic.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
+                                                    <div class="row specialist-hours-row">
+                                                {% else %}
+                                                    {% set previous = clinic.clinicId.getId %}
+                                                {% endif %}
                                             <div class="col-xl-2 specialist-work-hours mx-2 px-1">
                                                 <div class="row specialist-row">
                                                     {{ specialist_service.getDateFromDayNumber(clinic.0.day) }}
