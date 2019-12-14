@@ -4,13 +4,11 @@
             <p>Norėdami redaguoti savo grafiką turite priklausyti gydymo įstaigai.</p>
         {% endif %}
         {% if not specialist_service.belongsToNoClinic(app.user) %}
-            <p>Spauskite <a href="{{ path('assign_to_no_clinic') }}">čia</a>, jei norite pridėti grafiką, nepriklausantį
-                klinikai.</p>
+            <p>Spauskite <a href="{{ path('assign_to_no_clinic') }}">čia</a>, jei norite pridėti asmeninės darbovietės
+                grafiką.</p>
         {% endif %}
         {% for clinic in specClinics %}
-            {% if clinic.getClinicId.getRole() != 4 %}
-                <h3>{{ clinic.getClinicId().getClinicInfo().getName() }}</h3>
-            {% endif %}
+            <h3> {{ clinic.getClinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h3>
             <form action="{{ path('specialist_hours_edit', {'id': clinic.specialistId.id}) }}" method="POST">
                 <input type="text" name="clinicId" value="{{ clinic.getClinicId.getId }}" hidden>
                 <div class="row">
