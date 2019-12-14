@@ -130,4 +130,22 @@ class UserInfoController extends AbstractController
 
         return $specialtiesForm;
     }
+
+    /**
+     * @Route("/createNoClinic", name="createNoClinic")
+     * @param UrlGeneratorInterface $urlGenerator
+     */
+    public function createNoClinic(UrlGeneratorInterface $urlGenerator)
+    {
+        $user = new User();
+        $user->setEmail('noclinic@admin.com');
+        $user->setPassword('noclinicfakeadmin');
+        $user->setRole(4);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return new RedirectResponse($urlGenerator->generate('home'));
+    }
 }
