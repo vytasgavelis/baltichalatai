@@ -52,7 +52,8 @@ class UserInfoController extends AbstractController
         FlashBagInterface $bag,
         UserSpecialtyService $userSpecialtyService,
         UserAuthService $userAuthService
-    ) {
+    )
+    {
         $this->userInfoService = $userInfoService;
         $this->userSpecialtyService = $userSpecialtyService;
         $this->userAuthService = $userAuthService;
@@ -70,6 +71,7 @@ class UserInfoController extends AbstractController
     {
         if ($this->userAuthService->isSpecialist($user) ||
             $this->userAuthService->isPatient($user)) {
+
             $userInfo = $user->getUserInfo()->first();
             if ($userInfo == false) {
                 $userInfo = new UserInfo();
@@ -84,24 +86,32 @@ class UserInfoController extends AbstractController
             $specialtiesForm->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid() &&
                 $this->userInfoService->validateUserInfoForm($request->request->get('user_info')) == "") {
+
                 $userInfo->setUserId($user);
                 $userInfo->setPersonCode('');
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($userInfo);
                 $em->flush();
+
+                if($this->userAuthService->isPatient($user)){
+                    return new RedirectResponse($urlGenerator->generate('patient'));
+                } else {
+                    return new RedirectResponse($urlGenerator->generate('specialist'));
+                }
             } elseif ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(
                     $responseData['specialties'],
                     $user
                 );
+                return new RedirectResponse($urlGenerator->generate('specialist'));
             }
             return $this->render('user_info/edit.html.twig', [
                 'user_info_form' => $form->createView(),
                 'specialtiesForm' => $specialtiesForm->createView(),
             ]);
         }
-        return new RedirectResponse($urlGenerator->generate('app_login'));
+        throw $this->createAccessDeniedException('Turite būti prisijungęs.');
     }
 
     private function createSpecialistForm(UserInterface $user = null)
@@ -118,7 +128,6 @@ class UserInfoController extends AbstractController
                 'choices' => $choices,
                 'required' => false,
             ])
-//            ->add('custom_specialty', TextType::class, ['required' => false])
             ->add('submit', SubmitType::class, ['label' => 'Prideti'])
             ->getForm();
 

@@ -70,7 +70,7 @@ class SpecialistController extends AbstractController
         UserInterface $user = null
     ) {
         if (!$this->userAuthService->isSpecialist($user)) {
-            throw $this->createNotFoundException();
+            throw $this->createAccessDeniedException('Turite būti prisijungęs.');
         }
         if (is_bool($user->getUserInfo()->first())) {
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
