@@ -2,7 +2,7 @@
     <div class="container-fluid bc-patient-container">
         <div class="row">
             <div class="col-sm-4 bc-patient-column-4">
-                <div class="panel">
+                <div class="panel" style="text-align: center">
                     <div class="user-heading">
                         <div class="user-heading text-center">
                             <a href="#"><img src="/images/profile-avatar.png" alt="" title=""></a>
@@ -71,8 +71,7 @@
                                             <button class="btn btn-secondary"
                                                     onclick="location.href='/uservisit/{{ visit.getId() }}/delete'"
                                                     data-toggle="tooltip" data-placement="bottom" title="Atšaukti">
-                                                Atšaukti<i
-                                                        class="fa fa-times" aria-hidden="true"></i></button>
+                                                    <i class="fa fa-times" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -94,8 +93,8 @@
                                         <td> {{ recipe.getRecipeId.getValidDuration }}</td>
                                         <td> {{ recipe.getRecipeId.getDescription }} </td>
                                         <td>
-                                            <a href="https://vaistai.lt/paieska/{{ recipe.getRecipeId.getDescription }}">
-                                                ieškoti </a></td>
+                                            <a href="https://vaistai.lt/paieska/{{ recipe.getRecipeId.getDescription }}" target="_blank">
+                                                Ieškoti </a></td>
                                     </tr>
                                 {% endfor %}
                             </table>

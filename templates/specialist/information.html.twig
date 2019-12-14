@@ -79,14 +79,14 @@
                                 <form action="{{ path('specialist_register_visit', {'specialistId':  specialist.getId()}) }}"
                                       method="POST">
                                     <div class="row ">
-                                        <div class="col-md-2">
+                                        <div class="col-md-5 show-less-times">
                                             {% if page > 1 %}
                                                 <p><a href="/specialist/show/{{ id }}?page={{ page-1 }}"><i
                                                                 class="fa fa-arrow-circle-left"></i></a> Grįžti atgal
                                                 </p>
                                             {% endif %}
                                         </div>
-                                        <div class="col-md-3 offset-7 pl-5">
+                                        <div class="col-md-7 show-more-times">
                                             {% if workHours is not empty %}
                                                 <p> Rodyti daugiau <a
                                                             href="/specialist/show/{{ id }}?page={{ page+1 }}"><i

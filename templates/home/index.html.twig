@@ -4,9 +4,9 @@
 
 {% block body %}
     <body id="section1" class="bc-index">
-    {% include 'components/layout/navbar.html.twig' %}
+    {% include 'components/layout/navbar_vertical.html.twig' %}
     <div class="wrap">
-        <div class="text-center"><h1 class="search-header">Suraskite gydytoją ir užsiregistruokite vizitui</h1></div>
+        <div class="text-center"><h3 class="search-header">Suraskite gydytoją ir užsiregistruokite vizitui:</h3></div>
         {{ form_start(search_form) }}
         {{ form_widget(search_form.name, {'attr':
             {'class': 'search-term', 'placeholder': 'Vardas'}}
@@ -22,7 +22,7 @@
         ) }}
         {{ form_end(search_form) }}
     </div>
-    <div class="section2-circle">
+    <div class="section2-circle" title="Apie Mus">
         <a href="#section2"><i class="fa fa-angle-down"
                                style="margin: 1px 10px; font-size:78px; color: #fca85e"></i></a>
     </div>
@@ -63,7 +63,7 @@
                     <p class="reason-text">Lengviau valdyti pacientų vizitus.</p>
                 </div>
             </div>
-        <div id="backToTop" class="section1-circle">
+        <div id="backToTop" title="Į viršų" class="section1-circle">
             <a href="#section1"><i class="fa fa-angle-up" style="margin: 1px 10px; font-size:78px; color: #fca85e"></i></a>
         </div>
         </div>

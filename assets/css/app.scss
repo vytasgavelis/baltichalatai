@@ -12,7 +12,6 @@ html {
 }
 
 // Error Page
-
 .error-image {
   max-height: 100vh;
   position: absolute;
@@ -216,7 +215,7 @@ html {
   transform: translate(-50%, -50%);
   padding: 30px 80px;
   background: RGBA(255, 255, 255, 0.95);
-  margin-top: 20px;
+  margin-top: 50px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -459,6 +458,26 @@ html {
   cursor: pointer;
 }
 
+.wrap-results-error {
+  width: 60%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px 80px;
+  background: RGBA(255, 255, 255, 0.95);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.search-error-header {
+  color: #2f5caf;
+  text-align: center;
+}
+
+// Pagination
+.container-table > nav:nth-child(2) {
+  transform: translate(-200%,102%);
+}
 
 // Registration
 .registration-form {
@@ -507,7 +526,25 @@ html {
   margin-bottom: 20px;
 }
 
+.panel > div:nth-child(1) > p:nth-child(4) {
+  width: 300px;
+}
+
+.panel > div:nth-child(1) {
+  max-width: 300px;
+}
+
+
 // Patient Profile
+.show-more-times {
+  height: 30px;
+  text-align: right;
+}
+
+.show-less-times {
+  height: 30px;
+}
+
 .bc-patient-container {
   width: 90%;
   background: RGBA(255, 255, 255, 0.95);
@@ -517,6 +554,7 @@ html {
 
 .bc-patient-column-4 {
   min-height: 70vh;
+  text-align: center;
 }
 
 .bc-patient-column-8 {
@@ -629,6 +667,11 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
   align-content: center;
 }
 
+.table th, .table td {
+  vertical-align: middle;
+}
+
+
 // Patient Profile Edit
 #user_info_name {
   width: 50%;
@@ -713,7 +756,6 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
   margin-right: 20px;
   transform: translate(0%, -100%);
   color: #2f5caf;
-  margin-bottom: 40px;
 }
 
 #user_info_description {
@@ -743,11 +785,6 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
   margin-top: 20px;
 }
 
-#user_info_save {
-  margin-top: -40px;
-}
-
-
 #user_info_save:hover {
   color: white;
   border: none;
@@ -755,7 +792,11 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
 }
 
 .edit-wrap {
-  margin-top: 100px;
+  margin-top: 130px;
+}
+
+h3.search-header:nth-child(3) {
+  margin-top: 50px;
 }
 
 // Clinic Profile Edit
@@ -875,6 +916,16 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
   color: #2f5caf;
 }
 
+.wrap > form:nth-child(2) > div:nth-child(4) > label:nth-child(1) {
+  color: #2f5caf;
+  width: 25%;
+}
+
+#registration_form_agreeTerms {
+  margin-left: 40px;
+}
+
+
 #registration_form_role {
   width: 50%;
   color: #2f5caf;
@@ -908,6 +959,13 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
 }
 
 // Media queries
+@media screen and (max-width : 1920px) {
+  .container-table > nav:nth-child(2) {
+    margin-top: 10px;
+    transform: none;
+  }
+}
+
 @media screen and (max-width: 850px) {
   .bc-link {
     background: white;
@@ -1098,6 +1156,10 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
   .reason-header {
     font-size: 50px;
   }
+
+  .edit-wrap {
+    margin-top: 180px;
+  }
 }
 
 @media screen and (max-width: 650px) {
@@ -1112,6 +1174,9 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
     height: 150px;
     margin-left: 50px;
     margin-top: 30px;
+  }
+  .edit-wrap {
+    margin-top: 260px;
   }
 }
 

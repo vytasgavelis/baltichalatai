@@ -2,8 +2,7 @@
     <div class="container">
         {% if specClinics|length == 0 %}
             <p>Norėdami redaguoti savo grafiką turite priklausyti gydymo įstaigai.</p>
-        {% endif %}
-        {% if not specialist_service.belongsToNoClinic(app.user) %}
+        {% else %}
             <p>Spauskite <a href="{{ path('assign_to_no_clinic') }}">čia</a>, jei norite pridėti grafiką, nepriklausantį
                 klinikai.</p>
         {% endif %}

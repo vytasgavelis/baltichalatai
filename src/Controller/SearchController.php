@@ -69,6 +69,9 @@ class SearchController extends AbstractController
             5
         );
 
+        $pagination->setTemplate('components/layout/pagination.html.twig');
+        $request->setLocale('lt');
+
         return $this->render('home/results.html.twig', ['specialists' => $pagination]);
 
 //        $specialists = $this->getDoctrine()->getRepository(User::class)->search(
