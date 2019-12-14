@@ -86,6 +86,12 @@ class AppFixtures extends Fixture
             $user->setEmail("user$i@test.com");
             $manager->persist($user);
         }
+        $user = new User();
+        $user->setRole(4);
+        $user->setPassword($this->encoder->encodePassword($user, 'testas'));
+        $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        $user->setEmail('noclinic@test.com');
+        $manager->persist($user);
         $manager->flush();
     }
 
@@ -167,10 +173,15 @@ class AppFixtures extends Fixture
         $clinics = $manager->getRepository(User::class)->getClinics();
         $specialists = $manager->getRepository(User::class)->getSpecialists();
 
-        foreach ($specialists as $specialist) {
+        foreach ($specialists as $key => $specialist) {
             $clinicSpecialist = new ClinicSpecialists();
             $clinicSpecialist->setSpecialistId($specialist);
-            $clinicSpecialist->setClinicId($clinics[mt_rand(0, sizeof($clinics) - 1)]);
+            if ($key % 10 == 0) {
+                $noClinic = $manager->getRepository(User::class)->findBy(['role' => 4]);
+                $clinicSpecialist->setClinicId($noClinic[0]);
+            } else {
+                $clinicSpecialist->setClinicId($clinics[mt_rand(0, sizeof($clinics) - 1)]);
+            }
             $manager->persist($clinicSpecialist);
         }
         $manager->flush();
@@ -373,16 +384,16 @@ class AppFixtures extends Fixture
         string $email,
         string $phone
     ): string {
-        return "Sveiki, aš esu $name $surn\r\n".
-            " Gyvenu $city\r\n".
-            " Esant reikalu su manimi galite susisiekti el. paštu: $email".
+        return "Sveiki, aš esu $name $surn.\r\n".
+            " Gyvenu $city.\r\n".
+            " Esant reikalu su manimi galite susisiekti el. paštu: $email.".
             " arba telefonu: ".$phone.".";
     }
 
     protected function getSpecialistDescription(string $name, string $surname, string $address, string $email): string
     {
-        return "Sveiki, aš esu $name $surname\r\n".
-            " Mano dabartinis darbo adresas yra: $address\r\n".
+        return "Sveiki, aš esu $name $surname.\r\n".
+            " Mano dabartinis darbo adresas yra: $address.\r\n".
             " Užsiregistruoti pas mane galite per Baltų Chalatų puslapį. \r\n".
             " Asmeniniais klausimais kreipkitės el. paštu: $email.";
     }
@@ -391,8 +402,8 @@ class AppFixtures extends Fixture
     {
         return "Sveiki atvykę į mūsų klinikos paskyrą. \r\n".
             " Trumpa informacija apie mus. \r\n".
-            " Mus galite rasti adresu: $address\r\n".
-            " Mūsų klinikos puslapis: $webpage\r\n".
+            " Mus galite rasti adresu: $address.\r\n".
+            " Mūsų klinikos puslapis: $webpage.\r\n".
             " Jeigu turi klausimų kreipkitės el. paštu: $email".
             " arba skambinkite telefonu: ".$phoneNo;
     }

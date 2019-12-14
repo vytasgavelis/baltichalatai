@@ -119,6 +119,7 @@ class SpecialistController extends AbstractController
         }
         $page = $request->query->getInt('page', 1);
         $queryBuilder = $this->specialistService->getSpecialistHoursFormatted($workHours, $page);
+
         return $this->render('specialist/index.html.twig', [
             'specialist' => $specialist[0],
             'workHours' => $queryBuilder,
@@ -150,10 +151,17 @@ class SpecialistController extends AbstractController
                 $manager->remove($workHour);
             }
             foreach ($request->get('day') as $key => $day) {
-                //praskipinam jeigu nieko neideta, kad nesugeneruotu default laiku
-                if ($day['startTime'] == "" || $day['endTime'] == "") {
+                $timeStart = $day['startTime'];
+                $timeEnd = $day['endTime'];
+                // praskipinam jeigu blogai ivestas laikas
+                if (!DateTime::createFromFormat('H:i', $timeStart) || !DateTime::createFromFormat('H:i', $timeEnd)) {
                     continue;
                 }
+                //praskipinam jeigu nieko neideta, kad nesugeneruotu default laiku
+                if ($timeStart == "" || $timeEnd == "") {
+                    continue;
+                }
+
                 $workHours = new SpecialistWorkHours(); //sudedam naujus laikus
                 $workHours->setClinicId($clinic[0]);
                 $workHours->setSpecialistId($user);
