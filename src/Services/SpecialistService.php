@@ -48,7 +48,7 @@ class SpecialistService
                 $formattedDate = $this->getDateFromDayNumber($workDay);
                 $formattedTime = $d->format('H:i');
                 if ($this->checkIfDateIsOccupied(
-                    new DateTime($formattedDate . $formattedTime),
+                    new DateTime($formattedDate.$formattedTime),
                     $workHour->getSpecialistId()->getId(),
                     $workHour->getClinicId()->getId()
                 )) {
@@ -188,7 +188,22 @@ class SpecialistService
     {
         $date = new DateTime();
 
-        return $date->modify('this week +' . ($dayCount - 1) . ' days')->format('Y-m-d');
+        if ($this->checkIfDayIsWeekend()) {
+            return $date->modify('next week +'.($dayCount - 1).' days')->format('Y-m-d');
+        }
+
+        return $date->modify('this week +'.($dayCount - 1).' days')->format('Y-m-d');
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function checkIfDayIsWeekend()
+    {
+        $date = new DateTime();
+
+        return $date->format('N') >= 6;
     }
 
     /**
