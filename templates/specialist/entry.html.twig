@@ -1,5 +1,8 @@
 {% block doctor_profile %}
     <div class="container-fluid bc-patient-container">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
         <div class="row">
             <div class="col-sm-4 bc-patient-column-4">
                 <div class="panel">

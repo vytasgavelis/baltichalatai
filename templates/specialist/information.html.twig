@@ -3,6 +3,9 @@
         {% if specialist.getUserInfo() is not defined or specialist.getUserInfo() is  null %}
             <h1>Nepavyko rasti specialisto</h1>
         {% else %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ flashMessage }}</div>
+        {% endfor %}
             <div class="row">
                 <div class="col-sm-4 bc-patient-column-4">
                     <div class="panel">
@@ -95,42 +98,44 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h5>{{ workHours.0.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
+                                        <h5>{{ workHours.0.clinicId.getClinicInfo.getName ?? '' }} </h5>
                                         <div class="row specialist-hours-row">
                                             {% if workHours is empty %}
-                                                <p class="specialist-hours-error">Šiam periodui vizitui vietų nėra</p>
-                                            {% endif %}
-                                            {% set previous = workHours.0.clinicId.getId %}
-                                            {% for clinic in workHours %}
+                                            <p class="specialist-hours-error">Kalendoriaus nėra. Registruotis pas šį
+                                                gydytoją klinikoje galima tik telefonu.</p>
+                                            {% else %}
+                                                {% set previous = workHours.0.clinicId.getId %}
+                                                {% for clinic in workHours %}
                                                 {% if clinic.clinicId.getId != previous %}
                                                 {% set previous = clinic.clinicId.getId %}
-                                                    </div>
-                                                    <h5>{{ clinic.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
-                                                    <div class="row specialist-hours-row">
-                                                {% else %}
-                                                    {% set previous = clinic.clinicId.getId %}
-                                                {% endif %}
-                                            <div class="col-xl-2 specialist-work-hours mx-2 px-1">
-                                                <div class="row specialist-row">
-                                                    {{ specialist_service.getDateFromDayNumber(clinic.0.day) }}
                                                 </div>
-                                                <div class="row specialist-row" style="line-height:initial;">
-                                                    {% for key, hour in clinic.0.hours %}
-                                                        <div class="col-md-6 ml-0 px-0">
-                                                            <input type="radio" name="reg_time"
-                                                                   value="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}"
-                                                                   id="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}">
-                                                            <label
-                                                                    class="specialist-work-day"
-                                                                    for="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}"
-                                                            >
-                                                                {{ hour }}
-                                                            </label>
+                                                <h5>{{ clinic.clinicId.getClinicInfo.getName ?? '' }} </h5>
+                                                <div class="row specialist-hours-row">
+                                                    {% else %}
+                                                        {% set previous = clinic.clinicId.getId %}
+                                                    {% endif %}
+                                                    <div class="col-xl-2 specialist-work-hours mx-2 px-1">
+                                                        <div class="row specialist-row">
+                                                            {{ specialist_service.getDateFromDayNumber(clinic.0.day) }}
                                                         </div>
+                                                        <div class="row specialist-row" style="line-height:initial;">
+                                                            {% for key, hour in clinic.0.hours %}
+                                                                <div class="col-md-6 ml-0 px-0">
+                                                                    <input type="radio" name="reg_time"
+                                                                           value="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}"
+                                                                           id="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}">
+                                                                    <label
+                                                                            class="specialist-work-day"
+                                                                            for="{{ clinic.clinicId.getId }};{{ specialist_service.getDateFromDayNumber(clinic.0.day) }};{{ hour }}"
+                                                                    >
+                                                                        {{ hour }}
+                                                                    </label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
                                                     {% endfor %}
-                                                </div>
-                                            </div>
-                                            {% endfor %}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <br><br>

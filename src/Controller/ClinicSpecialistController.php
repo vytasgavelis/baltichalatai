@@ -94,6 +94,7 @@ class ClinicSpecialistController extends AbstractController
 
     /**
      * @Route("clinicspecialist/assignToNoClinic", name="assign_to_no_clinic")
+     * @param UrlGeneratorInterface $urlGenerator
      * @param UserInterface|null $user
      * @return RedirectResponse
      */

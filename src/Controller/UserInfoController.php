@@ -90,11 +90,8 @@ class UserInfoController extends AbstractController
                 $em->persist($userInfo);
                 $em->flush();
 
-                if ($this->userAuthService->isPatient($user)) {
-                    return new RedirectResponse($urlGenerator->generate('patient'));
-                } else {
-                    return new RedirectResponse($urlGenerator->generate('specialist'));
-                }
+                $this->bag->add('success', 'Paskyra sėkmingai atnaujinta');
+                return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
             } elseif ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(
@@ -125,7 +122,7 @@ class UserInfoController extends AbstractController
                 'choices' => $choices,
                 'required' => false,
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Prideti'])
+            ->add('submit', SubmitType::class, ['label' => 'Pridė   ti'])
             ->getForm();
 
         return $specialtiesForm;
