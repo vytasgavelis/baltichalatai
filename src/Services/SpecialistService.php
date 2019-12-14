@@ -17,14 +17,20 @@ class SpecialistService
 {
 
     private $manager;
+    /**
+     * @var ClinicSpecialistService
+     */
+    private $clinicSpecialistService;
 
     /**
      * SpecialistService constructor.
      * @param EntityManagerInterface $manager
+     * @param ClinicSpecialistService $clinicSpecialistService
      */
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(EntityManagerInterface $manager, ClinicSpecialistService $clinicSpecialistService)
     {
         $this->manager = $manager;
+        $this->clinicSpecialistService = $clinicSpecialistService;
     }
 
     /**
@@ -48,7 +54,7 @@ class SpecialistService
                 $formattedDate = $this->getDateFromDayNumber($workDay);
                 $formattedTime = $d->format('H:i');
                 if ($this->checkIfDateIsOccupied(
-                    new DateTime($formattedDate.$formattedTime),
+                    new DateTime($formattedDate . $formattedTime),
                     $workHour->getSpecialistId()->getId(),
                     $workHour->getClinicId()->getId()
                 )) {
@@ -189,10 +195,10 @@ class SpecialistService
         $date = new DateTime();
 
         if ($this->checkIfDayIsWeekend()) {
-            return $date->modify('next week +'.($dayCount - 1).' days')->format('Y-m-d');
+            return $date->modify('next week +' . ($dayCount - 1) . ' days')->format('Y-m-d');
         }
 
-        return $date->modify('this week +'.($dayCount - 1).' days')->format('Y-m-d');
+        return $date->modify('this week +' . ($dayCount - 1) . ' days')->format('Y-m-d');
     }
 
     /**
@@ -222,5 +228,20 @@ class SpecialistService
             $this->manager->remove($workHour);
         }
         //$this->manager->flush();
+    }
+
+    /**
+     * @param User $specialist
+     * @return bool
+     */
+    public function belongsToNoClinic(User $specialist)
+    {
+        $clinics = $this->manager->getRepository(ClinicSpecialists::class)
+            ->findBySpecialistIdAndClinicId(
+                $specialist->getId(),
+                $this->clinicSpecialistService->getNoClinic()[0]->getId()
+            );
+
+        return sizeof($clinics) != 0;
     }
 }

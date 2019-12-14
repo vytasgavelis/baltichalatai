@@ -99,7 +99,7 @@ class ClinicSpecialistController extends AbstractController
      */
     public function assignSpecialistToNoClinic(UrlGeneratorInterface $urlGenerator, UserInterface $user = null)
     {
-        if ($this->userAuthService->isSpecialist($user)) {
+        if ($this->userAuthService->isSpecialist($user) && !$this->specialistService->belongsToNoClinic($user)) {
             $clinic = $this->clinicSpecialistService->getNoClinic();
             $clinicSpecialist = new ClinicSpecialists();
             $clinicSpecialist->setClinicId($clinic[0]);
@@ -110,6 +110,6 @@ class ClinicSpecialistController extends AbstractController
 
             return new RedirectResponse($urlGenerator->generate('specialist'));
         }
-        throw $this->createNotFoundException();
+        return new RedirectResponse($urlGenerator->generate('specialist'));
     }
 }

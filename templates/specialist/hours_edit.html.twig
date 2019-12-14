@@ -1,8 +1,11 @@
 {% block hours_edit %}
     <div class="container">
         {% if specClinics|length == 0 %}
-            <p>Norėdami redaguoti savo grafiką turite priklausyti gydymo įstaigai.
-            <p>Arba spauskite <a href="{{ path('assign_to_no_clinic') }}">čia</a>, jei jūs dirbate ne gydymo įstaigoje.</p>
+            <p>Norėdami redaguoti savo grafiką turite priklausyti gydymo įstaigai.</p>
+        {% endif %}
+        {% if not specialist_service.belongsToNoClinic(app.user) %}
+            <p>Spauskite <a href="{{ path('assign_to_no_clinic') }}">čia</a>, jei norite pridėti grafiką, nepriklausantį
+                klinikai.</p>
         {% endif %}
         {% for clinic in specClinics %}
             {% if clinic.getClinicId.getRole() != 4 %}
