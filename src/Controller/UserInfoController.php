@@ -125,7 +125,7 @@ class UserInfoController extends AbstractController
                 'choices' => $choices,
                 'required' => false,
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Prideti'])
+            ->add('submit', SubmitType::class, ['label' => 'Pridė   ti'])
             ->getForm();
 
         return $specialtiesForm;
