@@ -80,7 +80,11 @@
                             </div>
                             <div class="tab-pane fade show active p-3" id="two" role="tabpanel"
                                  aria-labelledby="two-tab">
-                                <h5 class="card-title py-0 my-0">Pasirinkite vizito laiką:</h5>
+                                {% if (app.user and app.user.getRole() == 1) or (not app.user) %}
+                                    <h5 class="card-title py-0 my-0">Pasirinkite vizito laiką:</h5>
+                                {% else %}
+                                    <h5 class="card-title py-0 my-0">Grafikas</h5>
+                                {% endif %}
                                 <form action="{{ path('specialist_register_visit', {'specialistId':  specialist.getId()}) }}"
                                       method="POST">
                                     <div class="row ">
@@ -148,7 +152,7 @@
                                             Norėdami registruotis vizitui, turite užpildyti <a
                                                 href="{{ path('userinfo_edit') }}">asmeninę informaciją</a>
                                         {% endif %}
-                                    {% else %}
+                                    {% elseif not app.user %}
                                         <p>Norėdami registruotis vizitui, turite <a
                                                     href="{{ path('app_login') }}">prisijungti</a>
                                             arba <a href="{{ path('app_register') }}">susikurti paskyrą</a></p>

@@ -18,7 +18,7 @@ class UserInfoType extends AbstractType
             ->add('name', null, ['label'=> 'Vardas', 'empty_data' => '',])
             ->add('surname', null, ['label'=> 'Pavardė', 'empty_data' => '',])
             ->add('phoneNumber', null, ['label'=> 'Telefono Nr.', 'empty_data' => '',])
-            ->add('personalEmail', null, ['label'=> 'El. Paštas', 'empty_data' => '',])
+            ->add('personalEmail', null, ['label'=> 'Asmeninis el. paštas', 'empty_data' => '',])
             ->add('dateOfBirth', DateType::class, [
                 'years' => range(
                     date('Y', strtotime("-100 years")),
