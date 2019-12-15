@@ -117,6 +117,9 @@ class ClinicController extends AbstractController
             5
         );
 
+        $pagination->setTemplate('components/layout/pagination.html.twig');
+        $request->setLocale('lt');
+
         return $this->render('clinic/index.html.twig', [
             'clinic' => $clinic[0],
             'clinicSpecialists' => $pagination,

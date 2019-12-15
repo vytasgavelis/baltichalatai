@@ -92,6 +92,9 @@ class PatientController extends AbstractController
             5
         );
 
+        $pagination->setTemplate('components/layout/pagination.html.twig');
+        $request->setLocale('lt');
+
         $upcomingVisits = $this->getDoctrine()->getRepository(UserVisit::class)
             ->findByPatientIdNotCompleted($user->getId());
 
