@@ -479,6 +479,10 @@ html {
   transform: translate(-200%,102%);
 }
 
+.pagination {
+  justify-content: center;
+}
+
 // Registration
 .registration-form {
   background: white;
@@ -553,7 +557,7 @@ html {
 }
 
 .bc-patient-column-4 {
-  min-height: 70vh;
+  min-height: 400px;
   text-align: center;
 }
 
@@ -582,9 +586,8 @@ html {
 
 .panel {
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 10%);
 }
 
 .badge-info {

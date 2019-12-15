@@ -86,14 +86,20 @@ class PatientController extends AbstractController
         $queryBuilder = $this->getDoctrine()->getRepository(UserVisit::class)
             ->getWithPatientIdCompletedQueryBuilder($user->getId());
 
+        // If pagination is used, show tab three (only page with pagination)
+        if($request->query->getInt('page', 0)) {
+            $activeTab = 3;
+        } else {
+            $activeTab = 1;
+        }
+
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
-            5
+            4
         );
 
         $pagination->setTemplate('components/layout/pagination.html.twig');
-        $request->setLocale('lt');
 
         $upcomingVisits = $this->getDoctrine()->getRepository(UserVisit::class)
             ->findByPatientIdNotCompleted($user->getId());
@@ -104,6 +110,7 @@ class PatientController extends AbstractController
             'userInfo' => $user->getUserInfo()->first(),
             'clientRecipes' => $this->patientServices->getClientRecipes($user),
             'clientSendings' => $this->patientServices->getClientSendingsToDoctor($user),
+            'activeTab' => $activeTab
         ]);
     }
 }
