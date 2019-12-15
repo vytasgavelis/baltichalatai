@@ -11,14 +11,14 @@
         <div>
             <label class="required" for=registration_form[email]">El. paštas</label>
             {{ form_widget(registrationForm.email) }}
-            <div class="alert-warning">
+            <div class="alert-warning warning">
                 {{ form_errors(registrationForm.email) }}
             </div>
         </div>
         <div>
             <label for="registration_form[plainPassword]">Slaptažodis</label>
             {{ form_widget(registrationForm.plainPassword) }}
-            <div class="alert-warning">
+            <div class="alert-warning warning">
                 {{ form_errors(registrationForm.plainPassword) }}
             </div>
         </div>

@@ -11,7 +11,7 @@
             <div class="alert alert-danger">{{ flashMessage }}</div>
         {% endfor %}
         {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">{{ flashMessage }}</div>
+            <div id="hide-alert" class="alert alert-success">{{ flashMessage }}</div>
         {% endfor %}
         <h3 class="search-header">Redaguoti specialybes:</h3>
         <div>

@@ -1,7 +1,7 @@
 {% block clinic_profile %}
     <div class="container-fluid bc-patient-container">
         {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">{{ flashMessage }}</div>
+            <div id="hide-alert" class="alert alert-success">{{ flashMessage }}</div>
         {% endfor %}
         <div class="row">
             <div class="col-sm-4 bc-patient-column-4">
@@ -46,8 +46,8 @@
                                 <div class="container-table">
                                     <div class="wrap-table">
                                         {% if app.user.getClinicSpecialists()|length == 0 %}
-                                            <div class="alert alert-warning">
-                                                <h1>Jūs specialistų neturite. Norėdami pridėti specialistą nueikite ant jo profilio ir paspauskite "Pridėti specialistą".</h1>
+                                            <div class="alert alert-warning warning">
+                                                <h3>Jūs specialistų neturite. Norėdami pridėti specialistą nueikite ant jo profilio ir paspauskite "Pridėti specialistą".</h3>
                                             </div>
                                         {% else %}
                                             <div class="table">
@@ -91,7 +91,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 {% endblock %}

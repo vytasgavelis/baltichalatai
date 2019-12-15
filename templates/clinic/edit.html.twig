@@ -8,13 +8,15 @@
     <div class="wrap edit-wrap">
         <h3 class="search-header">Redaguoti Profilį:</h3>
         {{ form(clinic_info_form) }}
-        {% if app.session.flashbag.has('error') %}
+    </div>
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        {% if loop.first %}
             <div class="alert alert-danger">
-            {% for flashMessage in app.session.flashbag.get('error') %}
-                {{ flashMessage }}
-            {% endfor %}
+        {% endif %}
+        {{ flashMessage }}
+        {% if loop.last %}
             </div>
         {% endif %}
-    </div>
+    {% endfor %}
     </body>
 {% endblock %}

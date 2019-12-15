@@ -17,9 +17,18 @@ require('bootstrap-datepicker');
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
     $('.datepicker').datepicker();
+
+    function hideAlert() {
+        var hideSuccessAlert = document.getElementById("hide-alert")
+        if (hideSuccessAlert) {
+            hideSuccessAlert.style.display = "none";
+        }
+    }
+    setTimeout(hideAlert, 5 * 1000);
 });
 
 
 $('.datepicker').datepicker({
     format: 'yyyy/mm/dd',
   })
+
