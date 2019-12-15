@@ -151,15 +151,19 @@ class SpecialistController extends AbstractController
             foreach ($workHours as $workHour) { //ismetam visus laikus
                 $manager->remove($workHour);
             }
+            $hadErrors = false;
             foreach ($request->get('day') as $key => $day) {
-                $timeStart = $day['startTime'];
-                $timeEnd = $day['endTime'];
-                // praskipinam jeigu blogai ivestas laikas
-                if (!DateTime::createFromFormat('H:i', $timeStart) || !DateTime::createFromFormat('H:i', $timeEnd)) {
-                    continue;
-                }
+                $timeStart = DateTime::createFromFormat('H:i', $day['startTime']);
+                $timeEnd = DateTime::createFromFormat('H:i', $day['endTime']);
+
                 //praskipinam jeigu nieko neideta, kad nesugeneruotu default laiku
                 if ($timeStart == "" || $timeEnd == "") {
+                    continue;
+                }
+
+                // praskipinam jeigu blogai ivestas laikas
+                if (!$timeStart || !$timeEnd ||  $timeEnd->diff($timeStart)->format('%R') == '+') {
+                    $hadErrors = true;
                     continue;
                 }
 
@@ -167,13 +171,17 @@ class SpecialistController extends AbstractController
                 $workHours->setClinicId($clinic[0]);
                 $workHours->setSpecialistId($user);
                 $workHours->setDay($key);
-                $workHours->setStartTime(new DateTime($timeStart));
-                $workHours->setEndTime(new DateTime($timeEnd));
+                $workHours->setStartTime($timeStart);
+                $workHours->setEndTime($timeEnd);
 
                 $manager->persist($workHours);
             }
             $manager->flush();
-            $this->bag->add('success', 'Grafikas išsaugotas.');
+            if ($hadErrors) {
+                $this->bag->add('error', 'Buvo klaidų išsaugant kai kuriuos laikus, bandykite dar kartą');
+            } else {
+                $this->bag->add('success', 'Grafikas išsaugotas.');
+            }
         }
 
         return new RedirectResponse($urlGenerator->generate('specialist'));

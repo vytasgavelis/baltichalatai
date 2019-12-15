@@ -20,14 +20,16 @@
                                 <input type="text" class="form-control ml-3" name="day[{{ loop.index }}][startTime]"
                                        value="{{ specialist_service.getWorkHoursTime(
                                            clinic.specialistId.getId, clinic.getClinicId.getId, loop.index, 'start'
-                                       ) }}">
+                                       ) }}"
+                                placeholder="09:00">
                             </div>
                             <div class="row">
                                 <label class="ml-3"> Pabaigos laikas </label>
                                 <input type="text" class="form-control ml-3" name="day[{{ loop.index }}][endTime]"
                                        value="{{ specialist_service.getWorkHoursTime(
                                            clinic.specialistId.getId, clinic.getClinicId.getId, loop.index, 'end'
-                                       ) }}">
+                                       ) }}"
+                                placeholder="16:00">
                             </div>
                         </div>
                     {% endfor %}

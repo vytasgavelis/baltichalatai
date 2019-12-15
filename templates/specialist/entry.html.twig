@@ -3,6 +3,9 @@
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-success">{{ flashMessage }}</div>
         {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ flashMessage }}</div>
+        {% endfor %}
         <div class="row">
             <div class="col-sm-4 bc-patient-column-4">
                 <div class="panel">
