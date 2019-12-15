@@ -74,7 +74,7 @@ class ClinicController extends AbstractController
         }
 
         if ($user->getClinicInfo() == null) {
-            $this->bag->add('error', 'Prašome užpildyti informaciją apie jūsų įstaigą.');
+            $this->bag->add('warning', 'Prašome užpildyti informaciją apie jūsų įstaigą.');
             return new RedirectResponse($urlGenerator->generate('clinic_edit'));
         }
 

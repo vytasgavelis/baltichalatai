@@ -91,7 +91,11 @@ class UserInfoController extends AbstractController
                 $em->flush();
 
                 $this->bag->add('success', 'Paskyra sėkmingai atnaujinta');
-                return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
+                if ($this->userAuthService->isPatient($user)) {
+                    return new RedirectResponse($urlGenerator->generate('patient'));
+                } else {
+                    return new RedirectResponse($urlGenerator->generate('specialist'));
+                }
             } elseif ($specialtiesForm->isSubmitted() && $specialtiesForm->isValid()) {
                 $responseData = $request->request->get('form');
                 $this->userSpecialtyService->addSpecialty(

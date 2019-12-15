@@ -4,64 +4,68 @@
 
 {% block body %}
     <body class="bc-index">
-        {% include 'components/layout/navbar.html.twig' %}
+    {% include 'components/layout/navbar.html.twig' %}
 
-        <div class = "grid">
-            <div class="page-back">
-            </div>
-            <div class="limiter">
-                <div class="container-table">
-                    <div class="wrap-table">
-                        {% if specialists|length == 0 %}
+    <div class="grid">
+        <div class="page-back">
+        </div>
+        <div class="limiter">
+            <div class="container-table">
+                <div class="wrap-table">
+                    {% if specialists|length == 0 %}
                         <div class="wrap-results-error">
                             <h3 class="search-error-header">Atsiprašome, nepavyko rasti specialistų.</h3>
                         </div>
-                        {% else %}
-                            <div class="table">
-                                <div class="results-row header">
-                                    <div class="cell">
-                                        Gyd. Vardas
-                                    </div>
-                                    <div class="cell">
-                                        Specialybė
-                                    </div>
-                                    <div class="cell">
-                                        Įstaiga
-                                    </div>
-                                    <div class="cell">
-                                        Miestas
-                                    </div>
+                    {% else %}
+                        <div class="table">
+                            <div class="results-row header">
+                                <div class="cell">
+                                    Gyd. Vardas
                                 </div>
-                                {% for specialist in specialists %}
-                                    <div class="results-row">
-                                        <div class="cell" data-title="Gyd. Vardas">
-                                            <a href="{{ path('specialist_show', {'id': specialist.getId() }) }}">{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</a>
-                                        </div>
+                                <div class="cell">
+                                    Specialybė
+                                </div>
+                                <div class="cell">
+                                    Įstaiga
+                                </div>
+                                <div class="cell">
+                                    Miestas
+                                </div>
+                            </div>
+                            {% for specialist in specialists %}
+                                <div class="results-row">
+                                    <div class="cell" data-title="Gyd. Vardas">
+                                        <a href="{{ path('specialist_show', {'id': specialist.getId() }) }}">{{ specialist.getUserInfo().first().getName() }} {{ specialist.getUserInfo().first().getSurname() }}</a>
+                                    </div>
                                     <div class="cell" data-title="Specialybė">
                                         {{ specialist.getUserSpecialties.first().getSpecialtyId().getName() }}
                                     </div>
                                     <div class="cell" data-title="Įstaiga">
-                                        {% if specialist.getSpecialistClinics.first() != false  and specialist.getSpecialistClinics.first().getClinicId().getClinicInfo() is not null%}
-                                        {{ specialist.getSpecialistClinics.first().getClinicId().getClinicInfo().getName() }}
+                                        {% if specialist.getSpecialistClinics.first() != false %}
+                                            {% if specialist.getSpecialistClinics.first().getClinicId().getClinicInfo() is not null %}
+                                                {{ specialist.getSpecialistClinics.first().getClinicId().getClinicInfo().getName() }}
+                                            {% else %}
+                                                Asmeninė darbovietė
+                                            {% endif %}
                                         {% else %}
                                             Specialistas įstaigai nepriklauso
-                                            {% endif %}
+                                        {% endif %}
                                     </div>
                                     <div class="cell" data-title="Miestas">
                                         {{ specialist.getUserInfo().first().getCity() }}
                                     </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    {{ knp_pagination_render(specialists) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
+                {{ knp_pagination_render(specialists) }}
             </div>
         </div>
-        <div class="page-forward">
-        </div>
-        </div>
+    </div>
+    <div class="page-forward">
+    </div>
+    </div>
 
     </body>
 {% endblock %}
