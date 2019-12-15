@@ -124,7 +124,7 @@ class AppFixtures extends Fixture
                     $userInfo->setDescription($this->getSpecialistDescription($name, $surname, $city, $email));
                 $userInfo->setUserId($usr);
                 $manager->persist($userInfo);
-            } else {
+            } elseif ($usr->getRole() == 3) {
                 $clinicInfo = new ClinicInfo();
                 $address = 'Klinikos 14, Kaunas';
                 $clinicNames = $this->getClinicName();

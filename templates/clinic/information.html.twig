@@ -38,15 +38,15 @@
 
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade p-3 {{ (activeTab==1) ?  'show active' : '' }}" id="one" role="tabpanel" aria-labelledby="one-tab">
-                            {{ app.user.getClinicInfo().getDescription() }}
+                            {{ clinic.getClinicInfo().getDescription() }}
                         </div>
                         <div class="tab-pane fade p-3 {{ (activeTab==2) ?  'show active' : '' }}" id="two" role="tabpanel" aria-labelledby="two-tab">
                             <div class="limiter">
                                 <div class="container-table">
                                     <div class="wrap-table">
-                                        {% if app.user.getClinicSpecialists()|length == 0 %}
+                                        {% if clinic.getClinicSpecialists()|length == 0 %}
                                             <div class="alert alert-warning">
-                                                <h1>Jūs specialistų neturite. Norėdami pridėti specialistą nueikite ant jo profilio ir paspauskite "Pridėti specialistą".</h1>
+                                                <h1>Ši klinika specialistų neturi.</h1>
                                             </div>
                                         {% else %}
                                             <div class="table">

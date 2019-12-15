@@ -88,14 +88,14 @@
                                 <form action="{{ path('specialist_register_visit', {'specialistId':  specialist.getId()}) }}"
                                       method="POST">
                                     <div class="row ">
-                                        <div class="col-md-5 show-less-times">
+                                        <div class="col-md-3 show-less-times">
                                             {% if page > 1 %}
                                                 <p><a href="/specialist/show/{{ id }}?page={{ page-1 }}"><i
                                                                 class="fa fa-arrow-circle-left"></i></a> Grįžti atgal
                                                 </p>
                                             {% endif %}
                                         </div>
-                                        <div class="col-md-7 show-more-times">
+                                        <div class="col-md-3 offset-6 show-more-times">
                                             {% if workHours is not empty %}
                                                 <p> Rodyti daugiau <a
                                                             href="/specialist/show/{{ id }}?page={{ page+1 }}"><i
@@ -104,7 +104,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h5>{{ workHours.0.clinicId.getClinicInfo.getName ?? '' }} </h5>
+                                        <h5>{{ workHours.0.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
                                         <div class="row specialist-hours-row">
                                             {% if workHours is empty %}
                                             <p class="specialist-hours-error">Kalendoriaus nėra. Registruotis pas šį
@@ -115,7 +115,7 @@
                                             {% if clinic.clinicId.getId != previous %}
                                             {% set previous = clinic.clinicId.getId %}
                                         </div>
-                                        <h5>{{ clinic.clinicId.getClinicInfo.getName ?? '' }} </h5>
+                                        <h5>{{ clinic.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
                                         <div class="row specialist-hours-row">
                                             {% else %}
                                                 {% set previous = clinic.clinicId.getId %}

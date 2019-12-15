@@ -102,7 +102,6 @@ class UserInfoController extends AbstractController
                     $responseData['specialties'],
                     $user
                 );
-                return new RedirectResponse($urlGenerator->generate('specialist'));
             }
             return $this->render('user_info/edit.html.twig', [
                 'user_info_form' => $form->createView(),
