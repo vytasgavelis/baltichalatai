@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -7,12 +8,27 @@ use App\Security\AppCustomAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * @var FlashBagInterface
+     */
+    private $bag;
+
+    /**
+     * RegistrationController constructor.
+     * @param FlashBagInterface $bag
+     */
+    public function __construct(FlashBagInterface $bag)
+    {
+        $this->bag = $bag;
+    }
+
     /**
      * @Route("/register", name="app_register")
      * @param AppCustomAuthenticator $authenticator
@@ -31,6 +47,12 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!filter_var($form->get('email')->getData(), FILTER_VALIDATE_EMAIL)) {
+                $this->bag->add('warning', 'Neteisingas el. pašto formatas.');
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
