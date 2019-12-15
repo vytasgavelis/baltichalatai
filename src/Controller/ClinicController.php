@@ -81,15 +81,25 @@ class ClinicController extends AbstractController
         $queryBuilder = $this->getDoctrine()->getRepository(ClinicSpecialists::class)
             ->findByClinicIdQueryBuilder($user->getId());
 
+        // If pagination is used, show tab two (only page with pagination)
+        if ($request->query->getInt('page', 0)) {
+            $activeTab = 2;
+        } else {
+            $activeTab = 1;
+        }
+
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
             5
         );
 
+        $pagination->setTemplate('components/layout/pagination.html.twig');
+
         return $this->render('clinic/home.html.twig', [
             'clinicInfo' => $user->getClinicInfo(),
             'clinicSpecialists' => $pagination,
+            'activeTab' => $activeTab,
         ]);
     }
 
@@ -117,12 +127,19 @@ class ClinicController extends AbstractController
             5
         );
 
+        // If pagination is used, show tab two (only page with pagination)
+        if ($request->query->getInt('page', 0)) {
+            $activeTab = 2;
+        } else {
+            $activeTab = 1;
+        }
+
         $pagination->setTemplate('components/layout/pagination.html.twig');
-        $request->setLocale('lt');
 
         return $this->render('clinic/index.html.twig', [
             'clinic' => $clinic[0],
             'clinicSpecialists' => $pagination,
+            'activeTab' => $activeTab,
         ]);
     }
 

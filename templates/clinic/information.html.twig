@@ -24,27 +24,29 @@
                     <div class="card-header tab-card-header bc-patient-tab-header">
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                             <li class="nav-item patient-tab">
-                                <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab"
-                                   aria-controls="One" aria-selected="true" selected="true">Apie</a>
+                                <a class="nav-link {{ (activeTab==1) ?  'active' : '' }}" id="one-tab" data-toggle="tab"
+                                   href="#one" role="tab"
+                                   aria-controls="One" aria-selected="{{ (activeTab==1) ?  'true' : 'false' }}"
+                                   selected="{{ (activeTab==1) ?  'true' : 'false' }}">Apie</a>
                             </li>
                             <li class="nav-item patient-tab">
-                                <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab"
-                                   aria-controls="Two" aria-selected="false">Specialistai</a>
+                                <a class="nav-link {{ (activeTab==2) ?  'active' : '' }}" id="two-tab" data-toggle="tab" href="#two" role="tab"
+                                   aria-controls="Two" aria-selected="{{ (activeTab==2) ?  'true' : 'false' }}" selected="{{ (activeTab==2) ?  'true' : 'false' }}">Specialistai</a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-                            {{ clinic.getClinicInfo().getDescription() }}
+                        <div class="tab-pane fade p-3 {{ (activeTab==1) ?  'show active' : '' }}" id="one" role="tabpanel" aria-labelledby="one-tab">
+                            {{ app.user.getClinicInfo().getDescription() }}
                         </div>
-                        <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+                        <div class="tab-pane fade p-3 {{ (activeTab==2) ?  'show active' : '' }}" id="two" role="tabpanel" aria-labelledby="two-tab">
                             <div class="limiter">
                                 <div class="container-table">
                                     <div class="wrap-table">
-                                        {% if clinic.getClinicSpecialists()|length == 0 %}
+                                        {% if app.user.getClinicSpecialists()|length == 0 %}
                                             <div class="alert alert-warning">
-                                                <h1>Ši poliklinika specialistų neturi.</h1>
+                                                <h1>Jūs specialistų neturite. Norėdami pridėti specialistą nueikite ant jo profilio ir paspauskite "Pridėti specialistą".</h1>
                                             </div>
                                         {% else %}
                                             <div class="table">
