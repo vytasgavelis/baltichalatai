@@ -79,7 +79,7 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('El. paštas nebuvo rastas.');
         }
 
         return $user;
@@ -98,7 +98,6 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
-        $this->bag->add('success', 'Sėkmingai prisijungta');
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 

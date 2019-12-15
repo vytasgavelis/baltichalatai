@@ -80,14 +80,14 @@ class PatientController extends AbstractController
             return new RedirectResponse($urlGenerator->generate('app_login'));
         }
         if (is_bool($user->getUserInfo()->first())) {
-            $this->bag->add('error', 'Prašome užpildyti asmeninę informaciją');
+            $this->bag->add('warning', 'Prašome užpildyti asmeninę informaciją');
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
         $queryBuilder = $this->getDoctrine()->getRepository(UserVisit::class)
             ->getWithPatientIdCompletedQueryBuilder($user->getId());
 
         // If pagination is used, show tab three (only page with pagination)
-        if($request->query->getInt('page', 0)) {
+        if ($request->query->getInt('page', 0)) {
             $activeTab = 3;
         } else {
             $activeTab = 1;

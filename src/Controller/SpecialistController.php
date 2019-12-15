@@ -73,6 +73,7 @@ class SpecialistController extends AbstractController
             throw $this->createAccessDeniedException('Turite būti prisijungęs.');
         }
         if (is_bool($user->getUserInfo()->first())) {
+            $this->bag->add('warning', 'Prašome užpildyti asmeninę informaciją');
             return new RedirectResponse($urlGenerator->generate('userinfo_edit'));
         }
 
