@@ -104,18 +104,21 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h5>{{ workHours.0.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
+                                        <h3>{{ workHours.0.clinicId.getClinicInfo.getName ?? '' }} </h3>
+                                        {% if workHours.0.clinicId.getRole == 4 %}
+                                            <h3>Asmeninė darbovietė</h3>
+                                        {% endif %}
                                         <div class="row specialist-hours-row">
                                             {% if workHours is empty %}
-                                            <p class="specialist-hours-error">Kalendoriaus nėra. Registruotis pas šį
-                                                gydytoją klinikoje galima tik telefonu.</p>
+                                            {#                                            <p class="specialist-hours-error">Kalendoriaus nėra. Registruotis pas šį#}
+                                            {#                                                gydytoją klinikoje galima tik telefonu.</p>#}
                                             {% else %}
                                             {% set previous = workHours.0.clinicId.getId %}
                                             {% for clinic in workHours %}
                                             {% if clinic.clinicId.getId != previous %}
                                             {% set previous = clinic.clinicId.getId %}
                                         </div>
-                                        <h5>{{ clinic.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h5>
+                                        <h3>{{ clinic.clinicId.getClinicInfo.getName ?? 'Asmeninė darbovietė' }} </h3>
                                         <div class="row specialist-hours-row">
                                             {% else %}
                                                 {% set previous = clinic.clinicId.getId %}
