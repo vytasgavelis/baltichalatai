@@ -41,7 +41,7 @@
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                             <li class="nav-item patient-tab">
                                 <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab"
-                                   aria-controls="One" aria-selected="true" selected="true">Šiandien</a>
+                                   aria-controls="One" aria-selected="true" selected="true">Vizitai</a>
                             </li>
                             <li class="nav-item patient-tab">
                                 <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab"
@@ -55,32 +55,30 @@
                             <table class="table">
                                 <thead>
                                 <tr>
+                                    <th>Data</th>
                                     <th>Laikas</th>
-                                    <th>Priežastis</th>
                                     <th>Pacientas</th>
                                     <th>Veiksmai</th>
                                 </tr>
                                 </thead>
                                 {% for visit in visits %}
-                                    {% if visit.isCompleted == false %}
-                                        <tr>
-                                            <td>{{ visit.getVisitDate()|date('H:i') }}</td>
-                                            <td>{{ visit.getDescription() }}</td>
-                                            <td>
-                                                {% if visit.getClientId().getUserInfo().first() != false %}
-                                                    {{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}
-                                                {% else %}
-                                                    Pacientas neužpildęs informacijos apie save.
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                <a href="{{ path('visit_info', {'id': visit.getId}) }}"
-                                                   class="btn btn-secondary" data-toggle="tooltip"
-                                                   data-placement="bottom" title="Receptas"><i class="fa fa-medkit"
-                                                                                               aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                    {% endif %}
+                                    <tr>
+                                        <td>{{ visit.getVisitDate()|date('Y m d') }}</td>
+                                        <td>{{ visit.getVisitDate()|date('H:i') }}</td>
+                                        <td>
+                                            {% if visit.getClientId().getUserInfo().first() != false %}
+                                                {{ visit.getClientId().getUserInfo().first().getName() }} {{ visit.getClientId().getUserInfo().first().getSurname() }}
+                                            {% else %}
+                                                Pacientas neužpildęs informacijos apie save.
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('visit_info', {'id': visit.getId}) }}"
+                                               class="btn btn-secondary" data-toggle="tooltip"
+                                               data-placement="bottom" title="Receptas"><i class="fa fa-medkit"
+                                                                                           aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
                             </table>
                             {{ knp_pagination_render(visits) }}

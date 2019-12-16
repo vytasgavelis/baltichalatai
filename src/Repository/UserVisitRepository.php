@@ -81,6 +81,17 @@ class UserVisitRepository extends ServiceEntityRepository
         return $query;
     }
 
+    public function getWithSpecialistIdUncompletedQueryBuilder(int $value)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->andWhere('u.specialistId = :val')
+            ->andWhere('u.isCompleted = 0')
+            ->setParameter('val', $value)
+            ->orderBy('u.visitDate', 'ASC');
+
+        return $query;
+    }
+
     /**
      * @param int $specialistId
      * @return mixed
@@ -130,6 +141,7 @@ class UserVisitRepository extends ServiceEntityRepository
             ->where('u.clientId = :client')
             ->andWhere('u.recipeId is not null')
             ->setParameter('client', $id)
+            ->orderBy('u.visitDate', 'desc')
             ->getQuery()
             ->getResult();
     }
@@ -144,6 +156,7 @@ class UserVisitRepository extends ServiceEntityRepository
             ->where('u.clientId = :client')
             ->andWhere('u.sendingToDoctorId is not null')
             ->setParameter('client', $id)
+            ->orderBy('u.visitDate', 'desc')
             ->getQuery()
             ->getResult();
     }

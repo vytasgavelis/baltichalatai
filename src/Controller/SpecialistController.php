@@ -80,13 +80,15 @@ class SpecialistController extends AbstractController
         $workHours = $this->specialistService->getSpecialistWorkHours($user);
 
         $queryBuilder = $this->getDoctrine()->getRepository(UserVisit::class)
-            ->getWithSpecialistIdQueryBuilder($user->getId());
+            ->getWithSpecialistIdUncompletedQueryBuilder($user->getId());
 
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
             5
         );
+
+        $pagination->setTemplate('components/layout/pagination.html.twig');
 
         $specClinics = $this->specialistService->getSpecialistClinics($user->getId());
 

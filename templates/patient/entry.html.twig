@@ -57,7 +57,7 @@
                                     <th>Data</th>
                                     <th>Laikas</th>
                                     <th>Specialistas</th>
-                                    <th>Gydytojas</th>
+                                    <th>Gyd. vardas</th>
                                     <th>Įstaiga</th>
                                     <th>Veiksmai</th>
                                 </tr>
@@ -73,6 +73,8 @@
                                         <td>
                                             {% if visit.getClinicId().getRole() == 3 %}
                                                 <a href="{{ path('clinic_show', {'id': visit.getClinicId().getId()}) }}">{{ visit.getClinicId().getClinicInfo().getName() }}</a>
+                                            {% else %}
+                                                Asmeninė darbovietė
                                             {% endif %}
                                         </td>
                                         <td>
