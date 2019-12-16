@@ -14,21 +14,22 @@ require('@fortawesome/fontawesome-free/js/all.js');
 const $ = require('jquery');
 require('bootstrap');
 require('bootstrap-datepicker');
-$(document).ready(function() {
+$(document).ready(function () {
     $('[data-toggle="popover"]').popover();
     $('.datepicker').datepicker();
 
-    function hideAlert() {
-        var hideSuccessAlert = document.getElementById("hide-alert")
-        if (hideSuccessAlert) {
-            hideSuccessAlert.style.display = "none";
+    function hideAlerts() {
+        var alerts = document.querySelectorAll(".alert.alert-success, .alert.alert-danger");
+        for (var i = 0; i < alerts.length; i++) {
+            alerts[i].style.display = "none";
         }
     }
-    setTimeout(hideAlert, 5 * 1000);
+
+    setTimeout(hideAlerts, 7 * 1000);
 });
 
 
 $('.datepicker').datepicker({
     format: 'yyyy/mm/dd',
-  })
+})
 

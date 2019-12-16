@@ -6,12 +6,12 @@
     <body class="bc-index">
     {% include 'components/layout/navbar.html.twig' %}
     {% for flashMessage in app.session.flashbag.get('success') %}
-        <div id="hide-alert" class="alert alert-success">{{ flashMessage }}</div>
+        <div class="alert alert-success">{{ flashMessage }}</div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('error') %}
         <div class="alert alert-danger">{{ flashMessage }}</div>
     {% endfor %}
-    <div class="wrap edit-wrap">
+    <div class="wrap">
         <h3 class="search-header">Redaguoti Profilį:</h3>
 
         {{ form(user_info_form) }}

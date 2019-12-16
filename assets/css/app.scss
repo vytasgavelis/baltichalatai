@@ -231,12 +231,12 @@ html {
 .wrap {
   width: 60%;
   position: absolute;
-  top: 50%;
+  top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 30px 80px;
   background: RGBA(255, 255, 255, 0.95);
-  margin-top: 50px;
+  //margin-top: 50px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -632,6 +632,13 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
   font-weight: bold;
 }
 
+.specialist-hours-input {
+  max-width: 120px;
+}
+
+.form-control::placeholder {
+  opacity: 0.6;
+}
 
 // Tables for doctor, clinic and patient
 .table > tbody > tr > td > button {
@@ -760,10 +767,6 @@ div.col-xl-2:nth-child(5) > div:nth-child(1) {
   color: white;
   border: none;
   background: #fea757;
-}
-
-.edit-wrap {
-  margin-top: 10%;
 }
 
 h3.search-header:nth-child(3) {
@@ -1042,10 +1045,6 @@ h3.search-header:nth-child(3) {
   .reason-header {
     font-size: 50px;
   }
-
-  .edit-wrap {
-  margin-top: 20%;
-  }
 }
 
 @media screen and (max-width: 650px) {
@@ -1061,10 +1060,6 @@ h3.search-header:nth-child(3) {
     height: 150px;
     margin-left: 50px;
     margin-top: 30px;
-  }
-
-  .edit-wrap {
-  margin-top: 20%;
   }
 }
 
@@ -1082,10 +1077,5 @@ h3.search-header:nth-child(3) {
 
   .wrap {
     min-width: 359px;
-    top: 60%;
-  }
-
-  .edit-wrap {
-    margin-top: 20%;
   }
 }

@@ -17,7 +17,7 @@
                             <label> {{ day }} </label>
                             <div class="row">
                                 <label class="ml-3"> Pradžios laikas </label>
-                                <input type="text" class="form-control ml-3" name="day[{{ loop.index }}][startTime]"
+                                <input type="text" class="form-control ml-3 specialist-hours-input" name="day[{{ loop.index }}][startTime]"
                                        value="{{ specialist_service.getWorkHoursTime(
                                            clinic.specialistId.getId, clinic.getClinicId.getId, loop.index, 'start'
                                        ) }}"
@@ -25,7 +25,7 @@
                             </div>
                             <div class="row">
                                 <label class="ml-3"> Pabaigos laikas </label>
-                                <input type="text" class="form-control ml-3" name="day[{{ loop.index }}][endTime]"
+                                <input type="text" class="form-control ml-3 specialist-hours-input" name="day[{{ loop.index }}][endTime]"
                                        value="{{ specialist_service.getWorkHoursTime(
                                            clinic.specialistId.getId, clinic.getClinicId.getId, loop.index, 'end'
                                        ) }}"
@@ -35,7 +35,7 @@
                     {% endfor %}
                 </div>
                 <div class=" row">
-                    <button type="submit" class="btn btn-success ml-3"> Išsaugoti</button>
+                    <button type="submit" class="btn btn-margin ml-3"> Išsaugoti</button>
                 </div>
             </form>
         {% endfor %}
