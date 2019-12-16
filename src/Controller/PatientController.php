@@ -43,8 +43,7 @@ class PatientController extends AbstractController
         PatientServices $patientServices,
         UserAuthService $userAuthService,
         FlashBagInterface $bag
-    )
-    {
+    ) {
         $this->patientServices = $patientServices;
         $this->userAuthService = $userAuthService;
         $this->bag = $bag;
@@ -76,8 +75,7 @@ class PatientController extends AbstractController
         PaginatorInterface $paginator,
         Request $request,
         UserInterface $user = null
-    )
-    {
+    ) {
         if (!$this->userAuthService->isPatient($user)) {
             return new RedirectResponse($urlGenerator->generate('app_login'));
         }
