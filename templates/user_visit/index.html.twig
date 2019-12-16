@@ -7,7 +7,7 @@
     {% include 'components/layout/navbar.html.twig' %}
     <div class="row justify-content-center">
         {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="alert alert-success">{{ flashMessage }}</div>
+            <div id="hide-alert" class="alert alert-success">{{ flashMessage }}</div>
         {% endfor %}
         {% for flashMessage in app.session.flashbag.get('error') %}
             <div class="alert alert-warning">{{ flashMessage }}</div>
