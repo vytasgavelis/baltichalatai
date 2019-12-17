@@ -43,7 +43,7 @@ class UserVisitRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.clientId = :val')
-            ->andWhere('u.isCompleted = 0')
+            ->andWhere('u.isCompleted is null')
             ->setParameter('val', $value)
             ->orderBy('u.visitDate', 'ASC')
             ->setMaxResults(10)
