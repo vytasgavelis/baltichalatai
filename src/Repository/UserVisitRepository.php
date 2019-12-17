@@ -74,7 +74,7 @@ class UserVisitRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('u')
             ->andWhere('u.specialistId = :val')
-            ->andWhere('u.isCompleted = 0')
+            ->andWhere('u.isCompleted = null')
             ->setParameter('val', $value)
             ->orderBy('u.visitDate', 'ASC');
 
